@@ -3,8 +3,10 @@ import { config } from './config/index.js';
 
 const app = createApp();
 
-if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {
-  const port = process.env.PORT || config.port || 5000;
+const port = process.env.PORT || config.port || 5000;
+
+// Listen if PORT is specified (Vercel services / container / local dev)
+if (process.env.PORT || (!process.env.VERCEL && process.env.NODE_ENV !== 'production')) {
   const server = app.listen(port, () => {
     console.log(`=======================================================`);
     console.log(` Pakistan Dropshipping Backend API running on port ${port}`);
@@ -22,5 +24,8 @@ if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {
   });
 }
 
+// Export for serverless function execution
 export default app;
+
+
 
