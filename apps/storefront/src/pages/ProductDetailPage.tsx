@@ -40,12 +40,12 @@ export const ProductDetailPage: React.FC = () => {
         setProduct(prod);
         setSelectedImage(prod.images[0]?.url || '');
         if (prod.variants && prod.variants.length > 0) {
-          const available = prod.variants.find((v) => v.isAvailable) || prod.variants[0];
+          const available = prod.variants.find((v: any) => v.isAvailable) || prod.variants[0];
           setSelectedVariantId(available.id);
         }
         // Load related items
         const rel = await fetchProducts({ category: prod.categorySlug, limit: 4 });
-        setRelatedProducts(rel.data.filter((p) => p.id !== prod.id));
+        setRelatedProducts(rel.data.filter((p: any) => p.id !== prod.id));
       } catch (err) {
         console.error('Failed to load product detail', err);
       } finally {
@@ -85,7 +85,7 @@ export const ProductDetailPage: React.FC = () => {
     );
   }
 
-  const selectedVariant = product.variants?.find((v) => v.id === selectedVariantId);
+  const selectedVariant = product.variants?.find((v: any) => v.id === selectedVariantId);
   const currentPrice = product.basePricePkr + (selectedVariant?.priceDeltaPkr || 0);
 
   const discountPercent =
@@ -152,7 +152,7 @@ export const ProductDetailPage: React.FC = () => {
 
           {product.images.length > 1 && (
             <div className="flex items-center gap-3 overflow-x-auto pb-2">
-              {product.images.map((img) => (
+              {product.images.map((img: any) => (
                 <button
                   key={img.id}
                   onClick={() => setSelectedImage(img.url)}
@@ -203,7 +203,7 @@ export const ProductDetailPage: React.FC = () => {
                 Select Option / Edition:
               </label>
               <div className="flex flex-wrap gap-2">
-                {product.variants.map((v) => (
+                {product.variants.map((v: any) => (
                   <button
                     key={v.id}
                     onClick={() => setSelectedVariantId(v.id)}
