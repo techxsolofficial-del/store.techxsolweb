@@ -1,6 +1,3 @@
-import { createApp } from '../apps/api/dist/app.js';
-
-const app = createApp();
+import app from '../apps/api/dist/server.js';
 
 export default app;
-

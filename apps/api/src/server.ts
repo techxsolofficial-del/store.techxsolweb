@@ -3,7 +3,7 @@ import { config } from './config/index.js';
 
 const app = createApp();
 
-if (!process.env.VERCEL || process.env.PORT) {
+if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {
   const port = process.env.PORT || config.port || 5000;
   const server = app.listen(port, () => {
     console.log(`=======================================================`);
