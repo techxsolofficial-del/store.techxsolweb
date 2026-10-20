@@ -2,6 +2,7 @@
   "name": "@dropship/api",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
