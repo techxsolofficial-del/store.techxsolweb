@@ -1,3 +1,4 @@
+import { createRequire } from 'module'; const require = createRequire(import.meta.url);
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -14726,7 +14727,7 @@ var require_object_inspect = __commonJS({
       if (isBoolean(obj)) {
         return markBoxed(booleanValueOf.call(obj));
       }
-      if (isString2(obj)) {
+      if (isString(obj)) {
         return markBoxed(inspect(String(obj)));
       }
       if (typeof window !== "undefined" && obj === window) {
@@ -14775,7 +14776,7 @@ var require_object_inspect = __commonJS({
     function isError(obj) {
       return toStr(obj) === "[object Error]" && canTrustToString(obj);
     }
-    function isString2(obj) {
+    function isString(obj) {
       return toStr(obj) === "[object String]" && canTrustToString(obj);
     }
     function isNumber(obj) {
@@ -24232,7 +24233,7 @@ var require_lib3 = __commonJS({
         preflightContinue: false,
         optionsSuccessStatus: 204
       };
-      function isString2(s) {
+      function isString(s) {
         return typeof s === "string" || s instanceof String;
       }
       function isOriginAllowed(origin, allowedOrigin) {
@@ -24243,7 +24244,7 @@ var require_lib3 = __commonJS({
             }
           }
           return false;
-        } else if (isString2(allowedOrigin)) {
+        } else if (isString(allowedOrigin)) {
           return origin === allowedOrigin;
         } else if (allowedOrigin instanceof RegExp) {
           return allowedOrigin.test(origin);
@@ -24258,7 +24259,7 @@ var require_lib3 = __commonJS({
             key: "Access-Control-Allow-Origin",
             value: "*"
           }]);
-        } else if (isString2(options.origin)) {
+        } else if (isString(options.origin)) {
           headers.push([{
             key: "Access-Control-Allow-Origin",
             value: options.origin
@@ -27988,7 +27989,7 @@ var require_lodash = __commonJS({
       if (fromIndex < 0) {
         fromIndex = nativeMax(length + fromIndex, 0);
       }
-      return isString2(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
+      return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
     }
     function isArguments(value) {
       return isArrayLikeObject(value) && hasOwnProperty.call(value, "callee") && (!propertyIsEnumerable.call(value, "callee") || objectToString.call(value) == argsTag);
@@ -28014,7 +28015,7 @@ var require_lodash = __commonJS({
     function isObjectLike(value) {
       return !!value && typeof value == "object";
     }
-    function isString2(value) {
+    function isString(value) {
       return typeof value == "string" || !isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag;
     }
     function isSymbol(value) {
@@ -28213,10 +28214,10 @@ var require_lodash6 = __commonJS({
     function isObjectLike(value) {
       return !!value && typeof value == "object";
     }
-    function isString2(value) {
+    function isString(value) {
       return typeof value == "string" || !isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag;
     }
-    module.exports = isString2;
+    module.exports = isString;
   }
 });
 
@@ -28313,7 +28314,7 @@ var require_sign2 = __commonJS({
     var isInteger = require_lodash3();
     var isNumber = require_lodash4();
     var isPlainObject = require_lodash5();
-    var isString2 = require_lodash6();
+    var isString = require_lodash6();
     var once = require_lodash7();
     var { KeyObject, createSecretKey, createPrivateKey } = __require("crypto");
     var SUPPORTED_ALGS = ["RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "HS256", "HS384", "HS512", "none"];
@@ -28322,22 +28323,22 @@ var require_sign2 = __commonJS({
     }
     var sign_options_schema = {
       expiresIn: { isValid: function(value) {
-        return isInteger(value) || isString2(value) && value;
+        return isInteger(value) || isString(value) && value;
       }, message: '"expiresIn" should be a number of seconds or string representing a timespan' },
       notBefore: { isValid: function(value) {
-        return isInteger(value) || isString2(value) && value;
+        return isInteger(value) || isString(value) && value;
       }, message: '"notBefore" should be a number of seconds or string representing a timespan' },
       audience: { isValid: function(value) {
-        return isString2(value) || Array.isArray(value);
+        return isString(value) || Array.isArray(value);
       }, message: '"audience" must be a string or array' },
       algorithm: { isValid: includes.bind(null, SUPPORTED_ALGS), message: '"algorithm" must be a valid string enum value' },
       header: { isValid: isPlainObject, message: '"header" must be an object' },
-      encoding: { isValid: isString2, message: '"encoding" must be a string' },
-      issuer: { isValid: isString2, message: '"issuer" must be a string' },
-      subject: { isValid: isString2, message: '"subject" must be a string' },
-      jwtid: { isValid: isString2, message: '"jwtid" must be a string' },
+      encoding: { isValid: isString, message: '"encoding" must be a string' },
+      issuer: { isValid: isString, message: '"issuer" must be a string' },
+      subject: { isValid: isString, message: '"subject" must be a string' },
+      jwtid: { isValid: isString, message: '"jwtid" must be a string' },
       noTimestamp: { isValid: isBoolean, message: '"noTimestamp" must be a boolean' },
-      keyid: { isValid: isString2, message: '"keyid" must be a string' },
+      keyid: { isValid: isString, message: '"keyid" must be a string' },
       mutatePayload: { isValid: isBoolean, message: '"mutatePayload" must be a boolean' },
       allowInsecureKeySizes: { isValid: isBoolean, message: '"allowInsecureKeySizes" must be a boolean' },
       allowInvalidAsymmetricKeyTypes: { isValid: isBoolean, message: '"allowInvalidAsymmetricKeyTypes" must be a boolean' }
@@ -28543,573 +28544,6 @@ var require_jsonwebtoken = __commonJS({
 // apps/api/src/app.ts
 var import_express3 = __toESM(require_express2(), 1);
 var import_cors = __toESM(require_lib3(), 1);
-
-// node_modules/helmet/index.mjs
-var dashify = (str) => str.replace(/[A-Z]/g, (capitalLetter) => "-" + capitalLetter.toLowerCase());
-var errify = (err) => err instanceof Error ? err : new Error(String(err));
-var isString = (value) => typeof value === "string";
-var throwErrorIfExists = (err) => {
-  if (err) throw err;
-};
-var dangerouslyDisableDefaultSrc = /* @__PURE__ */ Symbol("dangerouslyDisableDefaultSrc");
-var SHOULD_BE_QUOTED = /* @__PURE__ */ new Set(["none", "self", "strict-dynamic", "report-sample", "inline-speculation-rules", "unsafe-inline", "unsafe-eval", "unsafe-hashes", "wasm-unsafe-eval"]);
-var getDefaultDirectives = () => ({
-  "default-src": ["'self'"],
-  "base-uri": ["'self'"],
-  "font-src": ["'self'", "https:", "data:"],
-  "form-action": ["'self'"],
-  "frame-ancestors": ["'self'"],
-  "img-src": ["'self'", "data:"],
-  "object-src": ["'none'"],
-  "script-src": ["'self'"],
-  "script-src-attr": ["'none'"],
-  "style-src": ["'self'", "https:", "'unsafe-inline'"],
-  "upgrade-insecure-requests": []
-});
-var parseDirectiveName = (rawDirectiveName) => {
-  if (rawDirectiveName.length === 0 || !/^[a-z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(rawDirectiveName)) {
-    throw new Error(`Content-Security-Policy received an invalid directive name ${JSON.stringify(rawDirectiveName)}`);
-  }
-  return dashify(rawDirectiveName);
-};
-var getDirectiveValueValidationError = (directiveName, directiveValue) => /;|,/.test(directiveValue) ? new Error(`Content-Security-Policy received an invalid directive value for ${JSON.stringify(directiveName)}`) : null;
-var getDirectiveValueEntryValidationError = (directiveName, directiveValueEntry) => SHOULD_BE_QUOTED.has(directiveValueEntry) || directiveValueEntry.startsWith("nonce-") || directiveValueEntry.startsWith("sha256-") || directiveValueEntry.startsWith("sha384-") || directiveValueEntry.startsWith("sha512-") ? new Error(`Content-Security-Policy received an invalid directive value for ${JSON.stringify(directiveName)}. ${JSON.stringify(directiveValueEntry)} should be quoted`) : null;
-var stringifyDirectiveValue = (directiveValue) => {
-  if (Array.isArray(directiveValue)) {
-    return directiveValue.every(isString) ? directiveValue.join(" ") : null;
-  }
-  if (directiveValue instanceof Set) {
-    return stringifyDirectiveValue(Array.from(directiveValue));
-  }
-  return null;
-};
-var parseDirectives = ({ useDefaults = true, directives: rawDirectives = {} }) => {
-  const result = new Map(useDefaults ? Object.entries(getDefaultDirectives()) : []);
-  let hasDisabledDefaultSrc = false;
-  const directiveNamesSeen = /* @__PURE__ */ new Set();
-  for (const rawDirectiveName in rawDirectives) {
-    if (!Object.hasOwn(rawDirectives, rawDirectiveName)) {
-      continue;
-    }
-    const directiveName = parseDirectiveName(rawDirectiveName);
-    if (directiveNamesSeen.has(directiveName)) {
-      throw new Error(`Content-Security-Policy received a duplicate directive ${JSON.stringify(directiveName)}`);
-    }
-    directiveNamesSeen.add(directiveName);
-    const rawDirectiveValue = rawDirectives[rawDirectiveName];
-    let directiveValue;
-    if (rawDirectiveValue === null) {
-      if (directiveName === "default-src") {
-        throw new Error("Content-Security-Policy needs a default-src but it was set to `null`. If you really want to disable it, set it to `contentSecurityPolicy.dangerouslyDisableDefaultSrc`.");
-      }
-      result.delete(directiveName);
-      continue;
-    } else if (typeof rawDirectiveValue === "string") {
-      directiveValue = [rawDirectiveValue];
-    } else if (rawDirectiveValue === dangerouslyDisableDefaultSrc) {
-      if (directiveName === "default-src") {
-        hasDisabledDefaultSrc = true;
-        result.delete(directiveName);
-        continue;
-      } else {
-        throw new Error(`Content-Security-Policy: tried to disable ${JSON.stringify(directiveName)} as if it were default-src; simply omit the key`);
-      }
-    } else if (rawDirectiveValue) {
-      directiveValue = rawDirectiveValue;
-    } else {
-      throw new Error(`Content-Security-Policy received an invalid directive value for ${JSON.stringify(directiveName)}`);
-    }
-    for (const element of directiveValue) {
-      if (typeof element !== "string") continue;
-      throwErrorIfExists(getDirectiveValueValidationError(directiveName, element) ?? getDirectiveValueEntryValidationError(directiveName, element));
-    }
-    result.set(directiveName, directiveValue);
-  }
-  if (!result.size) {
-    throw new Error("Content-Security-Policy has no directives. Either set some or disable the header");
-  }
-  if (!result.has("default-src") && !hasDisabledDefaultSrc) {
-    throw new Error("Content-Security-Policy needs a default-src but none was provided. If you really want to disable it, set it to `contentSecurityPolicy.dangerouslyDisableDefaultSrc`.");
-  }
-  let stringResult = "";
-  let shouldUseStringResult = true;
-  for (const [directiveName, directiveValue] of result) {
-    const directiveValueString = stringifyDirectiveValue(directiveValue);
-    if (directiveValueString === null) {
-      shouldUseStringResult = false;
-      break;
-    } else {
-      if (stringResult) stringResult += ";";
-      stringResult += directiveValueString ? `${directiveName} ${directiveValueString}` : directiveName;
-    }
-  }
-  return shouldUseStringResult ? stringResult : result;
-};
-function getHeaderValue(req, res, normalizedDirectives) {
-  const result = [];
-  for (const [directiveName, rawDirectiveValue] of normalizedDirectives) {
-    let directiveValue = "";
-    for (const element of rawDirectiveValue) {
-      if (typeof element === "function") {
-        let newElement;
-        try {
-          newElement = element(req, res);
-        } catch (err2) {
-          return errify(err2);
-        }
-        const err = getDirectiveValueEntryValidationError(directiveName, newElement);
-        if (err) return err;
-        directiveValue += " " + newElement;
-      } else {
-        directiveValue += " " + element;
-      }
-    }
-    if (directiveValue) {
-      const err = getDirectiveValueValidationError(directiveName, directiveValue);
-      if (err) return err;
-      result.push(`${directiveName}${directiveValue}`);
-    } else {
-      result.push(directiveName);
-    }
-  }
-  return result.join(";");
-}
-var contentSecurityPolicy = function contentSecurityPolicy2(options = {}) {
-  const headerName = options.reportOnly ? "Content-Security-Policy-Report-Only" : "Content-Security-Policy";
-  const parsedDirectives = parseDirectives(options);
-  if (typeof parsedDirectives === "string") {
-    return function contentSecurityPolicyMiddleware(_req, res, next) {
-      res.setHeader(headerName, parsedDirectives);
-      next();
-    };
-  }
-  return function contentSecurityPolicyMiddleware(req, res, next) {
-    const result = getHeaderValue(req, res, parsedDirectives);
-    if (result instanceof Error) {
-      next(result);
-    } else {
-      res.setHeader(headerName, result);
-      next();
-    }
-  };
-};
-contentSecurityPolicy.getDefaultDirectives = getDefaultDirectives;
-contentSecurityPolicy.dangerouslyDisableDefaultSrc = dangerouslyDisableDefaultSrc;
-var ALLOWED_POLICIES$2 = /* @__PURE__ */ new Set(["require-corp", "credentialless", "unsafe-none"]);
-function getHeaderValueFromOptions$6({ policy = "require-corp" }) {
-  if (ALLOWED_POLICIES$2.has(policy)) {
-    return policy;
-  } else {
-    throw new Error(`Cross-Origin-Embedder-Policy does not support the ${JSON.stringify(policy)} policy`);
-  }
-}
-function crossOriginEmbedderPolicy(options = {}) {
-  const headerValue = getHeaderValueFromOptions$6(options);
-  return function crossOriginEmbedderPolicyMiddleware(_req, res, next) {
-    res.setHeader("Cross-Origin-Embedder-Policy", headerValue);
-    next();
-  };
-}
-var ALLOWED_POLICIES$1 = /* @__PURE__ */ new Set(["same-origin", "same-origin-allow-popups", "noopener-allow-popups", "unsafe-none"]);
-function getHeaderValueFromOptions$5({ policy = "same-origin" }) {
-  if (ALLOWED_POLICIES$1.has(policy)) {
-    return policy;
-  } else {
-    throw new Error(`Cross-Origin-Opener-Policy does not support the ${JSON.stringify(policy)} policy`);
-  }
-}
-function crossOriginOpenerPolicy(options = {}) {
-  const headerValue = getHeaderValueFromOptions$5(options);
-  return function crossOriginOpenerPolicyMiddleware(_req, res, next) {
-    res.setHeader("Cross-Origin-Opener-Policy", headerValue);
-    next();
-  };
-}
-var ALLOWED_POLICIES = /* @__PURE__ */ new Set(["same-origin", "same-site", "cross-origin"]);
-function getHeaderValueFromOptions$4({ policy = "same-origin" }) {
-  if (ALLOWED_POLICIES.has(policy)) {
-    return policy;
-  } else {
-    throw new Error(`Cross-Origin-Resource-Policy does not support the ${JSON.stringify(policy)} policy`);
-  }
-}
-function crossOriginResourcePolicy(options = {}) {
-  const headerValue = getHeaderValueFromOptions$4(options);
-  return function crossOriginResourcePolicyMiddleware(_req, res, next) {
-    res.setHeader("Cross-Origin-Resource-Policy", headerValue);
-    next();
-  };
-}
-function originAgentCluster() {
-  return function originAgentClusterMiddleware(_req, res, next) {
-    res.setHeader("Origin-Agent-Cluster", "?1");
-    next();
-  };
-}
-var ALLOWED_TOKENS = /* @__PURE__ */ new Set(["no-referrer", "no-referrer-when-downgrade", "same-origin", "origin", "strict-origin", "origin-when-cross-origin", "strict-origin-when-cross-origin", "unsafe-url", ""]);
-function getHeaderValueFromOptions$3({ policy = ["no-referrer"] }) {
-  const tokens = typeof policy === "string" ? [policy] : policy;
-  if (tokens.length === 0) {
-    throw new Error("Referrer-Policy received no policy tokens");
-  }
-  const tokensSeen = /* @__PURE__ */ new Set();
-  tokens.forEach((token) => {
-    if (!ALLOWED_TOKENS.has(token)) {
-      throw new Error(`Referrer-Policy received an unexpected policy token ${JSON.stringify(token)}`);
-    } else if (tokensSeen.has(token)) {
-      throw new Error(`Referrer-Policy received a duplicate policy token ${JSON.stringify(token)}`);
-    }
-    tokensSeen.add(token);
-  });
-  return tokens.join(",");
-}
-function referrerPolicy(options = {}) {
-  const headerValue = getHeaderValueFromOptions$3(options);
-  return function referrerPolicyMiddleware(_req, res, next) {
-    res.setHeader("Referrer-Policy", headerValue);
-    next();
-  };
-}
-var DEFAULT_MAX_AGE = 365 * 24 * 60 * 60;
-function parseMaxAge(value = DEFAULT_MAX_AGE) {
-  if (value >= 0 && Number.isFinite(value)) {
-    return Math.floor(value);
-  } else {
-    throw new Error(`Strict-Transport-Security: ${JSON.stringify(value)} is not a valid value for maxAge. Please choose a positive integer.`);
-  }
-}
-function getHeaderValueFromOptions$2(options) {
-  if ("maxage" in options) {
-    throw new Error("Strict-Transport-Security received an unsupported property, `maxage`. Did you mean to pass `maxAge`?");
-  }
-  if ("includeSubdomains" in options) {
-    throw new Error('Strict-Transport-Security middleware should use `includeSubDomains` instead of `includeSubdomains`. (The correct one has an uppercase "D".)');
-  }
-  const directives = [`max-age=${parseMaxAge(options.maxAge)}`];
-  if (options.includeSubDomains === void 0 || options.includeSubDomains) {
-    directives.push("includeSubDomains");
-  }
-  if (options.preload) {
-    directives.push("preload");
-  }
-  return directives.join("; ");
-}
-function strictTransportSecurity(options = {}) {
-  const headerValue = getHeaderValueFromOptions$2(options);
-  return function strictTransportSecurityMiddleware(_req, res, next) {
-    res.setHeader("Strict-Transport-Security", headerValue);
-    next();
-  };
-}
-function xContentTypeOptions() {
-  return function xContentTypeOptionsMiddleware(_req, res, next) {
-    res.setHeader("X-Content-Type-Options", "nosniff");
-    next();
-  };
-}
-function xDnsPrefetchControl(options = {}) {
-  const headerValue = options.allow ? "on" : "off";
-  return function xDnsPrefetchControlMiddleware(_req, res, next) {
-    res.setHeader("X-DNS-Prefetch-Control", headerValue);
-    next();
-  };
-}
-function xDownloadOptions() {
-  return function xDownloadOptionsMiddleware(_req, res, next) {
-    res.setHeader("X-Download-Options", "noopen");
-    next();
-  };
-}
-function getHeaderValueFromOptions$1({ action = "sameorigin" }) {
-  const normalizedAction = typeof action === "string" ? action.toUpperCase() : action;
-  switch (normalizedAction) {
-    case "SAME-ORIGIN":
-      return "SAMEORIGIN";
-    case "DENY":
-    case "SAMEORIGIN":
-      return normalizedAction;
-    default:
-      throw new Error(`X-Frame-Options received an invalid action ${JSON.stringify(action)}`);
-  }
-}
-function xFrameOptions(options = {}) {
-  const headerValue = getHeaderValueFromOptions$1(options);
-  return function xFrameOptionsMiddleware(_req, res, next) {
-    res.setHeader("X-Frame-Options", headerValue);
-    next();
-  };
-}
-var ALLOWED_PERMITTED_POLICIES = /* @__PURE__ */ new Set(["none", "master-only", "by-content-type", "all"]);
-function getHeaderValueFromOptions({ permittedPolicies = "none" }) {
-  if (ALLOWED_PERMITTED_POLICIES.has(permittedPolicies)) {
-    return permittedPolicies;
-  } else {
-    throw new Error(`X-Permitted-Cross-Domain-Policies does not support ${JSON.stringify(permittedPolicies)}`);
-  }
-}
-function xPermittedCrossDomainPolicies(options = {}) {
-  const headerValue = getHeaderValueFromOptions(options);
-  return function xPermittedCrossDomainPoliciesMiddleware(_req, res, next) {
-    res.setHeader("X-Permitted-Cross-Domain-Policies", headerValue);
-    next();
-  };
-}
-function xPoweredBy() {
-  return function xPoweredByMiddleware(_req, res, next) {
-    res.removeHeader("X-Powered-By");
-    next();
-  };
-}
-function xXssProtection() {
-  return function xXssProtectionMiddleware(_req, res, next) {
-    res.setHeader("X-XSS-Protection", "0");
-    next();
-  };
-}
-function getMiddlewareFunctionsFromOptions(options) {
-  const result = [];
-  switch (options.contentSecurityPolicy) {
-    case void 0:
-    case true:
-      result.push(contentSecurityPolicy());
-      break;
-    case false:
-      break;
-    default:
-      result.push(contentSecurityPolicy(options.contentSecurityPolicy));
-      break;
-  }
-  switch (options.crossOriginEmbedderPolicy) {
-    case void 0:
-    case false:
-      break;
-    case true:
-      result.push(crossOriginEmbedderPolicy());
-      break;
-    default:
-      result.push(crossOriginEmbedderPolicy(options.crossOriginEmbedderPolicy));
-      break;
-  }
-  switch (options.crossOriginOpenerPolicy) {
-    case void 0:
-    case true:
-      result.push(crossOriginOpenerPolicy());
-      break;
-    case false:
-      break;
-    default:
-      result.push(crossOriginOpenerPolicy(options.crossOriginOpenerPolicy));
-      break;
-  }
-  switch (options.crossOriginResourcePolicy) {
-    case void 0:
-    case true:
-      result.push(crossOriginResourcePolicy());
-      break;
-    case false:
-      break;
-    default:
-      result.push(crossOriginResourcePolicy(options.crossOriginResourcePolicy));
-      break;
-  }
-  switch (options.originAgentCluster) {
-    case void 0:
-    case true:
-      result.push(originAgentCluster());
-      break;
-    case false:
-      break;
-    default:
-      console.warn("Origin-Agent-Cluster does not take options. Remove the property to silence this warning.");
-      result.push(originAgentCluster());
-      break;
-  }
-  switch (options.referrerPolicy) {
-    case void 0:
-    case true:
-      result.push(referrerPolicy());
-      break;
-    case false:
-      break;
-    default:
-      result.push(referrerPolicy(options.referrerPolicy));
-      break;
-  }
-  if ("strictTransportSecurity" in options && "hsts" in options) {
-    throw new Error("Strict-Transport-Security option was specified twice. Remove the `hsts` option to fix this error.");
-  }
-  const strictTransportSecurityOption = options.strictTransportSecurity ?? options.hsts;
-  switch (strictTransportSecurityOption) {
-    case void 0:
-    case true:
-      result.push(strictTransportSecurity());
-      break;
-    case false:
-      break;
-    default:
-      result.push(strictTransportSecurity(strictTransportSecurityOption));
-      break;
-  }
-  if ("xContentTypeOptions" in options && "noSniff" in options) {
-    throw new Error("X-Content-Type-Options option was specified twice. Remove the `noSniff` option to fix this error.");
-  }
-  const xContentTypeOptionsOption = options.xContentTypeOptions ?? options.noSniff;
-  switch (xContentTypeOptionsOption) {
-    case void 0:
-    case true:
-      result.push(xContentTypeOptions());
-      break;
-    case false:
-      break;
-    default:
-      console.warn("X-Content-Type-Options does not take options. Remove the property to silence this warning.");
-      result.push(xContentTypeOptions());
-      break;
-  }
-  if ("xDnsPrefetchControl" in options && "dnsPrefetchControl" in options) {
-    throw new Error("X-DNS-Prefetch-Control option was specified twice. Remove the `dnsPrefetchControl` option to fix this error.");
-  }
-  const xDnsPrefetchControlOption = options.xDnsPrefetchControl ?? options.dnsPrefetchControl;
-  switch (xDnsPrefetchControlOption) {
-    case void 0:
-    case true:
-      result.push(xDnsPrefetchControl());
-      break;
-    case false:
-      break;
-    default:
-      result.push(xDnsPrefetchControl(xDnsPrefetchControlOption));
-      break;
-  }
-  if ("xDownloadOptions" in options && "ieNoOpen" in options) {
-    throw new Error("X-Download-Options option was specified twice. Remove the `ieNoOpen` option to fix this error.");
-  }
-  const xDownloadOptionsOption = options.xDownloadOptions ?? options.ieNoOpen;
-  switch (xDownloadOptionsOption) {
-    case void 0:
-    case true:
-      result.push(xDownloadOptions());
-      break;
-    case false:
-      break;
-    default:
-      console.warn("X-Download-Options does not take options. Remove the property to silence this warning.");
-      result.push(xDownloadOptions());
-      break;
-  }
-  if ("xFrameOptions" in options && "frameguard" in options) {
-    throw new Error("X-Frame-Options option was specified twice. Remove the `frameguard` option to fix this error.");
-  }
-  const xFrameOptionsOption = options.xFrameOptions ?? options.frameguard;
-  switch (xFrameOptionsOption) {
-    case void 0:
-    case true:
-      result.push(xFrameOptions());
-      break;
-    case false:
-      break;
-    default:
-      result.push(xFrameOptions(xFrameOptionsOption));
-      break;
-  }
-  if ("xPermittedCrossDomainPolicies" in options && "permittedCrossDomainPolicies" in options) {
-    throw new Error("X-Permitted-Cross-Domain-Policies option was specified twice. Remove the `permittedCrossDomainPolicies` option to fix this error.");
-  }
-  const xPermittedCrossDomainPoliciesOption = options.xPermittedCrossDomainPolicies ?? options.permittedCrossDomainPolicies;
-  switch (xPermittedCrossDomainPoliciesOption) {
-    case void 0:
-    case true:
-      result.push(xPermittedCrossDomainPolicies());
-      break;
-    case false:
-      break;
-    default:
-      result.push(xPermittedCrossDomainPolicies(xPermittedCrossDomainPoliciesOption));
-      break;
-  }
-  if ("xPoweredBy" in options && "hidePoweredBy" in options) {
-    throw new Error("X-Powered-By option was specified twice. Remove the `hidePoweredBy` option to fix this error.");
-  }
-  const xPoweredByOption = options.xPoweredBy ?? options.hidePoweredBy;
-  switch (xPoweredByOption) {
-    case void 0:
-    case true:
-      result.push(xPoweredBy());
-      break;
-    case false:
-      break;
-    default:
-      console.warn("X-Powered-By does not take options. Remove the property to silence this warning.");
-      result.push(xPoweredBy());
-      break;
-  }
-  if ("xXssProtection" in options && "xssFilter" in options) {
-    throw new Error("X-XSS-Protection option was specified twice. Remove the `xssFilter` option to fix this error.");
-  }
-  const xXssProtectionOption = options.xXssProtection ?? options.xssFilter;
-  switch (xXssProtectionOption) {
-    case void 0:
-    case true:
-      result.push(xXssProtection());
-      break;
-    case false:
-      break;
-    default:
-      console.warn("X-XSS-Protection does not take options. Remove the property to silence this warning.");
-      result.push(xXssProtection());
-      break;
-  }
-  return result;
-}
-var helmet = Object.assign(
-  function helmet2(options = {}) {
-    if (options.constructor?.name === "IncomingMessage") {
-      throw new Error("It appears you have done something like `app.use(helmet)`, but it should be `app.use(helmet())`.");
-    }
-    const middlewareFunctions = getMiddlewareFunctionsFromOptions(options);
-    return function helmetMiddleware(req, res, next) {
-      let middlewareIndex = 0;
-      (function internalNext(err) {
-        if (err) {
-          next(err);
-          return;
-        }
-        const middlewareFunction = middlewareFunctions[middlewareIndex];
-        if (middlewareFunction) {
-          middlewareIndex++;
-          middlewareFunction(req, res, internalNext);
-        } else {
-          next();
-        }
-      })();
-    };
-  },
-  {
-    contentSecurityPolicy,
-    crossOriginEmbedderPolicy,
-    crossOriginOpenerPolicy,
-    crossOriginResourcePolicy,
-    originAgentCluster,
-    referrerPolicy,
-    strictTransportSecurity,
-    xContentTypeOptions,
-    xDnsPrefetchControl,
-    xDownloadOptions,
-    xFrameOptions,
-    xPermittedCrossDomainPolicies,
-    xPoweredBy,
-    xXssProtection,
-    // Legacy aliases
-    dnsPrefetchControl: xDnsPrefetchControl,
-    xssFilter: xXssProtection,
-    permittedCrossDomainPolicies: xPermittedCrossDomainPolicies,
-    ieNoOpen: xDownloadOptions,
-    noSniff: xContentTypeOptions,
-    frameguard: xFrameOptions,
-    hidePoweredBy: xPoweredBy,
-    hsts: strictTransportSecurity
-  }
-);
 
 // apps/api/src/routes/publicRoutes.ts
 var import_express = __toESM(require_express2(), 1);
@@ -35878,21 +35312,7 @@ function errorHandler(err, _req, res, _next) {
 // apps/api/src/app.ts
 function createApp() {
   const app2 = (0, import_express3.default)();
-  app2.use(helmet());
-  app2.use(
-    (0, import_cors.default)({
-      origin: (origin, callback) => {
-        if (!origin || config.corsOrigins.includes(origin) || !config.isProd) {
-          callback(null, true);
-        } else {
-          callback(new Error("Blocked by CORS policy"));
-        }
-      },
-      credentials: true,
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization", "x-idempotency-key"]
-    })
-  );
+  app2.use((0, import_cors.default)({ origin: true, credentials: true }));
   app2.use(import_express3.default.json({ limit: "1mb" }));
   app2.use(import_express3.default.urlencoded({ extended: true, limit: "1mb" }));
   app2.use("/api/admin", adminRoutes_default);
