@@ -173,11 +173,19 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-3">
           <p>© {new Date().getFullYear()} BazaarPK Direct. All rights reserved. Operating in Pakistan.</p>
-          <div className="flex items-center gap-2 text-gray-400">
-            <span>Payment Method:</span>
-            <span className="font-semibold text-white px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
-              Cash on Delivery (COD)
-            </span>
+          <div className="flex items-center gap-4 text-gray-400">
+            <a
+              href="/admin/"
+              className="text-gray-400 hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium"
+            >
+              <span>🔒 Staff Portal</span>
+            </a>
+            <div className="flex items-center gap-2">
+              <span>Payment:</span>
+              <span className="font-semibold text-white px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
+                COD
+              </span>
+            </div>
           </div>
         </div>
       </div>
