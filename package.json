@@ -1,0 +1,23 @@
+{
+  "name": "dropshipping-platform-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade custom ecommerce and dropshipping platform for Pakistan",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/api",
+    "dev:all": "concurrently \"npm run dev --workspace=apps/api\" \"npm run dev --workspace=apps/storefront\" \"npm run dev --workspace=apps/admin\"",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:storefront": "npm run dev --workspace=apps/storefront",
+    "dev:admin": "npm run dev --workspace=apps/admin",
+    "build": "npm run build --workspace=packages/shared && npm run build --workspace=apps/api && npm run build --workspace=apps/storefront && npm run build --workspace=apps/admin",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
+
