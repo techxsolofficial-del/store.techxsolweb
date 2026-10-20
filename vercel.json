@@ -4,9 +4,6 @@
     "storefront": {
       "root": "apps/storefront"
     },
-    "admin": {
-      "root": "apps/admin"
-    },
     "api": {
       "root": "apps/api",
       "entrypoint": "src/server.ts"
@@ -17,27 +14,6 @@
       "source": "/api/(.*)",
       "destination": {
         "service": "api"
-      }
-    },
-    {
-      "source": "/admin/assets/(.*)",
-      "destination": {
-        "service": "admin",
-        "path": "/assets/$1"
-      }
-    },
-    {
-      "source": "/admin",
-      "destination": {
-        "service": "admin",
-        "path": "/index.html"
-      }
-    },
-    {
-      "source": "/admin/(.*)",
-      "destination": {
-        "service": "admin",
-        "path": "/index.html"
       }
     },
     {
