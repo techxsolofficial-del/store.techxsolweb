@@ -14,6 +14,9 @@
     "dev:storefront": "npm run dev --workspace=apps/storefront",
     "dev:admin": "npm run dev --workspace=apps/admin",
     "build": "npm run build --workspace=packages/shared && npm run build --workspace=apps/api && npm run build --workspace=apps/storefront && npm run build --workspace=apps/admin",
+    "build:storefront": "npm run build --workspace=packages/shared && npm run build --workspace=apps/storefront",
+    "build:admin": "npm run build --workspace=packages/shared && npm run build --workspace=apps/admin",
+    "build:api": "npm run build --workspace=packages/shared && npm run build --workspace=apps/api",
     "test": "npm run test --workspaces --if-present"
   },
   "devDependencies": {
