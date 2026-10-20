@@ -20,15 +20,24 @@
       }
     },
     {
-      "source": "/admin/(.*)",
+      "source": "/admin/assets/(.*)",
       "destination": {
-        "service": "admin"
+        "service": "admin",
+        "path": "/assets/$1"
       }
     },
     {
       "source": "/admin",
       "destination": {
-        "service": "admin"
+        "service": "admin",
+        "path": "/index.html"
+      }
+    },
+    {
+      "source": "/admin/(.*)",
+      "destination": {
+        "service": "admin",
+        "path": "/index.html"
       }
     },
     {
