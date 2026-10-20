@@ -2,6 +2,7 @@
   "name": "dropshipping-platform-root",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Production-grade custom ecommerce and dropshipping platform for Pakistan",
   "workspaces": [
     "packages/*",
@@ -13,7 +14,7 @@
     "dev:api": "npm run dev --workspace=apps/api",
     "dev:storefront": "npm run dev --workspace=apps/storefront",
     "dev:admin": "npm run dev --workspace=apps/admin",
-    "build": "npm run build --workspace=packages/shared && npm run build --workspace=apps/api && npm run build --workspace=apps/storefront && npm run build --workspace=apps/admin",
+    "build": "npm run build --workspace=packages/shared && npm run build --workspace=apps/api && npm run build --workspace=apps/storefront && npm run build --workspace=apps/admin && node scripts/bundle-dist.js",
     "build:storefront": "npm run build --workspace=packages/shared && npm run build --workspace=apps/storefront",
     "build:admin": "npm run build --workspace=packages/shared && npm run build --workspace=apps/admin",
     "build:api": "npm run build --workspace=packages/shared && npm run build --workspace=apps/api",
