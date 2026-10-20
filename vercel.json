@@ -1,23 +1,40 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build:storefront",
-  "outputDirectory": "apps/storefront/dist",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "web": {
+      "root": "apps/storefront"
+    },
+    "api": {
+      "root": "apps/api",
+      "entrypoint": "dist/server.js"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.js"
+      "destination": {
+        "service": "api"
+      }
     },
     {
       "source": "/admin",
-      "destination": "/admin/index.html"
+      "destination": {
+        "service": "web",
+        "path": "/admin/index.html"
+      }
     },
     {
       "source": "/admin/(.*)",
-      "destination": "/admin/index.html"
+      "destination": {
+        "service": "web",
+        "path": "/admin/index.html"
+      }
     },
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": {
+        "service": "web"
+      }
     }
   ]
 }
