@@ -28590,7 +28590,7 @@ var PAYMENT_STATUS_LABELS = {
 var ORDER_SOURCE_CHANNELS = ["website", "whatsapp"];
 var PAKISTAN_PHONE_REGEX = /^(?:(?:\+92)|(?:0092)|(?:92)|(?:0))?3[0-9]{9}$/;
 var DEFAULT_STORE_SETTINGS = {
-  store_name: "apnabuy",
+  store_name: "ApnaBuy",
   tagline: "Pakistan Ka Apna Store - Cash on Delivery Nationwide",
   whatsapp_number: "923001234567",
   // Standard format without +
@@ -32935,7 +32935,7 @@ var InMemoryStore = class {
     estimatedDeliveryDays: DEFAULT_STORE_SETTINGS.estimated_delivery_days,
     codTerms: DEFAULT_STORE_SETTINGS.cod_terms,
     returnPolicySummary: "7-day easy replacement policy for damaged or defective products.",
-    aboutText: "apnabuy is a premier Pakistani online shopping storefront curating high-utility gadgets, home essentials, and grooming devices with nationwide Cash on Delivery."
+    aboutText: "ApnaBuy is a premier Pakistani online shopping storefront curating high-utility gadgets, home essentials, and grooming devices with nationwide Cash on Delivery."
   };
   // Categories
   async getCategories(activeOnly = true) {

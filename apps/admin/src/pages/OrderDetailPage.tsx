@@ -159,7 +159,7 @@ export const OrderDetailPage: React.FC = () => {
   };
 
   const whatsappCustomerLink = `https://wa.me/${order.customer?.phone.replace(/\D/g, '')}?text=${encodeURIComponent(
-    `Assalam-o-Alaikum ${order.customer?.name}! This is apnabuy customer support regarding your order reference: ${order.orderReference}. We are calling to confirm your delivery address: ${order.customer?.deliveryAddress}, ${order.customer?.city}.`
+    `Assalam-o-Alaikum ${order.customer?.name}! This is ApnaBuy customer support regarding your order reference: ${order.orderReference}. We are calling to confirm your delivery address: ${order.customer?.deliveryAddress}, ${order.customer?.city}.`
   )}`;
 
   return (

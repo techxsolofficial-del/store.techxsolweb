@@ -137,7 +137,7 @@ export const PAKISTAN_CITIES = [
 export const PAKISTAN_PHONE_REGEX = /^(?:(?:\+92)|(?:0092)|(?:92)|(?:0))?3[0-9]{9}$/;
 
 export const DEFAULT_STORE_SETTINGS = {
-  store_name: 'apnabuy',
+  store_name: 'ApnaBuy',
   tagline: 'Pakistan Ka Apna Store - Cash on Delivery Nationwide',
   whatsapp_number: '923001234567', // Standard format without +
   support_email: 'support@apnabuy.pk',

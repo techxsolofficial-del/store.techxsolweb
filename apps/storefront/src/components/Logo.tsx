@@ -51,8 +51,7 @@ export const Logo: React.FC<LogoProps> = ({
       {/* Brand Typography */}
       <div className="flex flex-col">
         <span className={`font-black ${textSizes[size]} tracking-tight leading-none ${isLight ? 'text-white' : 'text-gray-900'}`}>
-          apna<span className="text-emerald-500">buy</span>
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 ml-0.5 align-top" />
+          Apna<span className="text-emerald-500">Buy</span>
         </span>
         {showTagline && (
           <span className={`text-[10px] font-bold tracking-wider uppercase mt-0.5 ${isLight ? 'text-emerald-300/90' : 'text-gray-400'}`}>

@@ -168,7 +168,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-3">
-          <p>© {new Date().getFullYear()} apnabuy. All rights reserved. Operating across Pakistan.</p>
+          <p>© {new Date().getFullYear()} ApnaBuy. All rights reserved. Operating across Pakistan.</p>
           <div className="flex items-center gap-4 text-gray-400">
             <a
               href="/admin/"
