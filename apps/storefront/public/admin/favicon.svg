@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="ab_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="gold_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+  </defs>
+  <!-- Rounded Bag Base -->
+  <rect x="14" y="26" width="72" height="64" rx="18" fill="url(#ab_grad)" />
+  <!-- Bag Handles -->
+  <path d="M34 30 V20 C34 11.16 41.16 4 50 4 C58.84 4 66 11.16 66 20 V30" fill="none" stroke="#047857" stroke-width="8" stroke-linecap="round" />
+  <path d="M34 28 V20 C34 12.27 41.16 6 50 6 C58.84 6 66 12.27 66 20 V28" fill="none" stroke="#34D399" stroke-width="6" stroke-linecap="round" />
+  <!-- Inner Dynamic Checkmark -->
+  <path d="M32 58 L44 70 L68 44" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Sparkle Accent -->
+  <path d="M74 15 L76.5 21.5 L83 24 L76.5 26.5 L74 33 L71.5 26.5 L65 24 L71.5 21.5 Z" fill="url(#gold_grad)" />
+</svg>
+
