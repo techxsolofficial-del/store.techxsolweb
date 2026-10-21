@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ShieldCheck, Truck, RefreshCw, MessageCircle } from 'lucide-react';
+import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
   return (
@@ -53,14 +54,9 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-10">
           {/* Brand Col */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-black text-lg">
-                B
-              </div>
-              <span className="font-bold text-xl text-white tracking-tight">
-                Bazaar<span className="text-emerald-400">PK</span>
-              </span>
-            </div>
+            <Link to="/" className="inline-block">
+              <Logo variant="light" size="md" />
+            </Link>
             <p className="text-sm text-gray-400 leading-relaxed">
               Curated everyday innovations, trending electronics, and smart household tools delivered direct to your doorstep across Pakistan with trusted Cash on Delivery.
             </p>
@@ -161,7 +157,7 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>support@bazaarpk.com</span>
+                <span>support@apnabuy.pk</span>
               </div>
               <div className="pt-2 text-xs text-gray-400">
                 Courier Partners: Trax, Call Courier, TCS, Leopards
@@ -172,7 +168,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-3">
-          <p>© {new Date().getFullYear()} BazaarPK Direct. All rights reserved. Operating in Pakistan.</p>
+          <p>© {new Date().getFullYear()} apnabuy. All rights reserved. Operating across Pakistan.</p>
           <div className="flex items-center gap-4 text-gray-400">
             <a
               href="/admin/"

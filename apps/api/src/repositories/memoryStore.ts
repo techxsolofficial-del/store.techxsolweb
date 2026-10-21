@@ -146,7 +146,7 @@ export class InMemoryStore implements IDataStore {
     estimatedDeliveryDays: DEFAULT_STORE_SETTINGS.estimated_delivery_days,
     codTerms: DEFAULT_STORE_SETTINGS.cod_terms,
     returnPolicySummary: '7-day easy replacement policy for damaged or defective products.',
-    aboutText: 'BazaarPK Direct is a premier Pakistani dropshipping storefront curating high-utility gadgets, home essentials, and grooming devices with nationwide Cash on Delivery.',
+    aboutText: 'apnabuy is a premier Pakistani online shopping storefront curating high-utility gadgets, home essentials, and grooming devices with nationwide Cash on Delivery.',
   };
 
   // Categories

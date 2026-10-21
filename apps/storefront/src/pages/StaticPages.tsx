@@ -4,9 +4,9 @@ import { Truck, ShieldCheck, RefreshCw, Mail, Phone, MapPin, MessageCircle } fro
 
 export const AboutPage: React.FC = () => (
   <div className="max-w-4xl mx-auto px-4 py-12 space-y-6">
-    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">About BazaarPK Direct</h1>
+    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">About apnabuy</h1>
     <p className="text-sm text-gray-600 leading-relaxed">
-      BazaarPK Direct is a modern, transparent Pakistani ecommerce brand built to make high-utility gadgets, kitchen innovations, and personal grooming tools accessible with absolute zero financial risk.
+      apnabuy is a modern, transparent Pakistani ecommerce brand built to make high-utility gadgets, kitchen innovations, and personal grooming tools accessible with absolute zero financial risk.
     </p>
     <p className="text-sm text-gray-600 leading-relaxed">
       Operating directly through vetted dropshipping suppliers in Lahore and Karachi, we ensure that every product is tested for functionality before being sealed and dispatched via trusted national courier partners (Trax, Leopards, Call Courier, TCS).
@@ -62,10 +62,10 @@ export const ContactPage: React.FC = () => (
         <h3 className="font-bold text-gray-900 text-base">Email Support</h3>
         <p className="text-xs text-gray-500">For business proposals, bulk orders, and return claims.</p>
         <a
-          href="mailto:support@bazaarpk.com"
+          href="mailto:support@apnabuy.pk"
           className="inline-block text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200"
         >
-          support@bazaarpk.com &rarr;
+          support@apnabuy.pk &rarr;
         </a>
       </div>
     </div>

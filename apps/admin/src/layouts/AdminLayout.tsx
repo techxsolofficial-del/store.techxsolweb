@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Logo } from '../components/Logo';
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -44,18 +45,8 @@ export const AdminLayout: React.FC = () => {
       {/* Sidebar - Desktop */}
       <aside className="hidden md:flex flex-col w-64 bg-gray-900 text-gray-300 border-r border-gray-800 shrink-0">
         <div className="p-5 border-b border-gray-800 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-black text-lg shadow-sm">
-              B
-            </div>
-            <div>
-              <span className="font-bold text-base text-white tracking-tight leading-none block">
-                BazaarPK
-              </span>
-              <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
-                Admin Console
-              </span>
-            </div>
+          <Link to="/" className="flex items-center">
+            <Logo size="md" variant="light" subtitle="Admin Console" />
           </Link>
         </div>
 
@@ -114,11 +105,8 @@ export const AdminLayout: React.FC = () => {
 
       {/* Mobile Header Bar */}
       <header className="md:hidden bg-gray-900 text-white p-4 flex items-center justify-between border-b border-gray-800">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-bold text-sm">
-            B
-          </div>
-          <span className="font-bold text-sm">BazaarPK Admin</span>
+        <Link to="/" className="flex items-center">
+          <Logo size="sm" variant="light" subtitle="Admin" />
         </Link>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

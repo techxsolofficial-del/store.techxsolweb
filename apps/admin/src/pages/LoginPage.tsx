@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Lock, Mail, AlertCircle, ShieldCheck } from 'lucide-react';
+import { Logo } from '../components/Logo';
 
 export const LoginPage: React.FC = () => {
   const { login, isAuthenticated } = useAuth();
@@ -34,11 +35,11 @@ export const LoginPage: React.FC = () => {
     <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-2xl space-y-6">
         {/* Brand Header */}
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black text-2xl mx-auto shadow-md">
-            B
+        <div className="text-center space-y-3">
+          <div className="flex justify-center">
+            <Logo size="lg" variant="light" subtitle="Admin Portal" />
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">
+          <h1 className="text-xl font-extrabold text-white tracking-tight">
             Admin Command Center
           </h1>
           <p className="text-xs text-gray-400">

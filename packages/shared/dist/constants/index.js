@@ -120,10 +120,10 @@ export const PAKISTAN_CITIES = [
 ];
 export const PAKISTAN_PHONE_REGEX = /^(?:(?:\+92)|(?:0092)|(?:92)|(?:0))?3[0-9]{9}$/;
 export const DEFAULT_STORE_SETTINGS = {
-    store_name: 'BazaarPK Direct',
-    tagline: 'Premium Lifestyle & Gadgets - Cash on Delivery Across Pakistan',
+    store_name: 'apnabuy',
+    tagline: 'Pakistan Ka Apna Store - Cash on Delivery Nationwide',
     whatsapp_number: '923001234567', // Standard format without +
-    support_email: 'support@bazaarpk.com',
+    support_email: 'support@apnabuy.pk',
     support_phone: '0300 1234567',
     currency: 'PKR',
     default_delivery_charge_pkr: 250,

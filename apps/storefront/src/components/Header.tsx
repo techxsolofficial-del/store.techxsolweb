@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Search, Menu, X, PhoneCall, ShieldCheck, Truck } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { Logo } from './Logo';
 
 export const Header: React.FC = () => {
   const { itemCount } = useCart();
@@ -62,18 +63,8 @@ export const Header: React.FC = () => {
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-xl shadow-md">
-                B
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-xl text-gray-900 tracking-tight leading-none">
-                  Bazaar<span className="text-emerald-600">PK</span>
-                </span>
-                <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">
-                  Direct Store
-                </span>
-              </div>
+            <Link to="/" className="flex items-center">
+              <Logo size="md" />
             </Link>
           </div>
 
