@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, AlertCircle, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, AlertCircle } from 'lucide-react';
 import { Logo } from '../components/Logo';
 
 export const LoginPage: React.FC = () => {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('admin@bazaarpk.com');
-  const [password, setPassword] = useState('AdminBazaar2026!');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -62,9 +62,10 @@ export const LoginPage: React.FC = () => {
               <input
                 type="email"
                 required
+                placeholder="Enter admin email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-emerald-500 placeholder-gray-500"
               />
               <Mail className="w-4 h-4 text-gray-400 absolute left-3 pointer-events-none" />
             </div>
@@ -76,9 +77,10 @@ export const LoginPage: React.FC = () => {
               <input
                 type="password"
                 required
+                placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-emerald-500 placeholder-gray-500"
               />
               <Lock className="w-4 h-4 text-gray-400 absolute left-3 pointer-events-none" />
             </div>
@@ -96,14 +98,6 @@ export const LoginPage: React.FC = () => {
             )}
           </button>
         </form>
-
-        <div className="p-3.5 rounded-2xl bg-gray-800/60 border border-gray-700/60 text-[11px] text-gray-400 space-y-1">
-          <div className="flex items-center gap-1.5 text-emerald-400 font-semibold">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Default Development Credentials Pre-Filled</span>
-          </div>
-          <p>Email: admin@bazaarpk.com | Pass: AdminBazaar2026!</p>
-        </div>
       </div>
     </div>
   );
