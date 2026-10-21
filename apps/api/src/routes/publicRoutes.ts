@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { PublicController } from '../controllers/publicController.js';
 import { validateRequest } from '../middleware/validate.js';
 import { createOrderSchema } from '@dropship/shared';
+import { getDataStore } from '../repositories/index.js';
 import rateLimit from 'express-rate-limit';
 
 const router = Router();
@@ -19,13 +20,32 @@ const orderLimiter = rateLimit({
   },
 });
 
-router.get('/health', (_req, res) => {
-  res.json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    service: 'Dropship Pakistan API',
-    version: '1.0.0',
-  });
+router.get('/health', async (_req, res) => {
+  try {
+    const store = getDataStore();
+    const prods = await store.getProducts({ activeOnly: false });
+    const cats = await store.getCategories(false);
+    const orders = await store.getOrders();
+    res.json({
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      service: 'Dropship Pakistan API',
+      version: '1.0.0',
+      stats: {
+        productsCount: prods.total,
+        categoriesCount: cats.length,
+        ordersCount: orders.total,
+      },
+    });
+  } catch (e: any) {
+    res.json({
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      service: 'Dropship Pakistan API',
+      version: '1.0.0',
+      error: e.message,
+    });
+  }
 });
 
 router.get('/settings/public', PublicController.getPublicSettings);

@@ -219,47 +219,55 @@ export const DashboardPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 font-medium">
-              {metrics.recentOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50/80 transition-colors">
-                  <td className="py-3 px-4 font-mono font-bold text-emerald-950">
-                    <Link to={`/orders/${order.id}`} className="hover:underline">
-                      {order.orderReference}
-                    </Link>
-                  </td>
-                  <td className="py-3 px-4 text-gray-900">
-                    <div>{order.customer?.name}</div>
-                    <div className="text-[10px] text-gray-400">{order.customer?.phone}</div>
-                  </td>
-                  <td className="py-3 px-4 text-gray-600">{order.customer?.city}</td>
-                  <td className="py-3 px-4 capitalize">
-                    <span
-                      className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
-                        order.sourceChannel === 'whatsapp'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-blue-100 text-blue-800'
-                      }`}
-                    >
-                      {order.sourceChannel}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 font-bold text-gray-900">
-                    {formatPkr(order.totalPayablePkr)}
-                  </td>
-                  <td className="py-3 px-4">
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-800">
-                      {ORDER_STATUS_LABELS[order.orderStatus]}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 text-right">
-                    <Link
-                      to={`/orders/${order.id}`}
-                      className="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold inline-block"
-                    >
-                      Manage
-                    </Link>
+              {metrics.recentOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-8 text-center text-gray-400 text-xs">
+                    No orders placed yet. As customers order on the website or via WhatsApp, they will appear here in real time.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                metrics.recentOrders.map((order) => (
+                  <tr key={order.id} className="hover:bg-gray-50/80 transition-colors">
+                    <td className="py-3 px-4 font-mono font-bold text-emerald-950">
+                      <Link to={`/orders/${order.id}`} className="hover:underline">
+                        {order.orderReference}
+                      </Link>
+                    </td>
+                    <td className="py-3 px-4 text-gray-900">
+                      <div>{order.customer?.name}</div>
+                      <div className="text-[10px] text-gray-400">{order.customer?.phone}</div>
+                    </td>
+                    <td className="py-3 px-4 text-gray-600">{order.customer?.city}</td>
+                    <td className="py-3 px-4 capitalize">
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
+                          order.sourceChannel === 'whatsapp'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : 'bg-blue-100 text-blue-800'
+                        }`}
+                      >
+                        {order.sourceChannel}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 font-bold text-gray-900">
+                      {formatPkr(order.totalPayablePkr)}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-800">
+                        {ORDER_STATUS_LABELS[order.orderStatus]}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      <Link
+                        to={`/orders/${order.id}`}
+                        className="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold inline-block"
+                      >
+                        Manage
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

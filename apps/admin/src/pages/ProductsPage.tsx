@@ -172,6 +172,21 @@ export const ProductsPage: React.FC = () => {
       <div className="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
         {loading ? (
           <div className="p-8 text-center text-xs text-gray-400 animate-pulse">Loading catalog...</div>
+        ) : products.length === 0 ? (
+          <div className="p-12 text-center space-y-3">
+            <Package className="w-12 h-12 text-gray-300 mx-auto" />
+            <h3 className="font-bold text-gray-800 text-sm">Product Catalog is Empty</h3>
+            <p className="text-xs text-gray-500 max-w-sm mx-auto">
+              Your store has been reset to a clean slate. Click below to add your first product!
+            </p>
+            <button
+              onClick={handleOpenCreate}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 shadow-xs"
+            >
+              <Plus className="w-4 h-4" />
+              Add Product Now
+            </button>
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">

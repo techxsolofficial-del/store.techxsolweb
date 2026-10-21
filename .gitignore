@@ -24,4 +24,5 @@ Thumbs.db
 # Test coverage & logs
 coverage/
 *.log
+*store_state.json
 

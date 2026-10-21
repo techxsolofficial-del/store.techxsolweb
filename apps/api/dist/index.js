@@ -1294,8 +1294,8 @@ var require_node = __commonJS({
           }
           break;
         case "FILE":
-          var fs = require("fs");
-          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
+          var fs2 = require("fs");
+          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
@@ -14082,11 +14082,11 @@ var require_mime_types = __commonJS({
       }
       return exts[0];
     }
-    function lookup(path2) {
-      if (!path2 || typeof path2 !== "string") {
+    function lookup(path3) {
+      if (!path3 || typeof path3 !== "string") {
         return false;
       }
-      var extension2 = extname("x." + path2).toLowerCase().substr(1);
+      var extension2 = extname("x." + path3).toLowerCase().substr(1);
       if (!extension2) {
         return false;
       }
@@ -17910,8 +17910,8 @@ var require_node2 = __commonJS({
           }
           break;
         case "FILE":
-          var fs = require("fs");
-          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
+          var fs2 = require("fs");
+          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
@@ -18629,8 +18629,8 @@ var require_node3 = __commonJS({
           }
           break;
         case "FILE":
-          var fs = require("fs");
-          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
+          var fs2 = require("fs");
+          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
@@ -18718,7 +18718,7 @@ var require_path_to_regexp = __commonJS({
   "../../node_modules/path-to-regexp/index.js"(exports2, module2) {
     module2.exports = pathToRegexp;
     var MATCHING_GROUP_REGEXP = /\\.|\((?:\?<(.*?)>)?(?!\?)/g;
-    function pathToRegexp(path2, keys, options) {
+    function pathToRegexp(path3, keys, options) {
       options = options || {};
       keys = keys || [];
       var strict = options.strict;
@@ -18732,8 +18732,8 @@ var require_path_to_regexp = __commonJS({
       var pos = 0;
       var backtrack = "";
       var m;
-      if (path2 instanceof RegExp) {
-        while (m = MATCHING_GROUP_REGEXP.exec(path2.source)) {
+      if (path3 instanceof RegExp) {
+        while (m = MATCHING_GROUP_REGEXP.exec(path3.source)) {
           if (m[0][0] === "\\") continue;
           keys.push({
             name: m[1] || name++,
@@ -18741,18 +18741,18 @@ var require_path_to_regexp = __commonJS({
             offset: m.index
           });
         }
-        return path2;
+        return path3;
       }
-      if (Array.isArray(path2)) {
-        path2 = path2.map(function(value) {
+      if (Array.isArray(path3)) {
+        path3 = path3.map(function(value) {
           return pathToRegexp(value, keys, options).source;
         });
-        return new RegExp(path2.join("|"), flags);
+        return new RegExp(path3.join("|"), flags);
       }
-      if (typeof path2 !== "string") {
+      if (typeof path3 !== "string") {
         throw new TypeError("path must be a string, array of strings, or regular expression");
       }
-      path2 = path2.replace(
+      path3 = path3.replace(
         /\\.|(\/)?(\.)?:(\w+)(\(.*?\))?(\*)?(\?)?|[.*]|\/\(/g,
         function(match, slash, format, key, capture, star, optional, offset) {
           if (match[0] === "\\") {
@@ -18769,7 +18769,7 @@ var require_path_to_regexp = __commonJS({
           if (slash || format) {
             backtrack = "";
           } else {
-            backtrack += path2.slice(pos, offset);
+            backtrack += path3.slice(pos, offset);
           }
           pos = offset + match.length;
           if (match === "*") {
@@ -18799,7 +18799,7 @@ var require_path_to_regexp = __commonJS({
           return result;
         }
       );
-      while (m = MATCHING_GROUP_REGEXP.exec(path2)) {
+      while (m = MATCHING_GROUP_REGEXP.exec(path3)) {
         if (m[0][0] === "\\") continue;
         if (keysOffset + i === keys.length || keys[keysOffset + i].offset > m.index) {
           keys.splice(keysOffset + i, 0, {
@@ -18811,13 +18811,13 @@ var require_path_to_regexp = __commonJS({
         }
         i++;
       }
-      path2 += strict ? "" : path2[path2.length - 1] === "/" ? "?" : "/?";
+      path3 += strict ? "" : path3[path3.length - 1] === "/" ? "?" : "/?";
       if (end) {
-        path2 += "$";
-      } else if (path2[path2.length - 1] !== "/") {
-        path2 += lookahead ? "(?=/|$)" : "(?:/|$)";
+        path3 += "$";
+      } else if (path3[path3.length - 1] !== "/") {
+        path3 += lookahead ? "(?=/|$)" : "(?:/|$)";
       }
-      return new RegExp("^" + path2, flags);
+      return new RegExp("^" + path3, flags);
     }
   }
 });
@@ -18830,19 +18830,19 @@ var require_layer = __commonJS({
     var debug = require_src3()("express:router:layer");
     var hasOwnProperty = Object.prototype.hasOwnProperty;
     module2.exports = Layer;
-    function Layer(path2, options, fn) {
+    function Layer(path3, options, fn) {
       if (!(this instanceof Layer)) {
-        return new Layer(path2, options, fn);
+        return new Layer(path3, options, fn);
       }
-      debug("new %o", path2);
+      debug("new %o", path3);
       var opts = options || {};
       this.handle = fn;
       this.name = fn.name || "<anonymous>";
       this.params = void 0;
       this.path = void 0;
-      this.regexp = pathRegexp(path2, this.keys = [], opts);
-      this.regexp.fast_star = path2 === "*";
-      this.regexp.fast_slash = path2 === "/" && opts.end === false;
+      this.regexp = pathRegexp(path3, this.keys = [], opts);
+      this.regexp.fast_star = path3 === "*";
+      this.regexp.fast_slash = path3 === "/" && opts.end === false;
     }
     Layer.prototype.handle_error = function handle_error(error, req, res, next) {
       var fn = this.handle;
@@ -18866,20 +18866,20 @@ var require_layer = __commonJS({
         next(err);
       }
     };
-    Layer.prototype.match = function match(path2) {
+    Layer.prototype.match = function match(path3) {
       var match2;
-      if (path2 != null) {
+      if (path3 != null) {
         if (this.regexp.fast_slash) {
           this.params = {};
           this.path = "";
           return true;
         }
         if (this.regexp.fast_star) {
-          this.params = { "0": decode_param(path2) };
-          this.path = path2;
+          this.params = { "0": decode_param(path3) };
+          this.path = path3;
           return true;
         }
-        match2 = this.regexp.exec(path2);
+        match2 = this.regexp.exec(path3);
       }
       if (!match2) {
         this.params = void 0;
@@ -18972,10 +18972,10 @@ var require_route = __commonJS({
     var slice = Array.prototype.slice;
     var toString = Object.prototype.toString;
     module2.exports = Route;
-    function Route(path2) {
-      this.path = path2;
+    function Route(path3) {
+      this.path = path3;
       this.stack = [];
-      debug("new %o", path2);
+      debug("new %o", path3);
       this.methods = {};
     }
     Route.prototype._handles_method = function _handles_method(method) {
@@ -19187,8 +19187,8 @@ var require_router = __commonJS({
         if (++sync > 100) {
           return setImmediate(next, err);
         }
-        var path2 = getPathname(req);
-        if (path2 == null) {
+        var path3 = getPathname(req);
+        if (path3 == null) {
           return done(layerError);
         }
         var layer;
@@ -19196,7 +19196,7 @@ var require_router = __commonJS({
         var route;
         while (match !== true && idx < stack.length) {
           layer = stack[idx++];
-          match = matchLayer(layer, path2);
+          match = matchLayer(layer, path3);
           route = layer.route;
           if (typeof match !== "boolean") {
             layerError = layerError || match;
@@ -19234,18 +19234,18 @@ var require_router = __commonJS({
           } else if (route) {
             layer.handle_request(req, res, next);
           } else {
-            trim_prefix(layer, layerError, layerPath, path2);
+            trim_prefix(layer, layerError, layerPath, path3);
           }
           sync = 0;
         });
       }
-      function trim_prefix(layer, layerError, layerPath, path2) {
+      function trim_prefix(layer, layerError, layerPath, path3) {
         if (layerPath.length !== 0) {
-          if (layerPath !== path2.slice(0, layerPath.length)) {
+          if (layerPath !== path3.slice(0, layerPath.length)) {
             next(layerError);
             return;
           }
-          var c = path2[layerPath.length];
+          var c = path3[layerPath.length];
           if (c && c !== "/" && c !== ".") return next(layerError);
           debug("trim prefix (%s) from url %s", layerPath, req.url);
           removed = layerPath;
@@ -19323,7 +19323,7 @@ var require_router = __commonJS({
     };
     proto.use = function use(fn) {
       var offset = 0;
-      var path2 = "/";
+      var path3 = "/";
       if (typeof fn !== "function") {
         var arg = fn;
         while (Array.isArray(arg) && arg.length !== 0) {
@@ -19331,7 +19331,7 @@ var require_router = __commonJS({
         }
         if (typeof arg !== "function") {
           offset = 1;
-          path2 = fn;
+          path3 = fn;
         }
       }
       var callbacks = flatten(slice.call(arguments, offset));
@@ -19343,8 +19343,8 @@ var require_router = __commonJS({
         if (typeof fn !== "function") {
           throw new TypeError("Router.use() requires a middleware function but got a " + gettype(fn));
         }
-        debug("use %o %s", path2, fn.name || "<anonymous>");
-        var layer = new Layer(path2, {
+        debug("use %o %s", path3, fn.name || "<anonymous>");
+        var layer = new Layer(path3, {
           sensitive: this.caseSensitive,
           strict: false,
           end: false
@@ -19354,9 +19354,9 @@ var require_router = __commonJS({
       }
       return this;
     };
-    proto.route = function route(path2) {
-      var route2 = new Route(path2);
-      var layer = new Layer(path2, {
+    proto.route = function route(path3) {
+      var route2 = new Route(path3);
+      var layer = new Layer(path3, {
         sensitive: this.caseSensitive,
         strict: this.strict,
         end: true
@@ -19366,8 +19366,8 @@ var require_router = __commonJS({
       return route2;
     };
     methods.concat("all").forEach(function(method) {
-      proto[method] = function(path2) {
-        var route = this.route(path2);
+      proto[method] = function(path3) {
+        var route = this.route(path3);
         route[method].apply(route, slice.call(arguments, 1));
         return this;
       };
@@ -19403,9 +19403,9 @@ var require_router = __commonJS({
       }
       return toString.call(obj).replace(objectRegExp, "$1");
     }
-    function matchLayer(layer, path2) {
+    function matchLayer(layer, path3) {
       try {
-        return layer.match(path2);
+        return layer.match(path3);
       } catch (err) {
         return err;
       }
@@ -19523,13 +19523,13 @@ var require_view = __commonJS({
   "../../node_modules/express/lib/view.js"(exports2, module2) {
     "use strict";
     var debug = require_src3()("express:view");
-    var path2 = require("path");
-    var fs = require("fs");
-    var dirname = path2.dirname;
-    var basename = path2.basename;
-    var extname = path2.extname;
-    var join = path2.join;
-    var resolve = path2.resolve;
+    var path3 = require("path");
+    var fs2 = require("fs");
+    var dirname = path3.dirname;
+    var basename = path3.basename;
+    var extname = path3.extname;
+    var join = path3.join;
+    var resolve = path3.resolve;
     module2.exports = View;
     function View(name, options) {
       var opts = options || {};
@@ -19558,17 +19558,17 @@ var require_view = __commonJS({
       this.path = this.lookup(fileName);
     }
     View.prototype.lookup = function lookup(name) {
-      var path3;
+      var path4;
       var roots = [].concat(this.root);
       debug('lookup "%s"', name);
-      for (var i = 0; i < roots.length && !path3; i++) {
+      for (var i = 0; i < roots.length && !path4; i++) {
         var root = roots[i];
         var loc = resolve(root, name);
         var dir = dirname(loc);
         var file = basename(loc);
-        path3 = this.resolve(dir, file);
+        path4 = this.resolve(dir, file);
       }
-      return path3;
+      return path4;
     };
     View.prototype.render = function render(options, callback) {
       debug('render "%s"', this.path);
@@ -19576,21 +19576,21 @@ var require_view = __commonJS({
     };
     View.prototype.resolve = function resolve2(dir, file) {
       var ext = this.ext;
-      var path3 = join(dir, file);
-      var stat = tryStat(path3);
+      var path4 = join(dir, file);
+      var stat = tryStat(path4);
       if (stat && stat.isFile()) {
-        return path3;
+        return path4;
       }
-      path3 = join(dir, basename(file, ext), "index" + ext);
-      stat = tryStat(path3);
+      path4 = join(dir, basename(file, ext), "index" + ext);
+      stat = tryStat(path4);
       if (stat && stat.isFile()) {
-        return path3;
+        return path4;
       }
     };
-    function tryStat(path3) {
-      debug('stat "%s"', path3);
+    function tryStat(path4) {
+      debug('stat "%s"', path4);
       try {
-        return fs.statSync(path3);
+        return fs2.statSync(path4);
       } catch (e) {
         return void 0;
       }
@@ -20195,8 +20195,8 @@ var require_node4 = __commonJS({
           }
           break;
         case "FILE":
-          var fs = require("fs");
-          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
+          var fs2 = require("fs");
+          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
@@ -20368,8 +20368,8 @@ var require_types = __commonJS({
 // ../../node_modules/mime/mime.js
 var require_mime = __commonJS({
   "../../node_modules/mime/mime.js"(exports2, module2) {
-    var path2 = require("path");
-    var fs = require("fs");
+    var path3 = require("path");
+    var fs2 = require("fs");
     function Mime() {
       this.types = /* @__PURE__ */ Object.create(null);
       this.extensions = /* @__PURE__ */ Object.create(null);
@@ -20390,7 +20390,7 @@ var require_mime = __commonJS({
     };
     Mime.prototype.load = function(file) {
       this._loading = file;
-      var map = {}, content = fs.readFileSync(file, "ascii"), lines = content.split(/[\r\n]+/);
+      var map = {}, content = fs2.readFileSync(file, "ascii"), lines = content.split(/[\r\n]+/);
       lines.forEach(function(line) {
         var fields = line.replace(/\s*#.*|^\s*|\s*$/g, "").split(/\s+/);
         map[fields.shift()] = fields;
@@ -20398,8 +20398,8 @@ var require_mime = __commonJS({
       this.define(map);
       this._loading = null;
     };
-    Mime.prototype.lookup = function(path3, fallback) {
-      var ext = path3.replace(/^.*[\.\/\\]/, "").toLowerCase();
+    Mime.prototype.lookup = function(path4, fallback) {
+      var ext = path4.replace(/^.*[\.\/\\]/, "").toLowerCase();
       return this.types[ext] || fallback || this.default_type;
     };
     Mime.prototype.extension = function(mimeType) {
@@ -20628,33 +20628,33 @@ var require_send = __commonJS({
     var escapeHtml = require_escape_html();
     var etag = require_etag();
     var fresh = require_fresh();
-    var fs = require("fs");
+    var fs2 = require("fs");
     var mime = require_mime();
     var ms = require_ms5();
     var onFinished = require_on_finished();
     var parseRange = require_range_parser();
-    var path2 = require("path");
+    var path3 = require("path");
     var statuses = require_statuses();
     var Stream = require("stream");
     var util2 = require("util");
-    var extname = path2.extname;
-    var join = path2.join;
-    var normalize = path2.normalize;
-    var resolve = path2.resolve;
-    var sep = path2.sep;
+    var extname = path3.extname;
+    var join = path3.join;
+    var normalize = path3.normalize;
+    var resolve = path3.resolve;
+    var sep = path3.sep;
     var BYTES_RANGE_REGEXP = /^ *bytes=/;
     var MAX_MAXAGE = 60 * 60 * 24 * 365 * 1e3;
     var UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
     module2.exports = send;
     module2.exports.mime = mime;
-    function send(req, path3, options) {
-      return new SendStream(req, path3, options);
+    function send(req, path4, options) {
+      return new SendStream(req, path4, options);
     }
-    function SendStream(req, path3, options) {
+    function SendStream(req, path4, options) {
       Stream.call(this);
       var opts = options || {};
       this.options = opts;
-      this.path = path3;
+      this.path = path4;
       this.req = req;
       this._acceptRanges = opts.acceptRanges !== void 0 ? Boolean(opts.acceptRanges) : true;
       this._cacheControl = opts.cacheControl !== void 0 ? Boolean(opts.cacheControl) : true;
@@ -20700,8 +20700,8 @@ var require_send = __commonJS({
       this._index = index2;
       return this;
     }, "send.index: pass index as option");
-    SendStream.prototype.root = function root(path3) {
-      this._root = resolve(String(path3));
+    SendStream.prototype.root = function root(path4) {
+      this._root = resolve(String(path4));
       debug("root %s", this._root);
       return this;
     };
@@ -20814,10 +20814,10 @@ var require_send = __commonJS({
       var lastModified = this.res.getHeader("Last-Modified");
       return parseHttpDate(lastModified) <= parseHttpDate(ifRange);
     };
-    SendStream.prototype.redirect = function redirect(path3) {
+    SendStream.prototype.redirect = function redirect(path4) {
       var res = this.res;
       if (hasListeners(this, "directory")) {
-        this.emit("directory", res, path3);
+        this.emit("directory", res, path4);
         return;
       }
       if (this.hasTrailingSlash()) {
@@ -20837,42 +20837,42 @@ var require_send = __commonJS({
     SendStream.prototype.pipe = function pipe(res) {
       var root = this._root;
       this.res = res;
-      var path3 = decode(this.path);
-      if (path3 === -1) {
+      var path4 = decode(this.path);
+      if (path4 === -1) {
         this.error(400);
         return res;
       }
-      if (~path3.indexOf("\0")) {
+      if (~path4.indexOf("\0")) {
         this.error(400);
         return res;
       }
       var parts;
       if (root !== null) {
-        if (path3) {
-          path3 = normalize("." + sep + path3);
+        if (path4) {
+          path4 = normalize("." + sep + path4);
         }
-        if (UP_PATH_REGEXP.test(path3)) {
-          debug('malicious path "%s"', path3);
+        if (UP_PATH_REGEXP.test(path4)) {
+          debug('malicious path "%s"', path4);
           this.error(403);
           return res;
         }
-        parts = path3.split(sep);
-        path3 = normalize(join(root, path3));
+        parts = path4.split(sep);
+        path4 = normalize(join(root, path4));
       } else {
-        if (UP_PATH_REGEXP.test(path3)) {
-          debug('malicious path "%s"', path3);
+        if (UP_PATH_REGEXP.test(path4)) {
+          debug('malicious path "%s"', path4);
           this.error(403);
           return res;
         }
-        parts = normalize(path3).split(sep);
-        path3 = resolve(path3);
+        parts = normalize(path4).split(sep);
+        path4 = resolve(path4);
       }
       if (containsDotFile(parts)) {
         var access = this._dotfiles;
         if (access === void 0) {
           access = parts[parts.length - 1][0] === "." ? this._hidden ? "allow" : "ignore" : "allow";
         }
-        debug('%s dotfile "%s"', access, path3);
+        debug('%s dotfile "%s"', access, path4);
         switch (access) {
           case "allow":
             break;
@@ -20886,13 +20886,13 @@ var require_send = __commonJS({
         }
       }
       if (this._index.length && this.hasTrailingSlash()) {
-        this.sendIndex(path3);
+        this.sendIndex(path4);
         return res;
       }
-      this.sendFile(path3);
+      this.sendFile(path4);
       return res;
     };
-    SendStream.prototype.send = function send2(path3, stat) {
+    SendStream.prototype.send = function send2(path4, stat) {
       var len = stat.size;
       var options = this.options;
       var opts = {};
@@ -20904,9 +20904,9 @@ var require_send = __commonJS({
         this.headersAlreadySent();
         return;
       }
-      debug('pipe "%s"', path3);
-      this.setHeader(path3, stat);
-      this.type(path3);
+      debug('pipe "%s"', path4);
+      this.setHeader(path4, stat);
+      this.type(path4);
       if (this.isConditionalGET()) {
         if (this.isPreconditionFailure()) {
           this.error(412);
@@ -20955,28 +20955,28 @@ var require_send = __commonJS({
         res.end();
         return;
       }
-      this.stream(path3, opts);
+      this.stream(path4, opts);
     };
-    SendStream.prototype.sendFile = function sendFile(path3) {
+    SendStream.prototype.sendFile = function sendFile(path4) {
       var i = 0;
       var self = this;
-      debug('stat "%s"', path3);
-      fs.stat(path3, function onstat(err, stat) {
-        if (err && err.code === "ENOENT" && !extname(path3) && path3[path3.length - 1] !== sep) {
+      debug('stat "%s"', path4);
+      fs2.stat(path4, function onstat(err, stat) {
+        if (err && err.code === "ENOENT" && !extname(path4) && path4[path4.length - 1] !== sep) {
           return next(err);
         }
         if (err) return self.onStatError(err);
-        if (stat.isDirectory()) return self.redirect(path3);
-        self.emit("file", path3, stat);
-        self.send(path3, stat);
+        if (stat.isDirectory()) return self.redirect(path4);
+        self.emit("file", path4, stat);
+        self.send(path4, stat);
       });
       function next(err) {
         if (self._extensions.length <= i) {
           return err ? self.onStatError(err) : self.error(404);
         }
-        var p = path3 + "." + self._extensions[i++];
+        var p = path4 + "." + self._extensions[i++];
         debug('stat "%s"', p);
-        fs.stat(p, function(err2, stat) {
+        fs2.stat(p, function(err2, stat) {
           if (err2) return next(err2);
           if (stat.isDirectory()) return next();
           self.emit("file", p, stat);
@@ -20984,7 +20984,7 @@ var require_send = __commonJS({
         });
       }
     };
-    SendStream.prototype.sendIndex = function sendIndex(path3) {
+    SendStream.prototype.sendIndex = function sendIndex(path4) {
       var i = -1;
       var self = this;
       function next(err) {
@@ -20992,9 +20992,9 @@ var require_send = __commonJS({
           if (err) return self.onStatError(err);
           return self.error(404);
         }
-        var p = join(path3, self._index[i]);
+        var p = join(path4, self._index[i]);
         debug('stat "%s"', p);
-        fs.stat(p, function(err2, stat) {
+        fs2.stat(p, function(err2, stat) {
           if (err2) return next(err2);
           if (stat.isDirectory()) return next();
           self.emit("file", p, stat);
@@ -21003,10 +21003,10 @@ var require_send = __commonJS({
       }
       next();
     };
-    SendStream.prototype.stream = function stream(path3, options) {
+    SendStream.prototype.stream = function stream(path4, options) {
       var self = this;
       var res = this.res;
-      var stream2 = fs.createReadStream(path3, options);
+      var stream2 = fs2.createReadStream(path4, options);
       this.emit("stream", stream2);
       stream2.pipe(res);
       function cleanup() {
@@ -21021,10 +21021,10 @@ var require_send = __commonJS({
         self.emit("end");
       });
     };
-    SendStream.prototype.type = function type(path3) {
+    SendStream.prototype.type = function type(path4) {
       var res = this.res;
       if (res.getHeader("Content-Type")) return;
-      var type2 = mime.lookup(path3);
+      var type2 = mime.lookup(path4);
       if (!type2) {
         debug("no content-type");
         return;
@@ -21033,9 +21033,9 @@ var require_send = __commonJS({
       debug("content-type %s", type2);
       res.setHeader("Content-Type", type2 + (charset ? "; charset=" + charset : ""));
     };
-    SendStream.prototype.setHeader = function setHeader(path3, stat) {
+    SendStream.prototype.setHeader = function setHeader(path4, stat) {
       var res = this.res;
-      this.emit("headers", res, path3, stat);
+      this.emit("headers", res, path4, stat);
       if (this._acceptRanges && !res.getHeader("Accept-Ranges")) {
         debug("accept ranges");
         res.setHeader("Accept-Ranges", "bytes");
@@ -21094,9 +21094,9 @@ var require_send = __commonJS({
       }
       return err instanceof Error ? createError(status, err, { expose: false }) : createError(status, err);
     }
-    function decode(path3) {
+    function decode(path4) {
       try {
-        return decodeURIComponent(path3);
+        return decodeURIComponent(path4);
       } catch (err) {
         return -1;
       }
@@ -22021,10 +22021,10 @@ var require_utils2 = __commonJS({
     var querystring = require("querystring");
     exports2.etag = createETagGenerator({ weak: false });
     exports2.wetag = createETagGenerator({ weak: true });
-    exports2.isAbsolute = function(path2) {
-      if ("/" === path2[0]) return true;
-      if (":" === path2[1] && ("\\" === path2[2] || "/" === path2[2])) return true;
-      if ("\\\\" === path2.substring(0, 2)) return true;
+    exports2.isAbsolute = function(path3) {
+      if ("/" === path3[0]) return true;
+      if (":" === path3[1] && ("\\" === path3[2] || "/" === path3[2])) return true;
+      if ("\\\\" === path3.substring(0, 2)) return true;
     };
     exports2.flatten = deprecate.function(
       flatten,
@@ -22236,7 +22236,7 @@ var require_application = __commonJS({
     };
     app2.use = function use(fn) {
       var offset = 0;
-      var path2 = "/";
+      var path3 = "/";
       if (typeof fn !== "function") {
         var arg = fn;
         while (Array.isArray(arg) && arg.length !== 0) {
@@ -22244,7 +22244,7 @@ var require_application = __commonJS({
         }
         if (typeof arg !== "function") {
           offset = 1;
-          path2 = fn;
+          path3 = fn;
         }
       }
       var fns = flatten(slice.call(arguments, offset));
@@ -22255,12 +22255,12 @@ var require_application = __commonJS({
       var router3 = this._router;
       fns.forEach(function(fn2) {
         if (!fn2 || !fn2.handle || !fn2.set) {
-          return router3.use(path2, fn2);
+          return router3.use(path3, fn2);
         }
-        debug(".use app under %s", path2);
-        fn2.mountpath = path2;
+        debug(".use app under %s", path3);
+        fn2.mountpath = path3;
         fn2.parent = this;
-        router3.use(path2, function mounted_app(req, res, next) {
+        router3.use(path3, function mounted_app(req, res, next) {
           var orig = req.app;
           fn2.handle(req, res, function(err) {
             setPrototypeOf(req, orig.request);
@@ -22272,9 +22272,9 @@ var require_application = __commonJS({
       }, this);
       return this;
     };
-    app2.route = function route(path2) {
+    app2.route = function route(path3) {
       this.lazyrouter();
-      return this._router.route(path2);
+      return this._router.route(path3);
     };
     app2.engine = function engine(ext, fn) {
       if (typeof fn !== "function") {
@@ -22325,7 +22325,7 @@ var require_application = __commonJS({
       }
       return this;
     };
-    app2.path = function path2() {
+    app2.path = function path3() {
       return this.parent ? this.parent.path() + this.mountpath : "";
     };
     app2.enabled = function enabled(setting) {
@@ -22341,19 +22341,19 @@ var require_application = __commonJS({
       return this.set(setting, false);
     };
     methods.forEach(function(method) {
-      app2[method] = function(path2) {
+      app2[method] = function(path3) {
         if (method === "get" && arguments.length === 1) {
-          return this.set(path2);
+          return this.set(path3);
         }
         this.lazyrouter();
-        var route = this._router.route(path2);
+        var route = this._router.route(path3);
         route[method].apply(route, slice.call(arguments, 1));
         return this;
       };
     });
-    app2.all = function all(path2) {
+    app2.all = function all(path3) {
       this.lazyrouter();
-      var route = this._router.route(path2);
+      var route = this._router.route(path3);
       var args = slice.call(arguments, 1);
       for (var i = 0; i < methods.length; i++) {
         route[methods[i]].apply(route, args);
@@ -23112,7 +23112,7 @@ var require_request = __commonJS({
       var subdomains2 = !isIP2(hostname) ? hostname.split(".").reverse() : [hostname];
       return subdomains2.slice(offset);
     });
-    defineGetter(req, "path", function path2() {
+    defineGetter(req, "path", function path3() {
       return parse(this).pathname;
     });
     defineGetter(req, "hostname", function hostname() {
@@ -23434,7 +23434,7 @@ var require_response = __commonJS({
     var http = require("http");
     var isAbsolute = require_utils2().isAbsolute;
     var onFinished = require_on_finished();
-    var path2 = require("path");
+    var path3 = require("path");
     var statuses = require_statuses();
     var merge = require_utils_merge();
     var sign = require_cookie_signature().sign;
@@ -23443,9 +23443,9 @@ var require_response = __commonJS({
     var setCharset = require_utils2().setCharset;
     var cookie = require_cookie();
     var send = require_send();
-    var extname = path2.extname;
+    var extname = path3.extname;
     var mime = send.mime;
-    var resolve = path2.resolve;
+    var resolve = path3.resolve;
     var vary = require_vary();
     var res = Object.create(http.ServerResponse.prototype);
     module2.exports = res;
@@ -23622,26 +23622,26 @@ var require_response = __commonJS({
       this.type("txt");
       return this.send(body);
     };
-    res.sendFile = function sendFile(path3, options, callback) {
+    res.sendFile = function sendFile(path4, options, callback) {
       var done = callback;
       var req = this.req;
       var res2 = this;
       var next = req.next;
       var opts = options || {};
-      if (!path3) {
+      if (!path4) {
         throw new TypeError("path argument is required to res.sendFile");
       }
-      if (typeof path3 !== "string") {
+      if (typeof path4 !== "string") {
         throw new TypeError("path must be a string to res.sendFile");
       }
       if (typeof options === "function") {
         done = options;
         opts = {};
       }
-      if (!opts.root && !isAbsolute(path3)) {
+      if (!opts.root && !isAbsolute(path4)) {
         throw new TypeError("path must be absolute or specify root to res.sendFile");
       }
-      var pathname = encodeURI(path3);
+      var pathname = encodeURI(path4);
       var file = send(req, pathname, opts);
       sendfile(res2, file, opts, function(err) {
         if (done) return done(err);
@@ -23651,7 +23651,7 @@ var require_response = __commonJS({
         }
       });
     };
-    res.sendfile = function(path3, options, callback) {
+    res.sendfile = function(path4, options, callback) {
       var done = callback;
       var req = this.req;
       var res2 = this;
@@ -23661,7 +23661,7 @@ var require_response = __commonJS({
         done = options;
         opts = {};
       }
-      var file = send(req, path3, opts);
+      var file = send(req, path4, opts);
       sendfile(res2, file, opts, function(err) {
         if (done) return done(err);
         if (err && err.code === "EISDIR") return next();
@@ -23674,7 +23674,7 @@ var require_response = __commonJS({
       res.sendfile,
       "res.sendfile: Use res.sendFile instead"
     );
-    res.download = function download(path3, filename, options, callback) {
+    res.download = function download(path4, filename, options, callback) {
       var done = callback;
       var name = filename;
       var opts = options || null;
@@ -23691,7 +23691,7 @@ var require_response = __commonJS({
         opts = filename;
       }
       var headers = {
-        "Content-Disposition": contentDisposition(name || path3)
+        "Content-Disposition": contentDisposition(name || path4)
       };
       if (opts && opts.headers) {
         var keys = Object.keys(opts.headers);
@@ -23704,7 +23704,7 @@ var require_response = __commonJS({
       }
       opts = Object.create(opts);
       opts.headers = headers;
-      var fullPath = !opts.root ? resolve(path3) : path3;
+      var fullPath = !opts.root ? resolve(path4) : path4;
       return this.sendFile(fullPath, opts, done);
     };
     res.contentType = res.type = function contentType(type) {
@@ -24005,11 +24005,11 @@ var require_serve_static = __commonJS({
         }
         var forwardError = !fallthrough;
         var originalUrl = parseUrl.original(req);
-        var path2 = parseUrl(req).pathname;
-        if (path2 === "/" && originalUrl.pathname.substr(-1) !== "/") {
-          path2 = "";
+        var path3 = parseUrl(req).pathname;
+        if (path3 === "/" && originalUrl.pathname.substr(-1) !== "/") {
+          path3 = "";
         }
-        var stream = send(req, path2, opts);
+        var stream = send(req, path3, opts);
         stream.on("directory", onDirectory);
         if (setHeaders) {
           stream.on("headers", setHeaders);
@@ -24494,8 +24494,8 @@ var require_package = __commonJS({
 // ../../node_modules/dotenv/lib/main.js
 var require_main = __commonJS({
   "../../node_modules/dotenv/lib/main.js"(exports2, module2) {
-    var fs = require("fs");
-    var path2 = require("path");
+    var fs2 = require("fs");
+    var path3 = require("path");
     var os = require("os");
     var crypto2 = require("crypto");
     var packageJson = require_package();
@@ -24603,7 +24603,7 @@ var require_main = __commonJS({
       if (options && options.path && options.path.length > 0) {
         if (Array.isArray(options.path)) {
           for (const filepath of options.path) {
-            if (fs.existsSync(filepath)) {
+            if (fs2.existsSync(filepath)) {
               possibleVaultPath = filepath.endsWith(".vault") ? filepath : `${filepath}.vault`;
             }
           }
@@ -24611,15 +24611,15 @@ var require_main = __commonJS({
           possibleVaultPath = options.path.endsWith(".vault") ? options.path : `${options.path}.vault`;
         }
       } else {
-        possibleVaultPath = path2.resolve(process.cwd(), ".env.vault");
+        possibleVaultPath = path3.resolve(process.cwd(), ".env.vault");
       }
-      if (fs.existsSync(possibleVaultPath)) {
+      if (fs2.existsSync(possibleVaultPath)) {
         return possibleVaultPath;
       }
       return null;
     }
     function _resolveHome(envPath) {
-      return envPath[0] === "~" ? path2.join(os.homedir(), envPath.slice(1)) : envPath;
+      return envPath[0] === "~" ? path3.join(os.homedir(), envPath.slice(1)) : envPath;
     }
     function _configVault(options) {
       const debug = Boolean(options && options.debug);
@@ -24636,7 +24636,7 @@ var require_main = __commonJS({
       return { parsed };
     }
     function configDotenv(options) {
-      const dotenvPath = path2.resolve(process.cwd(), ".env");
+      const dotenvPath = path3.resolve(process.cwd(), ".env");
       let encoding = "utf8";
       const debug = Boolean(options && options.debug);
       const quiet = options && "quiet" in options ? options.quiet : true;
@@ -24660,13 +24660,13 @@ var require_main = __commonJS({
       }
       let lastError;
       const parsedAll = {};
-      for (const path3 of optionPaths) {
+      for (const path4 of optionPaths) {
         try {
-          const parsed = DotenvModule.parse(fs.readFileSync(path3, { encoding }));
+          const parsed = DotenvModule.parse(fs2.readFileSync(path4, { encoding }));
           DotenvModule.populate(parsedAll, parsed, options);
         } catch (e) {
           if (debug) {
-            _debug(`Failed to load ${path3} ${e.message}`);
+            _debug(`Failed to load ${path4} ${e.message}`);
           }
           lastError = e;
         }
@@ -24681,7 +24681,7 @@ var require_main = __commonJS({
         const shortPaths = [];
         for (const filePath of optionPaths) {
           try {
-            const relative = path2.relative(process.cwd(), filePath);
+            const relative = path3.relative(process.cwd(), filePath);
             shortPaths.push(relative);
           } catch (e) {
             if (debug) {
@@ -29082,8 +29082,8 @@ function getErrorMap() {
 
 // ../../node_modules/zod/v3/helpers/parseUtil.js
 var makeIssue = (params) => {
-  const { data, path: path2, errorMaps, issueData } = params;
-  const fullPath = [...path2, ...issueData.path || []];
+  const { data, path: path3, errorMaps, issueData } = params;
+  const fullPath = [...path3, ...issueData.path || []];
   const fullIssue = {
     ...issueData,
     path: fullPath
@@ -29199,11 +29199,11 @@ var errorUtil;
 
 // ../../node_modules/zod/v3/types.js
 var ParseInputLazyPath = class {
-  constructor(parent, value, path2, key) {
+  constructor(parent, value, path3, key) {
     this._cachedPath = [];
     this.parent = parent;
     this.data = value;
-    this._path = path2;
+    this._path = path3;
     this._key = key;
   }
   get path() {
@@ -32814,11 +32814,14 @@ function generateOrderReference() {
 }
 
 // src/repositories/memoryStore.ts
+var import_fs = __toESM(require("fs"));
+var import_path = __toESM(require("path"));
 var InMemoryStore = class {
+  storageFilePath = process.env.VERCEL ? "/tmp/dropship_store_state.json" : import_path.default.join(process.cwd(), "dropship_store_state.json");
   categories = [
     {
       id: "c1111111-1111-1111-1111-111111111111",
-      name: "Smart Gadgets & Audio",
+      name: "Smart Gadgets & Electronics",
       slug: "smart-gadgets",
       description: "High-demand wireless earbuds, smartwatches, and smartphone accessories.",
       image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
@@ -32829,7 +32832,7 @@ var InMemoryStore = class {
     },
     {
       id: "c2222222-2222-2222-2222-222222222222",
-      name: "Home & Kitchen Gadgets",
+      name: "Home & Kitchen Essentials",
       slug: "home-kitchen",
       description: "Time-saving kitchen gadgets and home organizers for modern Pakistani households.",
       image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600&auto=format&fit=crop&q=80",
@@ -32884,414 +32887,42 @@ var InMemoryStore = class {
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     }
   ];
-  products = [
-    {
-      id: "p1111111-1111-1111-1111-111111111111",
-      categoryId: "c1111111-1111-1111-1111-111111111111",
-      categoryName: "Smart Gadgets & Audio",
-      categorySlug: "smart-gadgets",
-      name: "AeroPods Pro Wireless Earbuds with ANC & Deep Bass",
-      slug: "aeropods-pro-wireless-earbuds",
-      shortDescription: "True Wireless Bluetooth 5.3 earbuds with Active Noise Cancellation and 28-hour playtime.",
-      description: "Experience crisp, studio-grade acoustics and rich bass with the AeroPods Pro. Designed for high performance, these wireless earbuds feature smart touch controls, IPX5 water resistance for workouts, low latency gaming mode, and seamless instant pairing with all Android and iPhone devices across Pakistan. Package includes charging case, Type-C cable, and 3 ear tip sizes.",
-      basePricePkr: 2999,
-      compareAtPricePkr: 4500,
-      sku: "AP-PRO-BLK",
-      isActive: true,
-      isFeatured: true,
-      images: [
-        {
-          id: "img-1",
-          url: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80",
-          isPrimary: true,
-          altText: "AeroPods Pro Black Charging Case"
-        },
-        {
-          id: "img-2",
-          url: "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=800&auto=format&fit=crop&q=80",
-          isPrimary: false,
-          altText: "AeroPods In-Ear Close-up"
-        }
-      ],
-      variants: [
-        { id: "v-blk", name: "Matte Black", sku: "AP-PRO-BLK", priceDeltaPkr: 0, isAvailable: true },
-        { id: "v-wht", name: "Glossy White", sku: "AP-PRO-WHT", priceDeltaPkr: 0, isAvailable: true }
-      ],
-      supplierOffers: [
-        {
-          id: "off-1",
-          productId: "p1111111-1111-1111-1111-111111111111",
-          supplierId: "s1111111-1111-1111-1111-111111111111",
-          supplierName: "Shah Alam Wholesale Hub",
-          supplierSku: "SA-EAR-PRO",
-          supplierCostPkr: 1650,
-          isAvailable: true,
-          leadTimeDays: 1,
-          notes: "In stock. Wholesale bulk tier.",
-          updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-        }
-      ],
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-    },
-    {
-      id: "p2222222-2222-2222-2222-222222222222",
-      categoryId: "c2222222-2222-2222-2222-222222222222",
-      categoryName: "Home & Kitchen Gadgets",
-      categorySlug: "home-kitchen",
-      name: "14-in-1 Multifunction Vegetable & Onion Chopper",
-      slug: "14-in-1-multifunction-vegetable-chopper",
-      shortDescription: "Premium stainless-steel blade vegetable chopper with container and hand protector.",
-      description: "Cut meal prep time by 70%. This heavy-duty 14-in-1 kitchen mandoline dicer effortlessly chops onions, potatoes, tomatoes, and vegetables with zero eye irritation. Features 8 interchangeable 420-grade stainless steel blades, large 1.5L BPA-free catch container, drain basket, and ergonomic safety pusher.",
-      basePricePkr: 1950,
-      compareAtPricePkr: 2800,
-      sku: "KIT-CHOP-14",
-      isActive: true,
-      isFeatured: true,
-      images: [
-        {
-          id: "img-3",
-          url: "https://images.unsplash.com/photo-1584990347449-39906f3630f5?w=800&auto=format&fit=crop&q=80",
-          isPrimary: true,
-          altText: "Multifunction Vegetable Chopper Kit"
-        }
-      ],
-      variants: [
-        { id: "v-grn", name: "Classic Forest Green", sku: "KIT-CHOP-GRN", priceDeltaPkr: 0, isAvailable: true },
-        { id: "v-gry", name: "Modern Slate Grey", sku: "KIT-CHOP-GRY", priceDeltaPkr: 0, isAvailable: true }
-      ],
-      supplierOffers: [
-        {
-          id: "off-2",
-          productId: "p2222222-2222-2222-2222-222222222222",
-          supplierId: "s2222222-2222-2222-2222-222222222222",
-          supplierName: "Bolton Market Imports",
-          supplierSku: "BM-CHOP-14",
-          supplierCostPkr: 1050,
-          isAvailable: true,
-          leadTimeDays: 2,
-          notes: "Reliable packaging. Boxed with unboxing seal.",
-          updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-        }
-      ],
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-    },
-    {
-      id: "p3333333-3333-3333-3333-333333333333",
-      categoryId: "c3333333-3333-3333-3333-333333333333",
-      categoryName: "Personal Care & Grooming",
-      categorySlug: "personal-care",
-      name: "Rechargeable Vintage T9 Hair & Beard Trimmer",
-      slug: "vintage-t9-rechargeable-hair-trimmer",
-      shortDescription: "All-metal cordless zero-gapped precision detailer with USB rechargeable battery.",
-      description: "Engineered for professional barbers and home grooming, the Vintage T9 features a high-torque rotary motor, titanium coated T-blade for ultra-sharp lining, 1200mAh battery providing 180 minutes of runtime, and 4 attachment combs (1.5mm, 2mm, 3mm, 4mm).",
-      basePricePkr: 1699,
-      compareAtPricePkr: 2400,
-      sku: "TRIM-T9-GOLD",
-      isActive: true,
-      isFeatured: true,
-      images: [
-        {
-          id: "img-4",
-          url: "https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&auto=format&fit=crop&q=80",
-          isPrimary: true,
-          altText: "Vintage T9 Cordless Trimmer Gold"
-        }
-      ],
-      variants: [
-        { id: "v-gold", name: "Dragon Gold Edition", sku: "TRIM-T9-GLD", priceDeltaPkr: 0, isAvailable: true },
-        { id: "v-blk-trim", name: "Stealth Black Edition", sku: "TRIM-T9-BLK", priceDeltaPkr: 0, isAvailable: true }
-      ],
-      supplierOffers: [
-        {
-          id: "off-3",
-          productId: "p3333333-3333-3333-3333-333333333333",
-          supplierId: "s1111111-1111-1111-1111-111111111111",
-          supplierName: "Shah Alam Wholesale Hub",
-          supplierSku: "SA-TRIM-T9",
-          supplierCostPkr: 850,
-          isAvailable: true,
-          leadTimeDays: 1,
-          notes: "Includes lubricant oil and cleaning brush.",
-          updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-        }
-      ],
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-    },
-    {
-      id: "p4444444-4444-4444-4444-444444444444",
-      categoryId: "c1111111-1111-1111-1111-111111111111",
-      categoryName: "Smart Gadgets & Audio",
-      categorySlug: "smart-gadgets",
-      name: "Smart Fitness Tracker Watch with Blood Pressure & Heart Rate",
-      slug: "smart-fitness-tracker-watch",
-      shortDescription: "Waterproof health smartwatch with 1.4-inch HD display, sleep monitor, and WhatsApp call alerts.",
-      description: "Stay on top of your fitness journey with 24/7 pulse tracking, step counter, blood oxygen saturation monitor, sleep analysis, and instant WhatsApp / SMS vibration alerts. Magnetic fast charger included. Up to 7 days standby.",
-      basePricePkr: 2499,
-      compareAtPricePkr: 3800,
-      sku: "SW-FIT-01",
-      isActive: true,
-      isFeatured: false,
-      images: [
-        {
-          id: "img-5",
-          url: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80",
-          isPrimary: true,
-          altText: "Smartwatch Fitness Tracker"
-        }
-      ],
-      variants: [
-        { id: "v-sw-blk", name: "Silicone Black Strap", sku: "SW-FIT-BLK", priceDeltaPkr: 0, isAvailable: true },
-        { id: "v-sw-blu", name: "Navy Blue Strap", sku: "SW-FIT-BLU", priceDeltaPkr: 0, isAvailable: true }
-      ],
-      supplierOffers: [
-        {
-          id: "off-4",
-          productId: "p4444444-4444-4444-4444-444444444444",
-          supplierId: "s1111111-1111-1111-1111-111111111111",
-          supplierName: "Shah Alam Wholesale Hub",
-          supplierSku: "SA-WATCH-FIT",
-          supplierCostPkr: 1350,
-          isAvailable: true,
-          leadTimeDays: 1,
-          notes: "Ready for dispatch.",
-          updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-        }
-      ],
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString()
+  // Completely reset: Zero dummy products, zero dummy customers, zero dummy orders
+  products = [];
+  customers = [];
+  orders = [];
+  constructor() {
+    this.loadFromDisk();
+  }
+  loadFromDisk() {
+    try {
+      if (import_fs.default.existsSync(this.storageFilePath)) {
+        const raw = import_fs.default.readFileSync(this.storageFilePath, "utf8");
+        const data = JSON.parse(raw);
+        if (Array.isArray(data.categories) && data.categories.length > 0) this.categories = data.categories;
+        if (Array.isArray(data.suppliers) && data.suppliers.length > 0) this.suppliers = data.suppliers;
+        if (Array.isArray(data.products)) this.products = data.products;
+        if (Array.isArray(data.customers)) this.customers = data.customers;
+        if (Array.isArray(data.orders)) this.orders = data.orders;
+        if (data.settings) this.settings = { ...this.settings, ...data.settings };
+      }
+    } catch (e) {
     }
-  ];
-  customers = [
-    {
-      id: "cust-demo-1",
-      name: "Hamza Khan",
-      phone: "03001234567",
-      city: "Lahore",
-      deliveryAddress: "House 42, Block B, Gulberg III, Lahore",
-      deliveryInstructions: "Call before arriving",
-      createdAt: new Date(Date.now() - 864e5 * 2).toISOString()
-    },
-    {
-      id: "cust-demo-2",
-      name: "Zainab Ahmed",
-      phone: "03219876543",
-      city: "Karachi",
-      deliveryAddress: "Flat 402, Al-Noor Heights, Clifton Block 2, Karachi",
-      deliveryInstructions: "Leave with building security if unavailable",
-      createdAt: new Date(Date.now() - 864e5 * 4).toISOString()
+  }
+  saveToDisk() {
+    try {
+      const data = {
+        categories: this.categories,
+        suppliers: this.suppliers,
+        products: this.products,
+        customers: this.customers,
+        orders: this.orders,
+        settings: this.settings
+      };
+      import_fs.default.writeFileSync(this.storageFilePath, JSON.stringify(data, null, 2), "utf8");
+    } catch (e) {
     }
-  ];
-  orders = [
-    {
-      id: "ord-demo-1",
-      orderReference: "ORD-20261017-7A2F",
-      trackingToken: "tr_8f93e21a4",
-      customerId: "cust-demo-1",
-      customer: {
-        id: "cust-demo-1",
-        name: "Hamza Khan",
-        phone: "03001234567",
-        city: "Lahore",
-        deliveryAddress: "House 42, Block B, Gulberg III, Lahore",
-        deliveryInstructions: "Call before arriving",
-        createdAt: new Date(Date.now() - 864e5 * 2).toISOString()
-      },
-      sourceChannel: "website",
-      orderStatus: "dispatched",
-      paymentMethod: "cod",
-      paymentStatus: "unpaid",
-      subtotalPkr: 2999,
-      deliveryChargePkr: 250,
-      discountPkr: 0,
-      totalPayablePkr: 3249,
-      estimatedProfitPkr: 1349,
-      // 3249 - 1650 (supplier cost) - 250 (est courier) = 1349
-      actualProfitPkr: 0,
-      internalNotes: "Customer confirmed via phone call. Trax tracking assigned.",
-      items: [
-        {
-          id: "item-1",
-          orderId: "ord-demo-1",
-          productId: "p1111111-1111-1111-1111-111111111111",
-          productSlug: "aeropods-pro-wireless-earbuds",
-          productNameSnapshot: "AeroPods Pro Wireless Earbuds with ANC & Deep Bass",
-          variantSnapshot: { id: "v-blk", name: "Matte Black" },
-          imageSnapshot: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80",
-          quantity: 1,
-          unitPricePkr: 2999,
-          supplierCostPkr: 1650,
-          totalPricePkr: 2999
-        }
-      ],
-      fulfilments: [
-        {
-          id: "ful-1",
-          orderId: "ord-demo-1",
-          supplierId: "s1111111-1111-1111-1111-111111111111",
-          supplierName: "Shah Alam Wholesale Hub",
-          supplierOrderRef: "SA-ORD-902",
-          courierName: "Trax Logistics",
-          trackingNumber: "TRX78291039PK",
-          trackingUrl: "https://trax.pk/tracking?cn=TRX78291039PK",
-          status: "dispatched",
-          dispatchedAt: new Date(Date.now() - 864e5).toISOString(),
-          courierChargePkr: 240,
-          returnChargePkr: 0,
-          createdAt: new Date(Date.now() - 864e5).toISOString(),
-          updatedAt: new Date(Date.now() - 864e5).toISOString()
-        }
-      ],
-      statusHistory: [
-        {
-          id: "hist-1",
-          orderId: "ord-demo-1",
-          previousStatus: null,
-          newStatus: "pending_confirmation",
-          actorName: "Website Customer",
-          notes: "Customer submitted COD order on website",
-          createdAt: new Date(Date.now() - 864e5 * 2).toISOString()
-        },
-        {
-          id: "hist-2",
-          orderId: "ord-demo-1",
-          previousStatus: "pending_confirmation",
-          newStatus: "confirmed",
-          actorName: "Store Owner",
-          notes: "Address verified by phone call",
-          createdAt: new Date(Date.now() - 864e5 * 1.5).toISOString()
-        },
-        {
-          id: "hist-3",
-          orderId: "ord-demo-1",
-          previousStatus: "confirmed",
-          newStatus: "dispatched",
-          actorName: "Store Owner",
-          notes: "Dispatched via Trax CN TRX78291039PK",
-          createdAt: new Date(Date.now() - 864e5).toISOString()
-        }
-      ],
-      transactions: [],
-      createdAt: new Date(Date.now() - 864e5 * 2).toISOString(),
-      updatedAt: new Date(Date.now() - 864e5).toISOString()
-    },
-    {
-      id: "ord-demo-2",
-      orderReference: "ORD-20261015-3B9X",
-      trackingToken: "tr_2c71a93e1",
-      customerId: "cust-demo-2",
-      customer: {
-        id: "cust-demo-2",
-        name: "Zainab Ahmed",
-        phone: "03219876543",
-        city: "Karachi",
-        deliveryAddress: "Flat 402, Al-Noor Heights, Clifton Block 2, Karachi",
-        deliveryInstructions: "Leave with building security if unavailable",
-        createdAt: new Date(Date.now() - 864e5 * 4).toISOString()
-      },
-      sourceChannel: "whatsapp",
-      orderStatus: "delivered",
-      paymentMethod: "cod",
-      paymentStatus: "settled",
-      subtotalPkr: 1950,
-      deliveryChargePkr: 250,
-      discountPkr: 0,
-      totalPayablePkr: 2200,
-      estimatedProfitPkr: 900,
-      actualProfitPkr: 920,
-      // 2200 collected - 1050 supplier - 230 courier = 920
-      internalNotes: "Order received via WhatsApp inquiry and confirmed immediately.",
-      items: [
-        {
-          id: "item-2",
-          orderId: "ord-demo-2",
-          productId: "p2222222-2222-2222-2222-222222222222",
-          productSlug: "14-in-1-multifunction-vegetable-chopper",
-          productNameSnapshot: "14-in-1 Multifunction Vegetable & Onion Chopper",
-          variantSnapshot: { id: "v-grn", name: "Classic Forest Green" },
-          imageSnapshot: "https://images.unsplash.com/photo-1584990347449-39906f3630f5?w=800&auto=format&fit=crop&q=80",
-          quantity: 1,
-          unitPricePkr: 1950,
-          supplierCostPkr: 1050,
-          totalPricePkr: 1950
-        }
-      ],
-      fulfilments: [
-        {
-          id: "ful-2",
-          orderId: "ord-demo-2",
-          supplierId: "s2222222-2222-2222-2222-222222222222",
-          supplierName: "Bolton Market Imports",
-          supplierOrderRef: "BM-ORD-441",
-          courierName: "Leopards Courier",
-          trackingNumber: "LEO4829104PK",
-          status: "delivered",
-          dispatchedAt: new Date(Date.now() - 864e5 * 3).toISOString(),
-          deliveredAt: new Date(Date.now() - 864e5).toISOString(),
-          courierChargePkr: 230,
-          returnChargePkr: 0,
-          createdAt: new Date(Date.now() - 864e5 * 3).toISOString(),
-          updatedAt: new Date(Date.now() - 864e5).toISOString()
-        }
-      ],
-      statusHistory: [
-        {
-          id: "hist-2-1",
-          orderId: "ord-demo-2",
-          previousStatus: null,
-          newStatus: "pending_confirmation",
-          actorName: "WhatsApp Channel",
-          notes: "Entered manually from WhatsApp chat",
-          createdAt: new Date(Date.now() - 864e5 * 4).toISOString()
-        },
-        {
-          id: "hist-2-2",
-          orderId: "ord-demo-2",
-          previousStatus: "pending_confirmation",
-          newStatus: "delivered",
-          actorName: "Leopards Courier Webhook/Log",
-          notes: "Customer signed parcel and paid COD Rs. 2,200",
-          createdAt: new Date(Date.now() - 864e5).toISOString()
-        }
-      ],
-      transactions: [
-        {
-          id: "txn-1",
-          orderId: "ord-demo-2",
-          transactionType: "cod_collection",
-          amountPkr: 2200,
-          referenceNumber: "COD-LEO-48291",
-          status: "completed",
-          notes: "Cash on delivery remitted into bank account",
-          createdAt: new Date(Date.now() - 864e5).toISOString()
-        },
-        {
-          id: "txn-2",
-          orderId: "ord-demo-2",
-          transactionType: "supplier_payout",
-          amountPkr: 1050,
-          referenceNumber: "SUP-BM-091",
-          status: "completed",
-          notes: "Settled with Bolton Market Imports",
-          createdAt: new Date(Date.now() - 864e5).toISOString()
-        },
-        {
-          id: "txn-3",
-          orderId: "ord-demo-2",
-          transactionType: "courier_fee",
-          amountPkr: 230,
-          referenceNumber: "CR-LEO-88",
-          status: "completed",
-          notes: "Leopards delivery charges deducted",
-          createdAt: new Date(Date.now() - 864e5).toISOString()
-        }
-      ],
-      createdAt: new Date(Date.now() - 864e5 * 4).toISOString(),
-      updatedAt: new Date(Date.now() - 864e5).toISOString()
-    }
-  ];
+  }
   settings = {
     storeName: DEFAULT_STORE_SETTINGS.store_name,
     tagline: DEFAULT_STORE_SETTINGS.tagline,
@@ -33327,6 +32958,7 @@ var InMemoryStore = class {
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     };
     this.categories.push(category);
+    this.saveToDisk();
     return category;
   }
   async updateCategory(id, updates) {
@@ -33337,6 +32969,7 @@ var InMemoryStore = class {
       ...updates,
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     };
+    this.saveToDisk();
     return this.categories[idx];
   }
   // Products
@@ -33391,6 +33024,7 @@ var InMemoryStore = class {
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     };
     this.products.unshift(product);
+    this.saveToDisk();
     return product;
   }
   async updateProduct(id, updates) {
@@ -33412,11 +33046,13 @@ var InMemoryStore = class {
       categorySlug,
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     };
+    this.saveToDisk();
     return this.products[idx];
   }
   async deleteProduct(id) {
     const initialLen = this.products.length;
     this.products = this.products.filter((p) => p.id !== id);
+    this.saveToDisk();
     return this.products.length < initialLen;
   }
   // Suppliers
@@ -33437,6 +33073,7 @@ var InMemoryStore = class {
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     };
     this.suppliers.push(supplier);
+    this.saveToDisk();
     return supplier;
   }
   async updateSupplier(id, updates) {
@@ -33447,6 +33084,7 @@ var InMemoryStore = class {
       ...updates,
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     };
+    this.saveToDisk();
     return this.suppliers[idx];
   }
   // Customers
@@ -33457,6 +33095,7 @@ var InMemoryStore = class {
       existing.city = data.city;
       existing.deliveryAddress = data.deliveryAddress;
       if (data.deliveryInstructions) existing.deliveryInstructions = data.deliveryInstructions;
+      this.saveToDisk();
       return existing;
     }
     const newCust = {
@@ -33465,6 +33104,7 @@ var InMemoryStore = class {
       createdAt: (/* @__PURE__ */ new Date()).toISOString()
     };
     this.customers.push(newCust);
+    this.saveToDisk();
     return newCust;
   }
   async getCustomerById(id) {
@@ -33512,6 +33152,7 @@ var InMemoryStore = class {
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     };
     this.orders.unshift(order);
+    this.saveToDisk();
     return order;
   }
   async updateOrderStatus(orderId, newStatus, paymentStatus, notes, actorId, actorName) {
@@ -33534,6 +33175,7 @@ var InMemoryStore = class {
       createdAt: (/* @__PURE__ */ new Date()).toISOString()
     });
     order.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+    this.saveToDisk();
     return order;
   }
   async addOrderFulfilment(orderId, fulfilmentData) {
@@ -33563,6 +33205,7 @@ var InMemoryStore = class {
       });
     }
     order.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+    this.saveToDisk();
     return order;
   }
   async updateOrderFulfilment(orderId, fulfilmentId, updates) {
@@ -33586,6 +33229,7 @@ var InMemoryStore = class {
     }
     this.recalculateOrderActualProfit(order);
     order.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+    this.saveToDisk();
     return order;
   }
   async addFinancialTransaction(orderId, txnData) {
@@ -33604,6 +33248,7 @@ var InMemoryStore = class {
     }
     this.recalculateOrderActualProfit(order);
     order.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+    this.saveToDisk();
     return order;
   }
   async addOrderInternalNote(orderId, note) {
@@ -33614,6 +33259,7 @@ var InMemoryStore = class {
     const dateStamp = (/* @__PURE__ */ new Date()).toLocaleString("en-PK");
     order.internalNotes = `${existing}[${dateStamp}] ${note}`;
     order.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+    this.saveToDisk();
     return order;
   }
   recalculateOrderActualProfit(order) {
@@ -33657,14 +33303,15 @@ var InMemoryStore = class {
   }
   async updateStoreSettings(updates) {
     this.settings = { ...this.settings, ...updates };
+    this.saveToDisk();
     return { ...this.settings };
   }
 };
 
 // src/config/index.ts
 var import_dotenv = __toESM(require_main());
-var import_path = __toESM(require("path"));
-import_dotenv.default.config({ path: import_path.default.resolve(process.cwd(), ".env") });
+var import_path2 = __toESM(require("path"));
+import_dotenv.default.config({ path: import_path2.default.resolve(process.cwd(), ".env") });
 var config = {
   env: process.env.NODE_ENV || "development",
   isProd: process.env.NODE_ENV === "production",
@@ -34809,13 +34456,32 @@ var orderLimiter = lib_default({
     }
   }
 });
-router.get("/health", (_req, res) => {
-  res.json({
-    status: "healthy",
-    timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-    service: "Dropship Pakistan API",
-    version: "1.0.0"
-  });
+router.get("/health", async (_req, res) => {
+  try {
+    const store = getDataStore();
+    const prods = await store.getProducts({ activeOnly: false });
+    const cats = await store.getCategories(false);
+    const orders = await store.getOrders();
+    res.json({
+      status: "healthy",
+      timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+      service: "Dropship Pakistan API",
+      version: "1.0.0",
+      stats: {
+        productsCount: prods.total,
+        categoriesCount: cats.length,
+        ordersCount: orders.total
+      }
+    });
+  } catch (e) {
+    res.json({
+      status: "healthy",
+      timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+      service: "Dropship Pakistan API",
+      version: "1.0.0",
+      error: e.message
+    });
+  }
 });
 router.get("/settings/public", PublicController.getPublicSettings);
 router.get("/categories", PublicController.getCategories);
@@ -35274,6 +34940,7 @@ router2.post("/auth/login", AdminController.login);
 router2.use(requireAdminAuth);
 router2.get("/auth/verify", AdminController.verifySession);
 router2.get("/dashboard", AdminController.getDashboard);
+router2.get("/dashboard/metrics", AdminController.getDashboard);
 router2.get("/products", AdminController.getProducts);
 router2.post("/products", validateRequest(productCreateSchema), AdminController.createProduct);
 router2.put("/products/:id", AdminController.updateProduct);

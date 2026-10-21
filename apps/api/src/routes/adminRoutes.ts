@@ -23,6 +23,7 @@ router.use(requireAdminAuth);
 
 router.get('/auth/verify', AdminController.verifySession);
 router.get('/dashboard', AdminController.getDashboard);
+router.get('/dashboard/metrics', AdminController.getDashboard);
 
 // Products
 router.get('/products', AdminController.getProducts);

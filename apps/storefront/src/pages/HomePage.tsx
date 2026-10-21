@@ -157,6 +157,25 @@ export const HomePage: React.FC = () => {
               </div>
             ))}
           </div>
+        ) : featuredProducts.length === 0 ? (
+          <div className="text-center py-12 px-4 bg-emerald-50/60 rounded-3xl border border-emerald-100/80 space-y-4">
+            <Sparkles className="w-10 h-10 text-emerald-600 mx-auto" />
+            <h3 className="text-lg font-bold text-gray-900">New Arrivals Arriving Soon!</h3>
+            <p className="text-xs text-gray-600 max-w-md mx-auto leading-relaxed">
+              We are curating high-demand, tested gadgets and daily essentials with nationwide Cash on Delivery. Stay tuned or message us directly on WhatsApp!
+            </p>
+            <div className="pt-2">
+              <a
+                href="https://wa.me/923001234567"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-colors"
+              >
+                <MessageCircle className="w-4 h-4" />
+                Contact on WhatsApp
+              </a>
+            </div>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {featuredProducts.map((prod) => (

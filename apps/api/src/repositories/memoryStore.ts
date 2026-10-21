@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import {
   Category,
   Product,
@@ -15,10 +17,14 @@ import {
 import { IDataStore, ProductFilters, OrderFilters } from './types.js';
 
 export class InMemoryStore implements IDataStore {
+  private storageFilePath: string = process.env.VERCEL
+    ? '/tmp/dropship_store_state.json'
+    : path.join(process.cwd(), 'dropship_store_state.json');
+
   private categories: Category[] = [
     {
       id: 'c1111111-1111-1111-1111-111111111111',
-      name: 'Smart Gadgets & Audio',
+      name: 'Smart Gadgets & Electronics',
       slug: 'smart-gadgets',
       description: 'High-demand wireless earbuds, smartwatches, and smartphone accessories.',
       image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80',
@@ -29,7 +35,7 @@ export class InMemoryStore implements IDataStore {
     },
     {
       id: 'c2222222-2222-2222-2222-222222222222',
-      name: 'Home & Kitchen Gadgets',
+      name: 'Home & Kitchen Essentials',
       slug: 'home-kitchen',
       description: 'Time-saving kitchen gadgets and home organizers for modern Pakistani households.',
       image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600&auto=format&fit=crop&q=80',
@@ -86,414 +92,47 @@ export class InMemoryStore implements IDataStore {
     },
   ];
 
-  private products: Product[] = [
-    {
-      id: 'p1111111-1111-1111-1111-111111111111',
-      categoryId: 'c1111111-1111-1111-1111-111111111111',
-      categoryName: 'Smart Gadgets & Audio',
-      categorySlug: 'smart-gadgets',
-      name: 'AeroPods Pro Wireless Earbuds with ANC & Deep Bass',
-      slug: 'aeropods-pro-wireless-earbuds',
-      shortDescription: 'True Wireless Bluetooth 5.3 earbuds with Active Noise Cancellation and 28-hour playtime.',
-      description: 'Experience crisp, studio-grade acoustics and rich bass with the AeroPods Pro. Designed for high performance, these wireless earbuds feature smart touch controls, IPX5 water resistance for workouts, low latency gaming mode, and seamless instant pairing with all Android and iPhone devices across Pakistan. Package includes charging case, Type-C cable, and 3 ear tip sizes.',
-      basePricePkr: 2999,
-      compareAtPricePkr: 4500,
-      sku: 'AP-PRO-BLK',
-      isActive: true,
-      isFeatured: true,
-      images: [
-        {
-          id: 'img-1',
-          url: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80',
-          isPrimary: true,
-          altText: 'AeroPods Pro Black Charging Case',
-        },
-        {
-          id: 'img-2',
-          url: 'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=800&auto=format&fit=crop&q=80',
-          isPrimary: false,
-          altText: 'AeroPods In-Ear Close-up',
-        },
-      ],
-      variants: [
-        { id: 'v-blk', name: 'Matte Black', sku: 'AP-PRO-BLK', priceDeltaPkr: 0, isAvailable: true },
-        { id: 'v-wht', name: 'Glossy White', sku: 'AP-PRO-WHT', priceDeltaPkr: 0, isAvailable: true },
-      ],
-      supplierOffers: [
-        {
-          id: 'off-1',
-          productId: 'p1111111-1111-1111-1111-111111111111',
-          supplierId: 's1111111-1111-1111-1111-111111111111',
-          supplierName: 'Shah Alam Wholesale Hub',
-          supplierSku: 'SA-EAR-PRO',
-          supplierCostPkr: 1650,
-          isAvailable: true,
-          leadTimeDays: 1,
-          notes: 'In stock. Wholesale bulk tier.',
-          updatedAt: new Date().toISOString(),
-        },
-      ],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: 'p2222222-2222-2222-2222-222222222222',
-      categoryId: 'c2222222-2222-2222-2222-222222222222',
-      categoryName: 'Home & Kitchen Gadgets',
-      categorySlug: 'home-kitchen',
-      name: '14-in-1 Multifunction Vegetable & Onion Chopper',
-      slug: '14-in-1-multifunction-vegetable-chopper',
-      shortDescription: 'Premium stainless-steel blade vegetable chopper with container and hand protector.',
-      description: 'Cut meal prep time by 70%. This heavy-duty 14-in-1 kitchen mandoline dicer effortlessly chops onions, potatoes, tomatoes, and vegetables with zero eye irritation. Features 8 interchangeable 420-grade stainless steel blades, large 1.5L BPA-free catch container, drain basket, and ergonomic safety pusher.',
-      basePricePkr: 1950,
-      compareAtPricePkr: 2800,
-      sku: 'KIT-CHOP-14',
-      isActive: true,
-      isFeatured: true,
-      images: [
-        {
-          id: 'img-3',
-          url: 'https://images.unsplash.com/photo-1584990347449-39906f3630f5?w=800&auto=format&fit=crop&q=80',
-          isPrimary: true,
-          altText: 'Multifunction Vegetable Chopper Kit',
-        },
-      ],
-      variants: [
-        { id: 'v-grn', name: 'Classic Forest Green', sku: 'KIT-CHOP-GRN', priceDeltaPkr: 0, isAvailable: true },
-        { id: 'v-gry', name: 'Modern Slate Grey', sku: 'KIT-CHOP-GRY', priceDeltaPkr: 0, isAvailable: true },
-      ],
-      supplierOffers: [
-        {
-          id: 'off-2',
-          productId: 'p2222222-2222-2222-2222-222222222222',
-          supplierId: 's2222222-2222-2222-2222-222222222222',
-          supplierName: 'Bolton Market Imports',
-          supplierSku: 'BM-CHOP-14',
-          supplierCostPkr: 1050,
-          isAvailable: true,
-          leadTimeDays: 2,
-          notes: 'Reliable packaging. Boxed with unboxing seal.',
-          updatedAt: new Date().toISOString(),
-        },
-      ],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: 'p3333333-3333-3333-3333-333333333333',
-      categoryId: 'c3333333-3333-3333-3333-333333333333',
-      categoryName: 'Personal Care & Grooming',
-      categorySlug: 'personal-care',
-      name: 'Rechargeable Vintage T9 Hair & Beard Trimmer',
-      slug: 'vintage-t9-rechargeable-hair-trimmer',
-      shortDescription: 'All-metal cordless zero-gapped precision detailer with USB rechargeable battery.',
-      description: 'Engineered for professional barbers and home grooming, the Vintage T9 features a high-torque rotary motor, titanium coated T-blade for ultra-sharp lining, 1200mAh battery providing 180 minutes of runtime, and 4 attachment combs (1.5mm, 2mm, 3mm, 4mm).',
-      basePricePkr: 1699,
-      compareAtPricePkr: 2400,
-      sku: 'TRIM-T9-GOLD',
-      isActive: true,
-      isFeatured: true,
-      images: [
-        {
-          id: 'img-4',
-          url: 'https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&auto=format&fit=crop&q=80',
-          isPrimary: true,
-          altText: 'Vintage T9 Cordless Trimmer Gold',
-        },
-      ],
-      variants: [
-        { id: 'v-gold', name: 'Dragon Gold Edition', sku: 'TRIM-T9-GLD', priceDeltaPkr: 0, isAvailable: true },
-        { id: 'v-blk-trim', name: 'Stealth Black Edition', sku: 'TRIM-T9-BLK', priceDeltaPkr: 0, isAvailable: true },
-      ],
-      supplierOffers: [
-        {
-          id: 'off-3',
-          productId: 'p3333333-3333-3333-3333-333333333333',
-          supplierId: 's1111111-1111-1111-1111-111111111111',
-          supplierName: 'Shah Alam Wholesale Hub',
-          supplierSku: 'SA-TRIM-T9',
-          supplierCostPkr: 850,
-          isAvailable: true,
-          leadTimeDays: 1,
-          notes: 'Includes lubricant oil and cleaning brush.',
-          updatedAt: new Date().toISOString(),
-        },
-      ],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: 'p4444444-4444-4444-4444-444444444444',
-      categoryId: 'c1111111-1111-1111-1111-111111111111',
-      categoryName: 'Smart Gadgets & Audio',
-      categorySlug: 'smart-gadgets',
-      name: 'Smart Fitness Tracker Watch with Blood Pressure & Heart Rate',
-      slug: 'smart-fitness-tracker-watch',
-      shortDescription: 'Waterproof health smartwatch with 1.4-inch HD display, sleep monitor, and WhatsApp call alerts.',
-      description: 'Stay on top of your fitness journey with 24/7 pulse tracking, step counter, blood oxygen saturation monitor, sleep analysis, and instant WhatsApp / SMS vibration alerts. Magnetic fast charger included. Up to 7 days standby.',
-      basePricePkr: 2499,
-      compareAtPricePkr: 3800,
-      sku: 'SW-FIT-01',
-      isActive: true,
-      isFeatured: false,
-      images: [
-        {
-          id: 'img-5',
-          url: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80',
-          isPrimary: true,
-          altText: 'Smartwatch Fitness Tracker',
-        },
-      ],
-      variants: [
-        { id: 'v-sw-blk', name: 'Silicone Black Strap', sku: 'SW-FIT-BLK', priceDeltaPkr: 0, isAvailable: true },
-        { id: 'v-sw-blu', name: 'Navy Blue Strap', sku: 'SW-FIT-BLU', priceDeltaPkr: 0, isAvailable: true },
-      ],
-      supplierOffers: [
-        {
-          id: 'off-4',
-          productId: 'p4444444-4444-4444-4444-444444444444',
-          supplierId: 's1111111-1111-1111-1111-111111111111',
-          supplierName: 'Shah Alam Wholesale Hub',
-          supplierSku: 'SA-WATCH-FIT',
-          supplierCostPkr: 1350,
-          isAvailable: true,
-          leadTimeDays: 1,
-          notes: 'Ready for dispatch.',
-          updatedAt: new Date().toISOString(),
-        },
-      ],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-  ];
+  // Completely reset: Zero dummy products, zero dummy customers, zero dummy orders
+  private products: Product[] = [];
+  private customers: Customer[] = [];
+  private orders: Order[] = [];
 
-  private customers: Customer[] = [
-    {
-      id: 'cust-demo-1',
-      name: 'Hamza Khan',
-      phone: '03001234567',
-      city: 'Lahore',
-      deliveryAddress: 'House 42, Block B, Gulberg III, Lahore',
-      deliveryInstructions: 'Call before arriving',
-      createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-    },
-    {
-      id: 'cust-demo-2',
-      name: 'Zainab Ahmed',
-      phone: '03219876543',
-      city: 'Karachi',
-      deliveryAddress: 'Flat 402, Al-Noor Heights, Clifton Block 2, Karachi',
-      deliveryInstructions: 'Leave with building security if unavailable',
-      createdAt: new Date(Date.now() - 86400000 * 4).toISOString(),
-    },
-  ];
+  constructor() {
+    this.loadFromDisk();
+  }
 
-  private orders: Order[] = [
-    {
-      id: 'ord-demo-1',
-      orderReference: 'ORD-20261017-7A2F',
-      trackingToken: 'tr_8f93e21a4',
-      customerId: 'cust-demo-1',
-      customer: {
-        id: 'cust-demo-1',
-        name: 'Hamza Khan',
-        phone: '03001234567',
-        city: 'Lahore',
-        deliveryAddress: 'House 42, Block B, Gulberg III, Lahore',
-        deliveryInstructions: 'Call before arriving',
-        createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-      },
-      sourceChannel: 'website',
-      orderStatus: 'dispatched',
-      paymentMethod: 'cod',
-      paymentStatus: 'unpaid',
-      subtotalPkr: 2999,
-      deliveryChargePkr: 250,
-      discountPkr: 0,
-      totalPayablePkr: 3249,
-      estimatedProfitPkr: 1349, // 3249 - 1650 (supplier cost) - 250 (est courier) = 1349
-      actualProfitPkr: 0,
-      internalNotes: 'Customer confirmed via phone call. Trax tracking assigned.',
-      items: [
-        {
-          id: 'item-1',
-          orderId: 'ord-demo-1',
-          productId: 'p1111111-1111-1111-1111-111111111111',
-          productSlug: 'aeropods-pro-wireless-earbuds',
-          productNameSnapshot: 'AeroPods Pro Wireless Earbuds with ANC & Deep Bass',
-          variantSnapshot: { id: 'v-blk', name: 'Matte Black' },
-          imageSnapshot: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80',
-          quantity: 1,
-          unitPricePkr: 2999,
-          supplierCostPkr: 1650,
-          totalPricePkr: 2999,
-        },
-      ],
-      fulfilments: [
-        {
-          id: 'ful-1',
-          orderId: 'ord-demo-1',
-          supplierId: 's1111111-1111-1111-1111-111111111111',
-          supplierName: 'Shah Alam Wholesale Hub',
-          supplierOrderRef: 'SA-ORD-902',
-          courierName: 'Trax Logistics',
-          trackingNumber: 'TRX78291039PK',
-          trackingUrl: 'https://trax.pk/tracking?cn=TRX78291039PK',
-          status: 'dispatched',
-          dispatchedAt: new Date(Date.now() - 86400000).toISOString(),
-          courierChargePkr: 240,
-          returnChargePkr: 0,
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-          updatedAt: new Date(Date.now() - 86400000).toISOString(),
-        },
-      ],
-      statusHistory: [
-        {
-          id: 'hist-1',
-          orderId: 'ord-demo-1',
-          previousStatus: null,
-          newStatus: 'pending_confirmation',
-          actorName: 'Website Customer',
-          notes: 'Customer submitted COD order on website',
-          createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-        },
-        {
-          id: 'hist-2',
-          orderId: 'ord-demo-1',
-          previousStatus: 'pending_confirmation',
-          newStatus: 'confirmed',
-          actorName: 'Store Owner',
-          notes: 'Address verified by phone call',
-          createdAt: new Date(Date.now() - 86400000 * 1.5).toISOString(),
-        },
-        {
-          id: 'hist-3',
-          orderId: 'ord-demo-1',
-          previousStatus: 'confirmed',
-          newStatus: 'dispatched',
-          actorName: 'Store Owner',
-          notes: 'Dispatched via Trax CN TRX78291039PK',
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-        },
-      ],
-      transactions: [],
-      createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-      updatedAt: new Date(Date.now() - 86400000).toISOString(),
-    },
-    {
-      id: 'ord-demo-2',
-      orderReference: 'ORD-20261015-3B9X',
-      trackingToken: 'tr_2c71a93e1',
-      customerId: 'cust-demo-2',
-      customer: {
-        id: 'cust-demo-2',
-        name: 'Zainab Ahmed',
-        phone: '03219876543',
-        city: 'Karachi',
-        deliveryAddress: 'Flat 402, Al-Noor Heights, Clifton Block 2, Karachi',
-        deliveryInstructions: 'Leave with building security if unavailable',
-        createdAt: new Date(Date.now() - 86400000 * 4).toISOString(),
-      },
-      sourceChannel: 'whatsapp',
-      orderStatus: 'delivered',
-      paymentMethod: 'cod',
-      paymentStatus: 'settled',
-      subtotalPkr: 1950,
-      deliveryChargePkr: 250,
-      discountPkr: 0,
-      totalPayablePkr: 2200,
-      estimatedProfitPkr: 900,
-      actualProfitPkr: 920, // 2200 collected - 1050 supplier - 230 courier = 920
-      internalNotes: 'Order received via WhatsApp inquiry and confirmed immediately.',
-      items: [
-        {
-          id: 'item-2',
-          orderId: 'ord-demo-2',
-          productId: 'p2222222-2222-2222-2222-222222222222',
-          productSlug: '14-in-1-multifunction-vegetable-chopper',
-          productNameSnapshot: '14-in-1 Multifunction Vegetable & Onion Chopper',
-          variantSnapshot: { id: 'v-grn', name: 'Classic Forest Green' },
-          imageSnapshot: 'https://images.unsplash.com/photo-1584990347449-39906f3630f5?w=800&auto=format&fit=crop&q=80',
-          quantity: 1,
-          unitPricePkr: 1950,
-          supplierCostPkr: 1050,
-          totalPricePkr: 1950,
-        },
-      ],
-      fulfilments: [
-        {
-          id: 'ful-2',
-          orderId: 'ord-demo-2',
-          supplierId: 's2222222-2222-2222-2222-222222222222',
-          supplierName: 'Bolton Market Imports',
-          supplierOrderRef: 'BM-ORD-441',
-          courierName: 'Leopards Courier',
-          trackingNumber: 'LEO4829104PK',
-          status: 'delivered',
-          dispatchedAt: new Date(Date.now() - 86400000 * 3).toISOString(),
-          deliveredAt: new Date(Date.now() - 86400000).toISOString(),
-          courierChargePkr: 230,
-          returnChargePkr: 0,
-          createdAt: new Date(Date.now() - 86400000 * 3).toISOString(),
-          updatedAt: new Date(Date.now() - 86400000).toISOString(),
-        },
-      ],
-      statusHistory: [
-        {
-          id: 'hist-2-1',
-          orderId: 'ord-demo-2',
-          previousStatus: null,
-          newStatus: 'pending_confirmation',
-          actorName: 'WhatsApp Channel',
-          notes: 'Entered manually from WhatsApp chat',
-          createdAt: new Date(Date.now() - 86400000 * 4).toISOString(),
-        },
-        {
-          id: 'hist-2-2',
-          orderId: 'ord-demo-2',
-          previousStatus: 'pending_confirmation',
-          newStatus: 'delivered',
-          actorName: 'Leopards Courier Webhook/Log',
-          notes: 'Customer signed parcel and paid COD Rs. 2,200',
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-        },
-      ],
-      transactions: [
-        {
-          id: 'txn-1',
-          orderId: 'ord-demo-2',
-          transactionType: 'cod_collection',
-          amountPkr: 2200,
-          referenceNumber: 'COD-LEO-48291',
-          status: 'completed',
-          notes: 'Cash on delivery remitted into bank account',
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-        },
-        {
-          id: 'txn-2',
-          orderId: 'ord-demo-2',
-          transactionType: 'supplier_payout',
-          amountPkr: 1050,
-          referenceNumber: 'SUP-BM-091',
-          status: 'completed',
-          notes: 'Settled with Bolton Market Imports',
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-        },
-        {
-          id: 'txn-3',
-          orderId: 'ord-demo-2',
-          transactionType: 'courier_fee',
-          amountPkr: 230,
-          referenceNumber: 'CR-LEO-88',
-          status: 'completed',
-          notes: 'Leopards delivery charges deducted',
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-        },
-      ],
-      createdAt: new Date(Date.now() - 86400000 * 4).toISOString(),
-      updatedAt: new Date(Date.now() - 86400000).toISOString(),
-    },
-  ];
+  private loadFromDisk(): void {
+    try {
+      if (fs.existsSync(this.storageFilePath)) {
+        const raw = fs.readFileSync(this.storageFilePath, 'utf8');
+        const data = JSON.parse(raw);
+        if (Array.isArray(data.categories) && data.categories.length > 0) this.categories = data.categories;
+        if (Array.isArray(data.suppliers) && data.suppliers.length > 0) this.suppliers = data.suppliers;
+        if (Array.isArray(data.products)) this.products = data.products;
+        if (Array.isArray(data.customers)) this.customers = data.customers;
+        if (Array.isArray(data.orders)) this.orders = data.orders;
+        if (data.settings) this.settings = { ...this.settings, ...data.settings };
+      }
+    } catch (e) {
+      // Fallback cleanly to in-memory state
+    }
+  }
+
+  private saveToDisk(): void {
+    try {
+      const data = {
+        categories: this.categories,
+        suppliers: this.suppliers,
+        products: this.products,
+        customers: this.customers,
+        orders: this.orders,
+        settings: this.settings,
+      };
+      fs.writeFileSync(this.storageFilePath, JSON.stringify(data, null, 2), 'utf8');
+    } catch (e) {
+      // Disk writing fails gracefully
+    }
+  }
 
   private settings: StoreSettings = {
     storeName: DEFAULT_STORE_SETTINGS.store_name,
@@ -534,6 +173,7 @@ export class InMemoryStore implements IDataStore {
       updatedAt: new Date().toISOString(),
     };
     this.categories.push(category);
+    this.saveToDisk();
     return category;
   }
 
@@ -545,6 +185,7 @@ export class InMemoryStore implements IDataStore {
       ...updates,
       updatedAt: new Date().toISOString(),
     };
+    this.saveToDisk();
     return this.categories[idx];
   }
 
@@ -615,6 +256,7 @@ export class InMemoryStore implements IDataStore {
       updatedAt: new Date().toISOString(),
     };
     this.products.unshift(product);
+    this.saveToDisk();
     return product;
   }
 
@@ -637,12 +279,14 @@ export class InMemoryStore implements IDataStore {
       categorySlug,
       updatedAt: new Date().toISOString(),
     };
+    this.saveToDisk();
     return this.products[idx];
   }
 
   async deleteProduct(id: string): Promise<boolean> {
     const initialLen = this.products.length;
     this.products = this.products.filter((p) => p.id !== id);
+    this.saveToDisk();
     return this.products.length < initialLen;
   }
 
@@ -666,6 +310,7 @@ export class InMemoryStore implements IDataStore {
       updatedAt: new Date().toISOString(),
     };
     this.suppliers.push(supplier);
+    this.saveToDisk();
     return supplier;
   }
 
@@ -677,6 +322,7 @@ export class InMemoryStore implements IDataStore {
       ...updates,
       updatedAt: new Date().toISOString(),
     };
+    this.saveToDisk();
     return this.suppliers[idx];
   }
 
@@ -688,6 +334,7 @@ export class InMemoryStore implements IDataStore {
       existing.city = data.city;
       existing.deliveryAddress = data.deliveryAddress;
       if (data.deliveryInstructions) existing.deliveryInstructions = data.deliveryInstructions;
+      this.saveToDisk();
       return existing;
     }
     const newCust: Customer = {
@@ -696,6 +343,7 @@ export class InMemoryStore implements IDataStore {
       createdAt: new Date().toISOString(),
     };
     this.customers.push(newCust);
+    this.saveToDisk();
     return newCust;
   }
 
@@ -759,6 +407,7 @@ export class InMemoryStore implements IDataStore {
       updatedAt: new Date().toISOString(),
     };
     this.orders.unshift(order);
+    this.saveToDisk();
     return order;
   }
 
@@ -792,6 +441,7 @@ export class InMemoryStore implements IDataStore {
     });
 
     order.updatedAt = new Date().toISOString();
+    this.saveToDisk();
     return order;
   }
 
@@ -831,6 +481,7 @@ export class InMemoryStore implements IDataStore {
     }
 
     order.updatedAt = new Date().toISOString();
+    this.saveToDisk();
     return order;
   }
 
@@ -862,6 +513,7 @@ export class InMemoryStore implements IDataStore {
     this.recalculateOrderActualProfit(order);
 
     order.updatedAt = new Date().toISOString();
+    this.saveToDisk();
     return order;
   }
 
@@ -889,6 +541,7 @@ export class InMemoryStore implements IDataStore {
 
     this.recalculateOrderActualProfit(order);
     order.updatedAt = new Date().toISOString();
+    this.saveToDisk();
     return order;
   }
 
@@ -899,6 +552,7 @@ export class InMemoryStore implements IDataStore {
     const dateStamp = new Date().toLocaleString('en-PK');
     order.internalNotes = `${existing}[${dateStamp}] ${note}`;
     order.updatedAt = new Date().toISOString();
+    this.saveToDisk();
     return order;
   }
 
@@ -962,6 +616,7 @@ export class InMemoryStore implements IDataStore {
 
   async updateStoreSettings(updates: Partial<StoreSettings>): Promise<StoreSettings> {
     this.settings = { ...this.settings, ...updates };
+    this.saveToDisk();
     return { ...this.settings };
   }
 }
