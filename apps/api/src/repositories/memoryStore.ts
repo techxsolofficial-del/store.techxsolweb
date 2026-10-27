@@ -103,8 +103,23 @@ export class InMemoryStore implements IDataStore {
 
   private loadFromDisk(): void {
     try {
-      if (fs.existsSync(this.storageFilePath)) {
-        const raw = fs.readFileSync(this.storageFilePath, 'utf8');
+      let targetPath = this.storageFilePath;
+      if (!fs.existsSync(targetPath)) {
+        const fallbacks = [
+          path.join(process.cwd(), 'dropship_store_state.json'),
+          path.join(process.cwd(), '..', 'dropship_store_state.json'),
+          path.join(__dirname, '..', '..', 'dropship_store_state.json'),
+        ];
+        for (const fb of fallbacks) {
+          if (fs.existsSync(fb)) {
+            targetPath = fb;
+            break;
+          }
+        }
+      }
+
+      if (fs.existsSync(targetPath)) {
+        const raw = fs.readFileSync(targetPath, 'utf8');
         const data = JSON.parse(raw);
         if (Array.isArray(data.categories) && data.categories.length > 0) this.categories = data.categories;
         if (Array.isArray(data.suppliers) && data.suppliers.length > 0) this.suppliers = data.suppliers;
@@ -112,6 +127,15 @@ export class InMemoryStore implements IDataStore {
         if (Array.isArray(data.customers)) this.customers = data.customers;
         if (Array.isArray(data.orders)) this.orders = data.orders;
         if (data.settings) this.settings = { ...this.settings, ...data.settings };
+
+        // If on Vercel and loaded from fallback seed, persist to /tmp
+        if (targetPath !== this.storageFilePath) {
+          try {
+            fs.writeFileSync(this.storageFilePath, raw, 'utf8');
+          } catch {
+            // ignore
+          }
+        }
       }
     } catch (e) {
       // Fallback cleanly to in-memory state
@@ -128,7 +152,18 @@ export class InMemoryStore implements IDataStore {
         orders: this.orders,
         settings: this.settings,
       };
-      fs.writeFileSync(this.storageFilePath, JSON.stringify(data, null, 2), 'utf8');
+      const json = JSON.stringify(data, null, 2);
+      fs.writeFileSync(this.storageFilePath, json, 'utf8');
+
+      // Also persist to root repository state file if accessible
+      const rootPath = path.join(process.cwd(), 'dropship_store_state.json');
+      if (rootPath !== this.storageFilePath) {
+        try {
+          fs.writeFileSync(rootPath, json, 'utf8');
+        } catch {
+          // ignore readonly error in serverless
+        }
+      }
     } catch (e) {
       // Disk writing fails gracefully
     }

@@ -127,23 +127,26 @@ export const ShippingPolicyPage: React.FC = () => (
   </div>
 );
 
-export const ReturnPolicyPage: React.FC = () => (
-  <div className="max-w-4xl mx-auto px-4 py-12 space-y-6 text-sm text-gray-600 leading-relaxed">
-    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Return & Replacement Policy</h1>
-    <p>
-      We want you to order with complete confidence.
-    </p>
-    <p>
-      1. <strong>7-Day Replacement Guarantee:</strong> If your product arrives broken, physically damaged, or non-functional, contact our WhatsApp support within 7 days of delivery.
-    </p>
-    <p>
-      2. <strong>Claim Process:</strong> Send a short video showing the defect along with your Order Reference number on WhatsApp (0300 1234567). Our support team will review and approve a replacement.
-    </p>
-    <p>
-      3. <strong>Return Shipping:</strong> In case of manufacturing defects or incorrect items dispatched, reverse pickup is arranged at zero extra cost to the customer.
-    </p>
-  </div>
-);
+export const ReturnPolicyPage: React.FC = () => {
+  const { supportPhone, whatsappNumber } = useStoreSettings();
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-12 space-y-6 text-sm text-gray-600 leading-relaxed">
+      <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Return & Replacement Policy</h1>
+      <p>
+        We want you to order with complete confidence.
+      </p>
+      <p>
+        1. <strong>7-Day Replacement Guarantee:</strong> If your product arrives broken, physically damaged, or non-functional, contact our WhatsApp support within 7 days of delivery.
+      </p>
+      <p>
+        2. <strong>Claim Process:</strong> Send a short video showing the defect along with your Order Reference number on WhatsApp ({supportPhone || whatsappNumber}). Our support team will review and approve a replacement.
+      </p>
+      <p>
+        3. <strong>Return Shipping:</strong> In case of manufacturing defects or incorrect items dispatched, reverse pickup is arranged at zero extra cost to the customer.
+      </p>
+    </div>
+  );
+};
 
 export const TermsPage: React.FC = () => (
   <div className="max-w-4xl mx-auto px-4 py-12 space-y-6 text-sm text-gray-600 leading-relaxed">

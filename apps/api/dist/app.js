@@ -28592,10 +28592,10 @@ var PAKISTAN_PHONE_REGEX = /^(?:(?:\+92)|(?:0092)|(?:92)|(?:0))?3[0-9]{9}$/;
 var DEFAULT_STORE_SETTINGS = {
   store_name: "ApnaBuy",
   tagline: "Pakistan Ka Apna Store - Cash on Delivery Nationwide",
-  whatsapp_number: "923001234567",
+  whatsapp_number: "923001277042",
   // Standard format without +
   support_email: "support@apnabuy.pk",
-  support_phone: "0300 1234567",
+  support_phone: "0300 1277042",
   currency: "PKR",
   default_delivery_charge_pkr: 250,
   free_delivery_threshold_pkr: 3500,
@@ -32896,8 +32896,22 @@ var InMemoryStore = class {
   }
   loadFromDisk() {
     try {
-      if (import_fs.default.existsSync(this.storageFilePath)) {
-        const raw = import_fs.default.readFileSync(this.storageFilePath, "utf8");
+      let targetPath = this.storageFilePath;
+      if (!import_fs.default.existsSync(targetPath)) {
+        const fallbacks = [
+          import_path.default.join(process.cwd(), "dropship_store_state.json"),
+          import_path.default.join(process.cwd(), "..", "dropship_store_state.json"),
+          import_path.default.join(__dirname, "..", "..", "dropship_store_state.json")
+        ];
+        for (const fb of fallbacks) {
+          if (import_fs.default.existsSync(fb)) {
+            targetPath = fb;
+            break;
+          }
+        }
+      }
+      if (import_fs.default.existsSync(targetPath)) {
+        const raw = import_fs.default.readFileSync(targetPath, "utf8");
         const data = JSON.parse(raw);
         if (Array.isArray(data.categories) && data.categories.length > 0) this.categories = data.categories;
         if (Array.isArray(data.suppliers) && data.suppliers.length > 0) this.suppliers = data.suppliers;
@@ -32905,6 +32919,12 @@ var InMemoryStore = class {
         if (Array.isArray(data.customers)) this.customers = data.customers;
         if (Array.isArray(data.orders)) this.orders = data.orders;
         if (data.settings) this.settings = { ...this.settings, ...data.settings };
+        if (targetPath !== this.storageFilePath) {
+          try {
+            import_fs.default.writeFileSync(this.storageFilePath, raw, "utf8");
+          } catch {
+          }
+        }
       }
     } catch (e) {
     }
@@ -32919,7 +32939,15 @@ var InMemoryStore = class {
         orders: this.orders,
         settings: this.settings
       };
-      import_fs.default.writeFileSync(this.storageFilePath, JSON.stringify(data, null, 2), "utf8");
+      const json = JSON.stringify(data, null, 2);
+      import_fs.default.writeFileSync(this.storageFilePath, json, "utf8");
+      const rootPath = import_path.default.join(process.cwd(), "dropship_store_state.json");
+      if (rootPath !== this.storageFilePath) {
+        try {
+          import_fs.default.writeFileSync(rootPath, json, "utf8");
+        } catch {
+        }
+      }
     } catch (e) {
     }
   }
@@ -34932,6 +34960,9 @@ var AdminController = class {
           clean = "92" + clean.slice(1);
         }
         input.whatsappNumber = clean;
+      }
+      if (!input.supportPhone && input.whatsappNumber) {
+        input.supportPhone = input.whatsappNumber.startsWith("92") ? "0" + input.whatsappNumber.slice(2, 5) + " " + input.whatsappNumber.slice(5) : input.whatsappNumber;
       }
       const updated = await store.updateStoreSettings(input);
       res.json({ success: true, data: updated, message: "Settings saved successfully" });

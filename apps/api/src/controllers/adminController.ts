@@ -453,6 +453,13 @@ export class AdminController {
         input.whatsappNumber = clean;
       }
 
+      // If support phone is empty or mirrors old number, format from whatsapp number
+      if (!input.supportPhone && input.whatsappNumber) {
+        input.supportPhone = input.whatsappNumber.startsWith('92')
+          ? '0' + input.whatsappNumber.slice(2, 5) + ' ' + input.whatsappNumber.slice(5)
+          : input.whatsappNumber;
+      }
+
       const updated = await store.updateStoreSettings(input);
       res.json({ success: true, data: updated, message: 'Settings saved successfully' });
     } catch (err) {

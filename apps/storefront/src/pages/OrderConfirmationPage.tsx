@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, Link, Navigate } from 'react-router-dom';
 import { formatPkr } from '@dropship/shared';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 import {
   CheckCircle2,
   PackageCheck,
@@ -13,13 +14,14 @@ import {
 
 export const OrderConfirmationPage: React.FC = () => {
   const location = useLocation();
+  const { whatsappNumber } = useStoreSettings();
   const order = location.state?.order;
 
   if (!order) {
     return <Navigate to="/shop" replace />;
   }
 
-  const whatsappInquiryUrl = `https://wa.me/923001234567?text=${encodeURIComponent(
+  const whatsappInquiryUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     `Assalam-o-Alaikum! I have placed an order with Reference: *${order.orderReference}*. Please confirm status.`
   )}`;
 

@@ -5,9 +5,9 @@ import { fetchPublicSettings } from '../services/api';
 const DEFAULT_SETTINGS: StoreSettings = {
   storeName: 'ApnaBuy',
   tagline: 'Pakistan Ka Apna Store - Cash on Delivery Nationwide',
-  whatsappNumber: '923001234567',
+  whatsappNumber: '923001277042',
   supportEmail: 'support@apnabuy.pk',
-  supportPhone: '0300 1234567',
+  supportPhone: '0300 1277042',
   currency: 'PKR',
   defaultDeliveryChargePkr: 250,
   freeDeliveryThresholdPkr: 3500,

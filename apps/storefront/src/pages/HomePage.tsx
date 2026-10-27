@@ -4,11 +4,13 @@ import { ArrowRight, Truck, ShieldCheck, CheckCircle2, MessageCircle, Sparkles, 
 import { Product, Category } from '@dropship/shared';
 import { fetchCategories, fetchProducts } from '../services/api';
 import { ProductCard } from '../components/ProductCard';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 
 export const HomePage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const { whatsappNumber } = useStoreSettings();
 
   useEffect(() => {
     async function loadData() {
@@ -57,7 +59,7 @@ export const HomePage: React.FC = () => {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <a
-                href="https://wa.me/923001234567"
+                href={`https://wa.me/${whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm sm:text-base border border-white/20 transition-colors"
@@ -166,7 +168,7 @@ export const HomePage: React.FC = () => {
             </p>
             <div className="pt-2">
               <a
-                href="https://wa.me/923001234567"
+                href={`https://wa.me/${whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-colors"

@@ -122,9 +122,9 @@ export const PAKISTAN_PHONE_REGEX = /^(?:(?:\+92)|(?:0092)|(?:92)|(?:0))?3[0-9]{
 export const DEFAULT_STORE_SETTINGS = {
     store_name: 'ApnaBuy',
     tagline: 'Pakistan Ka Apna Store - Cash on Delivery Nationwide',
-    whatsapp_number: '923001234567', // Standard format without +
+    whatsapp_number: '923001277042', // Standard format without +
     support_email: 'support@apnabuy.pk',
-    support_phone: '0300 1234567',
+    support_phone: '0300 1277042',
     currency: 'PKR',
     default_delivery_charge_pkr: 250,
     free_delivery_threshold_pkr: 3500,
