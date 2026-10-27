@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useCustomerAuth } from '../context/CustomerAuthContext';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 import { formatPkr, buildWhatsAppOrderLink } from '@dropship/shared';
 import {
   Trash2,
@@ -16,6 +17,7 @@ import {
 export const CartPage: React.FC = () => {
   const navigate = useNavigate();
   const { isLoggedIn, openAuthModal } = useCustomerAuth();
+  const { whatsappNumber } = useStoreSettings();
   const {
     items,
     updateQuantity,
@@ -51,7 +53,7 @@ export const CartPage: React.FC = () => {
   }
 
   const whatsappCartLink = buildWhatsAppOrderLink({
-    businessPhone: '923001234567',
+    businessPhone: whatsappNumber || '923001234567',
     items: items.map((i) => ({
       name: i.product.name,
       variantName: i.variantName,

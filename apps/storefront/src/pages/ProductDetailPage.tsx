@@ -9,6 +9,7 @@ import {
 import { fetchProductBySlug, fetchProducts } from '../services/api';
 import { useCart } from '../context/CartContext';
 import { useCustomerAuth } from '../context/CustomerAuthContext';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 import { ProductCard } from '../components/ProductCard';
 import {
   ShoppingCart,
@@ -25,6 +26,7 @@ export const ProductDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { addToCart } = useCart();
   const { isLoggedIn, openAuthModal } = useCustomerAuth();
+  const { whatsappNumber } = useStoreSettings();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -117,7 +119,7 @@ export const ProductDetailPage: React.FC = () => {
   };
 
   const directWhatsAppLink = buildWhatsAppOrderLink({
-    businessPhone: '923001234567',
+    businessPhone: whatsappNumber || '923001234567',
     items: [
       {
         name: product.name,

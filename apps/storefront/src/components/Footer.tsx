@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ShieldCheck, Truck, RefreshCw, MessageCircle } from 'lucide-react';
 import { Logo } from './Logo';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 
 export const Footer: React.FC = () => {
+  const { whatsappNumber, supportPhone, supportEmail, settings } = useStoreSettings();
   return (
     <footer className="bg-gray-900 text-gray-300 pt-12 pb-8 border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,7 +64,7 @@ export const Footer: React.FC = () => {
             </p>
             <div className="pt-2">
               <a
-                href="https://wa.me/923001234567"
+                href={`https://wa.me/${whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors"
@@ -153,11 +155,11 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>0300 1234567 (10 AM - 10 PM)</span>
+                <span>{supportPhone || whatsappNumber} (10 AM - 10 PM)</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>support@apnabuy.pk</span>
+                <span>{supportEmail}</span>
               </div>
               <div className="pt-2 text-xs text-gray-400">
                 Courier Partners: Trax, Call Courier, TCS, Leopards

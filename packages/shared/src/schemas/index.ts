@@ -163,18 +163,18 @@ export const createFinancialTransactionSchema = z.object({
 export type CreateFinancialTransactionInput = z.infer<typeof createFinancialTransactionSchema>;
 
 export const updateSettingsSchema = z.object({
-  storeName: z.string().trim().min(2),
-  tagline: z.string().trim().min(2),
-  whatsappNumber: z.string().trim().min(10),
-  supportEmail: z.string().email(),
-  supportPhone: z.string().trim().min(7),
+  storeName: z.string().trim().min(1, 'Store Name is required'),
+  tagline: z.string().trim().default(''),
+  whatsappNumber: z.string().trim().min(5, 'WhatsApp number is required'),
+  supportEmail: z.string().trim().email('Invalid email address').or(z.string().trim().min(3)),
+  supportPhone: z.string().trim().default(''),
   currency: z.string().default('PKR'),
-  defaultDeliveryChargePkr: z.number().int().min(0),
-  freeDeliveryThresholdPkr: z.number().int().min(0),
-  estimatedDeliveryDays: z.string(),
-  codTerms: z.string(),
-  returnPolicySummary: z.string(),
-  aboutText: z.string(),
+  defaultDeliveryChargePkr: z.number().int().min(0).default(250),
+  freeDeliveryThresholdPkr: z.number().int().min(0).default(3500),
+  estimatedDeliveryDays: z.string().default('2 to 4 business days'),
+  codTerms: z.string().default(''),
+  returnPolicySummary: z.string().default(''),
+  aboutText: z.string().default(''),
 });
 
 export type UpdateSettingsInput = z.infer<typeof updateSettingsSchema>;

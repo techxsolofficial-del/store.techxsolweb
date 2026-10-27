@@ -443,6 +443,16 @@ export class AdminController {
     try {
       const store = getDataStore();
       const input = req.body as UpdateSettingsInput;
+
+      // Normalize WhatsApp phone number: remove non-digits, convert 03xx to 923xx
+      if (input.whatsappNumber) {
+        let clean = input.whatsappNumber.replace(/[\s\-\+\(\)]/g, '');
+        if (clean.startsWith('03')) {
+          clean = '92' + clean.slice(1);
+        }
+        input.whatsappNumber = clean;
+      }
+
       const updated = await store.updateStoreSettings(input);
       res.json({ success: true, data: updated, message: 'Settings saved successfully' });
     } catch (err) {

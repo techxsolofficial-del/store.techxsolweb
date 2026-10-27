@@ -3,11 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Search, Menu, X, PhoneCall, ShieldCheck, Truck, User, LogOut } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useCustomerAuth } from '../context/CustomerAuthContext';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 import { Logo } from './Logo';
 
 export const Header: React.FC = () => {
   const { itemCount } = useCart();
   const { customer, isLoggedIn, logout, openAuthModal } = useCustomerAuth();
+  const { whatsappNumber, supportPhone } = useStoreSettings();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,13 +41,13 @@ export const Header: React.FC = () => {
           </div>
           <div className="flex items-center gap-4">
             <a
-              href="https://wa.me/923001234567"
+              href={`https://wa.me/${whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 text-emerald-200 hover:text-white transition-colors"
             >
               <PhoneCall className="w-3 h-3 text-emerald-400" />
-              <span>WhatsApp: 0300-1234567</span>
+              <span>WhatsApp: {supportPhone || whatsappNumber}</span>
             </a>
             <Link to="/track" className="hover:text-white underline text-emerald-200">
               Track Order

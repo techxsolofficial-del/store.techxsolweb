@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Truck, ShieldCheck, RefreshCw, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 
 export const AboutPage: React.FC = () => (
   <div className="max-w-4xl mx-auto px-4 py-12 space-y-6">
@@ -31,46 +32,50 @@ export const AboutPage: React.FC = () => (
   </div>
 );
 
-export const ContactPage: React.FC = () => (
-  <div className="max-w-3xl mx-auto px-4 py-12 space-y-8">
-    <div className="text-center space-y-2">
-      <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Customer Support & Inquiries</h1>
-      <p className="text-sm text-gray-500">Have a question about an order or want to place an order via WhatsApp? We are here to help!</p>
-    </div>
+export const ContactPage: React.FC = () => {
+  const { whatsappNumber, supportPhone, supportEmail } = useStoreSettings();
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <div className="bg-white p-6 rounded-2xl border border-gray-200 space-y-3">
-        <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-          <MessageCircle className="w-5 h-5" />
-        </div>
-        <h3 className="font-bold text-gray-900 text-base">WhatsApp Support</h3>
-        <p className="text-xs text-gray-500">Instant answers for tracking, orders, and inquiries.</p>
-        <a
-          href="https://wa.me/923001234567"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200"
-        >
-          Chat on WhatsApp: 0300 1234567 &rarr;
-        </a>
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-12 space-y-8">
+      <div className="text-center space-y-2">
+        <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Customer Support & Inquiries</h1>
+        <p className="text-sm text-gray-500">Have a question about an order or want to place an order via WhatsApp? We are here to help!</p>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border border-gray-200 space-y-3">
-        <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-          <Mail className="w-5 h-5" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-2xl border border-gray-200 space-y-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <MessageCircle className="w-5 h-5" />
+          </div>
+          <h3 className="font-bold text-gray-900 text-base">WhatsApp Support</h3>
+          <p className="text-xs text-gray-500">Instant answers for tracking, orders, and inquiries.</p>
+          <a
+            href={`https://wa.me/${whatsappNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200"
+          >
+            Chat on WhatsApp: {supportPhone || whatsappNumber} &rarr;
+          </a>
         </div>
-        <h3 className="font-bold text-gray-900 text-base">Email Support</h3>
-        <p className="text-xs text-gray-500">For business proposals, bulk orders, and return claims.</p>
-        <a
-          href="mailto:support@apnabuy.pk"
-          className="inline-block text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200"
-        >
-          support@apnabuy.pk &rarr;
-        </a>
+
+        <div className="bg-white p-6 rounded-2xl border border-gray-200 space-y-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <Mail className="w-5 h-5" />
+          </div>
+          <h3 className="font-bold text-gray-900 text-base">Email Support</h3>
+          <p className="text-xs text-gray-500">For business proposals, bulk orders, and return claims.</p>
+          <a
+            href={`mailto:${supportEmail}`}
+            className="inline-block text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200"
+          >
+            {supportEmail} &rarr;
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const FaqPage: React.FC = () => (
   <div className="max-w-3xl mx-auto px-4 py-12 space-y-8">

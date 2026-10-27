@@ -8,11 +8,12 @@ export const SettingsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedAlert, setSavedAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetchSettings()
       .then(setSettings)
-      .catch(console.error)
+      .catch((err) => setErrorMessage(err.message || 'Failed to load settings'))
       .finally(() => setLoading(false));
   }, []);
 
@@ -20,13 +21,16 @@ export const SettingsPage: React.FC = () => {
     e.preventDefault();
     if (!settings) return;
     setSaving(true);
+    setErrorMessage('');
+    setSavedAlert(false);
+
     try {
       const updated = await updateSettings(settings);
       setSettings(updated);
       setSavedAlert(true);
-      setTimeout(() => setSavedAlert(false), 3000);
+      setTimeout(() => setSavedAlert(false), 4000);
     } catch (err: any) {
-      alert(err.message);
+      setErrorMessage(err.message || 'Failed to save settings. Please check your inputs.');
     } finally {
       setSaving(false);
     }
@@ -47,8 +51,14 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         {savedAlert && (
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-100 text-emerald-800 text-xs font-bold animate-fade-in">
-            <Check className="w-4 h-4" /> Settings Saved!
+          <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-100 text-emerald-800 text-xs font-bold animate-fade-in shadow-xs border border-emerald-200">
+            <Check className="w-4 h-4 text-emerald-600" /> Settings Saved! Changes applied across website.
+          </div>
+        )}
+
+        {errorMessage && (
+          <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium">
+            {errorMessage}
           </div>
         )}
       </div>

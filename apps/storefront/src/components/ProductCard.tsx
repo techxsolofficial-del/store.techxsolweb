@@ -4,6 +4,7 @@ import { ShoppingCart, MessageCircle, Truck } from 'lucide-react';
 import { Product, formatPkr, buildSingleProductWhatsAppLink } from '@dropship/shared';
 import { useCart } from '../context/CartContext';
 import { useCustomerAuth } from '../context/CustomerAuthContext';
+import { useStoreSettings } from '../context/StoreSettingsContext';
 
 interface ProductCardProps {
   product: Product;
@@ -12,10 +13,12 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
-  whatsappNumber = '923001234567',
+  whatsappNumber: propWhatsappNumber,
 }) => {
   const { addToCart } = useCart();
   const { isLoggedIn, openAuthModal } = useCustomerAuth();
+  const { whatsappNumber: storeWhatsappNumber } = useStoreSettings();
+  const whatsappNumber = propWhatsappNumber || storeWhatsappNumber || '923001234567';
   const primaryImage = product.images.find((i) => i.isPrimary)?.url || product.images[0]?.url;
 
   const discountPercent =

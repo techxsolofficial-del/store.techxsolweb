@@ -433,17 +433,17 @@ export declare const createFinancialTransactionSchema: z.ZodObject<{
 export type CreateFinancialTransactionInput = z.infer<typeof createFinancialTransactionSchema>;
 export declare const updateSettingsSchema: z.ZodObject<{
     storeName: z.ZodString;
-    tagline: z.ZodString;
+    tagline: z.ZodDefault<z.ZodString>;
     whatsappNumber: z.ZodString;
-    supportEmail: z.ZodString;
-    supportPhone: z.ZodString;
+    supportEmail: z.ZodUnion<[z.ZodString, z.ZodString]>;
+    supportPhone: z.ZodDefault<z.ZodString>;
     currency: z.ZodDefault<z.ZodString>;
-    defaultDeliveryChargePkr: z.ZodNumber;
-    freeDeliveryThresholdPkr: z.ZodNumber;
-    estimatedDeliveryDays: z.ZodString;
-    codTerms: z.ZodString;
-    returnPolicySummary: z.ZodString;
-    aboutText: z.ZodString;
+    defaultDeliveryChargePkr: z.ZodDefault<z.ZodNumber>;
+    freeDeliveryThresholdPkr: z.ZodDefault<z.ZodNumber>;
+    estimatedDeliveryDays: z.ZodDefault<z.ZodString>;
+    codTerms: z.ZodDefault<z.ZodString>;
+    returnPolicySummary: z.ZodDefault<z.ZodString>;
+    aboutText: z.ZodDefault<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     storeName: string;
     tagline: string;
@@ -459,17 +459,17 @@ export declare const updateSettingsSchema: z.ZodObject<{
     aboutText: string;
 }, {
     storeName: string;
-    tagline: string;
     whatsappNumber: string;
     supportEmail: string;
-    supportPhone: string;
-    defaultDeliveryChargePkr: number;
-    freeDeliveryThresholdPkr: number;
-    estimatedDeliveryDays: string;
-    codTerms: string;
-    returnPolicySummary: string;
-    aboutText: string;
+    tagline?: string | undefined;
+    supportPhone?: string | undefined;
     currency?: string | undefined;
+    defaultDeliveryChargePkr?: number | undefined;
+    freeDeliveryThresholdPkr?: number | undefined;
+    estimatedDeliveryDays?: string | undefined;
+    codTerms?: string | undefined;
+    returnPolicySummary?: string | undefined;
+    aboutText?: string | undefined;
 }>;
 export type UpdateSettingsInput = z.infer<typeof updateSettingsSchema>;
 //# sourceMappingURL=index.d.ts.map

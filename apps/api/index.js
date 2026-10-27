@@ -32759,18 +32759,18 @@ var createFinancialTransactionSchema = external_exports.object({
   notes: external_exports.string().trim().optional()
 });
 var updateSettingsSchema = external_exports.object({
-  storeName: external_exports.string().trim().min(2),
-  tagline: external_exports.string().trim().min(2),
-  whatsappNumber: external_exports.string().trim().min(10),
-  supportEmail: external_exports.string().email(),
-  supportPhone: external_exports.string().trim().min(7),
+  storeName: external_exports.string().trim().min(1, "Store Name is required"),
+  tagline: external_exports.string().trim().default(""),
+  whatsappNumber: external_exports.string().trim().min(5, "WhatsApp number is required"),
+  supportEmail: external_exports.string().trim().email("Invalid email address").or(external_exports.string().trim().min(3)),
+  supportPhone: external_exports.string().trim().default(""),
   currency: external_exports.string().default("PKR"),
-  defaultDeliveryChargePkr: external_exports.number().int().min(0),
-  freeDeliveryThresholdPkr: external_exports.number().int().min(0),
-  estimatedDeliveryDays: external_exports.string(),
-  codTerms: external_exports.string(),
-  returnPolicySummary: external_exports.string(),
-  aboutText: external_exports.string()
+  defaultDeliveryChargePkr: external_exports.number().int().min(0).default(250),
+  freeDeliveryThresholdPkr: external_exports.number().int().min(0).default(3500),
+  estimatedDeliveryDays: external_exports.string().default("2 to 4 business days"),
+  codTerms: external_exports.string().default(""),
+  returnPolicySummary: external_exports.string().default(""),
+  aboutText: external_exports.string().default("")
 });
 
 // ../../packages/shared/dist/utils/index.js
@@ -34926,6 +34926,13 @@ var AdminController = class {
     try {
       const store = getDataStore();
       const input = req.body;
+      if (input.whatsappNumber) {
+        let clean = input.whatsappNumber.replace(/[\s\-\+\(\)]/g, "");
+        if (clean.startsWith("03")) {
+          clean = "92" + clean.slice(1);
+        }
+        input.whatsappNumber = clean;
+      }
       const updated = await store.updateStoreSettings(input);
       res.json({ success: true, data: updated, message: "Settings saved successfully" });
     } catch (err) {
