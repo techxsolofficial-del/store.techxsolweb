@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, MessageCircle, Truck } from 'lucide-react';
 import { Product, formatPkr, buildSingleProductWhatsAppLink } from '@dropship/shared';
 import { useCart } from '../context/CartContext';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
 
 interface ProductCardProps {
   product: Product;
@@ -14,6 +15,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   whatsappNumber = '923001234567',
 }) => {
   const { addToCart } = useCart();
+  const { isLoggedIn, openAuthModal } = useCustomerAuth();
   const primaryImage = product.images.find((i) => i.isPrimary)?.url || product.images[0]?.url;
 
   const discountPercent =
@@ -94,7 +96,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           <div className="grid grid-cols-2 gap-2">
             <button
-              onClick={() => addToCart(product, 1)}
+              onClick={() => {
+                if (!isLoggedIn) {
+                  openAuthModal({
+                    mode: 'action',
+                    title: 'Add to Cart 🛒',
+                    description: 'Sign in to save this product to your account, or continue adding as a guest.',
+                    onContinue: () => addToCart(product, 1),
+                  });
+                } else {
+                  addToCart(product, 1);
+                }
+              }}
               className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition-colors"
             >
               <ShoppingCart className="w-3.5 h-3.5" />

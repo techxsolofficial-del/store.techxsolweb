@@ -170,16 +170,10 @@ export const Footer: React.FC = () => {
         <div className="pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-3">
           <p>© {new Date().getFullYear()} ApnaBuy. All rights reserved. Operating across Pakistan.</p>
           <div className="flex items-center gap-4 text-gray-400">
-            <a
-              href="/admin/"
-              className="text-gray-400 hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium"
-            >
-              <span>🔒 Staff Portal</span>
-            </a>
             <div className="flex items-center gap-2">
               <span>Payment:</span>
               <span className="font-semibold text-white px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
-                COD
+                100% Cash on Delivery
               </span>
             </div>
           </div>

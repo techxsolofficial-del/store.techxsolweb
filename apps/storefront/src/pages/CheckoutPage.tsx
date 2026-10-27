@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
 import {
   PAKISTAN_CITIES,
   PAKISTAN_PHONE_REGEX,
@@ -19,15 +20,25 @@ import {
 
 export const CheckoutPage: React.FC = () => {
   const { items, subtotalPkr, deliveryChargePkr, totalPayablePkr, clearCart } = useCart();
+  const { customer, isLoggedIn, login: saveCustomerAuth, openAuthModal } = useCustomerAuth();
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName] = useState(customer?.name || '');
+  const [phone, setPhone] = useState(customer?.phone || '');
   const [alternatePhone, setAlternatePhone] = useState('');
-  const [city, setCity] = useState('Lahore');
-  const [deliveryAddress, setDeliveryAddress] = useState('');
-  const [deliveryInstructions, setDeliveryInstructions] = useState('');
+  const [city, setCity] = useState(customer?.city || 'Lahore');
+  const [deliveryAddress, setDeliveryAddress] = useState(customer?.deliveryAddress || '');
+  const [deliveryInstructions, setDeliveryInstructions] = useState(customer?.deliveryInstructions || '');
   const [termsAgreed, setTermsAgreed] = useState(true);
+
+  useEffect(() => {
+    if (customer) {
+      if (!name) setName(customer.name);
+      if (!phone) setPhone(customer.phone);
+      if (customer.city) setCity(customer.city);
+      if (customer.deliveryAddress && !deliveryAddress) setDeliveryAddress(customer.deliveryAddress);
+    }
+  }, [customer]);
 
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -86,6 +97,15 @@ export const CheckoutPage: React.FC = () => {
       const result = await submitOrder(payload, idempotencyKey);
       clearCart();
 
+      // Automatically remember customer info for fast tracking and future orders
+      saveCustomerAuth({
+        name,
+        phone: cleanPhone,
+        city,
+        deliveryAddress,
+        deliveryInstructions: deliveryInstructions || undefined,
+      });
+
       // Navigate to order confirmation
       navigate('/order-confirmed', {
         state: { order: result.data },
@@ -123,6 +143,28 @@ export const CheckoutPage: React.FC = () => {
               <div className="p-4 rounded-2xl bg-red-50 border border-red-200 flex items-start gap-3 text-red-800 text-xs">
                 <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                 <div className="flex-1 font-medium">{errorMessage}</div>
+              </div>
+            )}
+
+            {/* Account Status / Fast Fill Banner */}
+            {isLoggedIn && customer ? (
+              <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2 text-emerald-800">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Ordering as <strong>{customer.name}</strong> ({customer.phone})</span>
+                </div>
+                <span className="text-[11px] text-emerald-700 font-medium hidden sm:inline">Details auto-filled</span>
+              </div>
+            ) : (
+              <div className="p-3 bg-gray-50 border border-gray-200 rounded-2xl flex items-center justify-between text-xs text-gray-600">
+                <span>Ordering as <strong>Guest</strong> (No login required)</span>
+                <button
+                  type="button"
+                  onClick={() => openAuthModal({ mode: 'action' })}
+                  className="text-emerald-700 font-bold hover:underline"
+                >
+                  Sign In for 1-Click Fill &rarr;
+                </button>
               </div>
             )}
 

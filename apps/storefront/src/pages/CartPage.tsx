@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
 import { formatPkr, buildWhatsAppOrderLink } from '@dropship/shared';
 import {
   Trash2,
@@ -13,6 +14,8 @@ import {
 } from 'lucide-react';
 
 export const CartPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn, openAuthModal } = useCustomerAuth();
   const {
     items,
     updateQuantity,
@@ -198,13 +201,25 @@ export const CartPage: React.FC = () => {
           </div>
 
           <div className="space-y-3 pt-2">
-            <Link
-              to="/checkout"
+            <button
+              type="button"
+              onClick={() => {
+                if (!isLoggedIn) {
+                  openAuthModal({
+                    mode: 'action',
+                    title: 'Proceed to Checkout 📦',
+                    description: 'Sign in to save your delivery address, or continue to checkout as a guest.',
+                    onContinue: () => navigate('/checkout'),
+                  });
+                } else {
+                  navigate('/checkout');
+                }
+              }}
               className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-colors"
             >
-              Proceed to COD Checkout
+              <span>Proceed to COD Checkout</span>
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </button>
 
             <a
               href={whatsappCartLink}

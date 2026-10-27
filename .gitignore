@@ -17,9 +17,11 @@ build/
 
 # IDE & OS
 .vscode/
+.vs/
 .idea/
 .DS_Store
 Thumbs.db
+scratch/
 
 # Test coverage & logs
 coverage/

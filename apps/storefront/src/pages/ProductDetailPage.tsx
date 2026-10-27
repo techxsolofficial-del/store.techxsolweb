@@ -8,6 +8,7 @@ import {
 } from '@dropship/shared';
 import { fetchProductBySlug, fetchProducts } from '../services/api';
 import { useCart } from '../context/CartContext';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
 import { ProductCard } from '../components/ProductCard';
 import {
   ShoppingCart,
@@ -23,6 +24,7 @@ import {
 export const ProductDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { addToCart } = useCart();
+  const { isLoggedIn, openAuthModal } = useCustomerAuth();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -93,10 +95,25 @@ export const ProductDetailPage: React.FC = () => {
       ? Math.round(((product.compareAtPricePkr - currentPrice) / product.compareAtPricePkr) * 100)
       : null;
 
-  const handleAddToCart = () => {
+  const executeAddToCart = () => {
+    if (!product) return;
     addToCart(product, quantity, selectedVariant?.id, selectedVariant?.name);
     setAddedToast(true);
     setTimeout(() => setAddedToast(false), 2500);
+  };
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    if (!isLoggedIn) {
+      openAuthModal({
+        mode: 'action',
+        title: 'Add to Cart 🛒',
+        description: 'Sign in to save this product to your account, or continue as a guest.',
+        onContinue: executeAddToCart,
+      });
+    } else {
+      executeAddToCart();
+    }
   };
 
   const directWhatsAppLink = buildWhatsAppOrderLink({

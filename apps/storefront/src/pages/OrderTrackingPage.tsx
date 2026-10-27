@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { PublicOrderTrackingResult, formatPkr } from '@dropship/shared';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
 import { trackOrder } from '../services/api';
 import {
   Search,
@@ -15,8 +16,9 @@ import {
 
 export const OrderTrackingPage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const { customer } = useCustomerAuth();
   const [reference, setReference] = useState(searchParams.get('ref') || '');
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState(customer?.phone || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState<PublicOrderTrackingResult | null>(null);
