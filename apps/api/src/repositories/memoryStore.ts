@@ -75,7 +75,7 @@ export class InMemoryStore implements IDataStore {
 
   private suppliers: Supplier[] = [
     {
-      id: 's1111111-1111-1111-1111-111111111111',
+      id: 'b1111111-1111-4111-a111-111111111111',
       businessName: 'Shah Alam Wholesale Hub',
       contactName: 'Mian Tariq',
       phone: '03008451122',
@@ -91,7 +91,7 @@ export class InMemoryStore implements IDataStore {
       updatedAt: new Date().toISOString(),
     },
     {
-      id: 's2222222-2222-2222-2222-222222222222',
+      id: 'b2222222-2222-4222-a222-222222222222',
       businessName: 'Bolton Market Imports',
       contactName: 'Muhammad Asif',
       phone: '03212894567',

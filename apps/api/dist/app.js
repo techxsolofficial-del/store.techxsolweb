@@ -52051,7 +52051,7 @@ var InMemoryStore = class {
   ];
   suppliers = [
     {
-      id: "s1111111-1111-1111-1111-111111111111",
+      id: "b1111111-1111-4111-a111-111111111111",
       businessName: "Shah Alam Wholesale Hub",
       contactName: "Mian Tariq",
       phone: "03008451122",
@@ -52067,7 +52067,7 @@ var InMemoryStore = class {
       updatedAt: (/* @__PURE__ */ new Date()).toISOString()
     },
     {
-      id: "s2222222-2222-2222-2222-222222222222",
+      id: "b2222222-2222-4222-a222-222222222222",
       businessName: "Bolton Market Imports",
       contactName: "Muhammad Asif",
       phone: "03212894567",
@@ -52552,6 +52552,8 @@ var import_crypto2 = __toESM(require("crypto"));
 var { Pool: Pool2 } = esm_default;
 function toValidUuid(id) {
   if (!id) return import_crypto2.default.randomUUID();
+  if (id === "s1111111-1111-1111-1111-111111111111") return "b1111111-1111-4111-a111-111111111111";
+  if (id === "s2222222-2222-2222-2222-222222222222") return "b2222222-2222-4222-a222-222222222222";
   const uuidRegex2 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (uuidRegex2.test(id)) return id;
   const md5 = import_crypto2.default.createHash("md5").update(id).digest("hex");
@@ -52776,47 +52778,59 @@ var PostgresStore = class {
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         );
       `);
-      const catCheck = await client.query("SELECT COUNT(*)::int AS count FROM categories;");
-      if (catCheck.rows[0].count === 0) {
-        await client.query(`
-          INSERT INTO categories (id, name, slug, description, image_url, is_active, display_order)
-          VALUES
-            ('c1111111-1111-1111-1111-111111111111', 'Smart Gadgets & Electronics', 'smart-gadgets', 'High-demand wireless earbuds, smartwatches, and smartphone accessories.', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80', TRUE, 1),
-            ('c2222222-2222-2222-2222-222222222222', 'Home & Kitchen Essentials', 'home-kitchen', 'Time-saving kitchen gadgets and home organizers for modern Pakistani households.', 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600&auto=format&fit=crop&q=80', TRUE, 2),
-            ('c3333333-3333-3333-3333-333333333333', 'Personal Care & Grooming', 'personal-care', 'Electric shavers, facial care devices, and wellness tools.', 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&auto=format&fit=crop&q=80', TRUE, 3)
-          ON CONFLICT (slug) DO NOTHING;
-        `);
+      try {
+        const catCheck = await client.query("SELECT COUNT(*)::int AS count FROM categories;");
+        if (catCheck.rows[0].count === 0) {
+          await client.query(`
+            INSERT INTO categories (id, name, slug, description, image_url, is_active, display_order)
+            VALUES
+              ('c1111111-1111-1111-1111-111111111111', 'Smart Gadgets & Electronics', 'smart-gadgets', 'High-demand wireless earbuds, smartwatches, and smartphone accessories.', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80', TRUE, 1),
+              ('c2222222-2222-2222-2222-222222222222', 'Home & Kitchen Essentials', 'home-kitchen', 'Time-saving kitchen gadgets and home organizers for modern Pakistani households.', 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600&auto=format&fit=crop&q=80', TRUE, 2),
+              ('c3333333-3333-3333-3333-333333333333', 'Personal Care & Grooming', 'personal-care', 'Electric shavers, facial care devices, and wellness tools.', 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&auto=format&fit=crop&q=80', TRUE, 3)
+            ON CONFLICT (slug) DO NOTHING;
+          `);
+        }
+      } catch (catErr) {
+        console.warn("[PostgresStore] Category seed notice:", catErr);
       }
-      const supCheck = await client.query("SELECT COUNT(*)::int AS count FROM suppliers;");
-      if (supCheck.rows[0].count === 0) {
-        await client.query(`
-          INSERT INTO suppliers (id, business_name, contact_name, phone, email, city, address, fulfilment_terms, return_policy, payout_terms, is_active, notes)
-          VALUES
-            ('s1111111-1111-1111-1111-111111111111', 'Shah Alam Wholesale Hub', 'Mian Tariq', '03008451122', 'tariq@shahalamhub.pk', 'Lahore', 'Shop # 45, Hall Road / Shah Alam Market, Lahore', 'Dispatches same-day if order confirmed before 2:00 PM. Uses Trax and Call Courier.', '7 days replacement warranty for dead-on-arrival electronics.', 'Weekly bank settlement every Monday after courier COD remittance.', TRUE, 'Primary supplier for audio and electronics.'),
-            ('s2222222-2222-2222-2222-222222222222', 'Bolton Market Imports', 'Muhammad Asif', '03212894567', 'asif@boltonimports.pk', 'Karachi', 'Plaza 12, Bolton Market, Karachi', 'Next-day dispatch. Operates directly with TCS & Leopards.', 'Replacement if reported within 5 days of delivery with parcel unboxing video.', '10 days credit cycle.', TRUE, 'Best wholesale rates for kitchen and home tools.')
-          ON CONFLICT (id) DO NOTHING;
-        `);
+      try {
+        const supCheck = await client.query("SELECT COUNT(*)::int AS count FROM suppliers;");
+        if (supCheck.rows[0].count === 0) {
+          await client.query(`
+            INSERT INTO suppliers (id, business_name, contact_name, phone, email, city, address, fulfilment_terms, return_policy, payout_terms, is_active, notes)
+            VALUES
+              ('b1111111-1111-4111-a111-111111111111', 'Shah Alam Wholesale Hub', 'Mian Tariq', '03008451122', 'tariq@shahalamhub.pk', 'Lahore', 'Shop # 45, Hall Road / Shah Alam Market, Lahore', 'Dispatches same-day if order confirmed before 2:00 PM. Uses Trax and Call Courier.', '7 days replacement warranty for dead-on-arrival electronics.', 'Weekly bank settlement every Monday after courier COD remittance.', TRUE, 'Primary supplier for audio and electronics.'),
+              ('b2222222-2222-4222-a222-222222222222', 'Bolton Market Imports', 'Muhammad Asif', '03212894567', 'asif@boltonimports.pk', 'Karachi', 'Plaza 12, Bolton Market, Karachi', 'Next-day dispatch. Operates directly with TCS & Leopards.', 'Replacement if reported within 5 days of delivery with parcel unboxing video.', '10 days credit cycle.', TRUE, 'Best wholesale rates for kitchen and home tools.')
+            ON CONFLICT (id) DO NOTHING;
+          `);
+        }
+      } catch (supErr) {
+        console.warn("[PostgresStore] Supplier seed notice:", supErr);
       }
-      const setCheck = await client.query("SELECT COUNT(*)::int AS count FROM store_settings;");
-      if (setCheck.rows[0].count === 0) {
-        const defaultSettings = {
-          storeName: DEFAULT_STORE_SETTINGS.store_name,
-          tagline: DEFAULT_STORE_SETTINGS.tagline,
-          whatsappNumber: DEFAULT_STORE_SETTINGS.whatsapp_number,
-          supportEmail: DEFAULT_STORE_SETTINGS.support_email,
-          supportPhone: DEFAULT_STORE_SETTINGS.support_phone,
-          currency: DEFAULT_STORE_SETTINGS.currency,
-          defaultDeliveryChargePkr: DEFAULT_STORE_SETTINGS.default_delivery_charge_pkr,
-          freeDeliveryThresholdPkr: DEFAULT_STORE_SETTINGS.free_delivery_threshold_pkr,
-          estimatedDeliveryDays: DEFAULT_STORE_SETTINGS.estimated_delivery_days,
-          codTerms: DEFAULT_STORE_SETTINGS.cod_terms,
-          returnPolicySummary: "7-day easy replacement policy for damaged or defective products.",
-          aboutText: "ApnaBuy is a premier Pakistani online shopping storefront curating high-utility gadgets, home essentials, and grooming devices with nationwide Cash on Delivery."
-        };
-        await client.query(
-          "INSERT INTO store_settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO NOTHING;",
-          ["main_settings", JSON.stringify(defaultSettings)]
-        );
+      try {
+        const setCheck = await client.query("SELECT COUNT(*)::int AS count FROM store_settings;");
+        if (setCheck.rows[0].count === 0) {
+          const defaultSettings = {
+            storeName: DEFAULT_STORE_SETTINGS.store_name,
+            tagline: DEFAULT_STORE_SETTINGS.tagline,
+            whatsappNumber: DEFAULT_STORE_SETTINGS.whatsapp_number,
+            supportEmail: DEFAULT_STORE_SETTINGS.support_email,
+            supportPhone: DEFAULT_STORE_SETTINGS.support_phone,
+            currency: DEFAULT_STORE_SETTINGS.currency,
+            defaultDeliveryChargePkr: DEFAULT_STORE_SETTINGS.default_delivery_charge_pkr,
+            freeDeliveryThresholdPkr: DEFAULT_STORE_SETTINGS.free_delivery_threshold_pkr,
+            estimatedDeliveryDays: DEFAULT_STORE_SETTINGS.estimated_delivery_days,
+            codTerms: DEFAULT_STORE_SETTINGS.cod_terms,
+            returnPolicySummary: "7-day easy replacement policy for damaged or defective products.",
+            aboutText: "ApnaBuy is a premier Pakistani online shopping storefront curating high-utility gadgets, home essentials, and grooming devices with nationwide Cash on Delivery."
+          };
+          await client.query(
+            "INSERT INTO store_settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO NOTHING;",
+            ["main_settings", JSON.stringify(defaultSettings)]
+          );
+        }
+      } catch (setErr) {
+        console.warn("[PostgresStore] Settings seed notice:", setErr);
       }
       console.log("[PostgresStore] Database schema verified and initialized successfully.");
     } catch (err) {

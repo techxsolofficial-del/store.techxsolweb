@@ -6,6 +6,7 @@ import { Plus, Edit2, Layers, Check, X } from 'lucide-react';
 export const CategoriesPage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
@@ -16,11 +17,13 @@ export const CategoriesPage: React.FC = () => {
 
   const loadCategories = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await fetchAdminCategories();
       setCategories(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setError(err?.message || 'Failed to load categories');
     } finally {
       setLoading(false);
     }
@@ -79,6 +82,13 @@ export const CategoriesPage: React.FC = () => {
           <Plus className="w-4 h-4" /> Add Category
         </button>
       </div>
+
+      {error && (
+        <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-center justify-between">
+          <span>⚠️ {error}</span>
+          <button onClick={loadCategories} className="font-bold underline">Retry</button>
+        </div>
+      )}
 
       <div className="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
         {loading ? (

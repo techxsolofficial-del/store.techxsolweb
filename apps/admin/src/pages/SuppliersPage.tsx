@@ -6,6 +6,7 @@ import { Plus, Truck, Phone, Mail, MapPin, X, CheckCircle } from 'lucide-react';
 export const SuppliersPage: React.FC = () => {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [businessName, setBusinessName] = useState('');
@@ -21,11 +22,13 @@ export const SuppliersPage: React.FC = () => {
 
   const loadSuppliers = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await fetchAdminSuppliers();
       setSuppliers(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setError(err?.message || 'Failed to load suppliers');
     } finally {
       setLoading(false);
     }
@@ -90,6 +93,13 @@ export const SuppliersPage: React.FC = () => {
           <Plus className="w-4 h-4" /> Add Dropship Supplier
         </button>
       </div>
+
+      {error && (
+        <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-center justify-between">
+          <span>⚠️ {error}</span>
+          <button onClick={loadSuppliers} className="font-bold underline">Retry</button>
+        </div>
+      )}
 
       {loading ? (
         <div className="p-8 text-center text-xs text-gray-400">Loading suppliers directory...</div>

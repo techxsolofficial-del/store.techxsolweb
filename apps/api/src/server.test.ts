@@ -106,7 +106,7 @@ describe('Dropshipping Ecommerce Platform Test Suite', () => {
       variants: [],
       supplierOffers: [
         {
-          supplierId: 's1111111-1111-1111-1111-111111111111',
+          supplierId: 'b1111111-1111-4111-a111-111111111111',
           supplierSku: 'SUP-EB-01',
           supplierCostPkr: 1400,
           isAvailable: true,
@@ -240,7 +240,7 @@ describe('Dropshipping Ecommerce Platform Test Suite', () => {
         Authorization: `Bearer ${adminToken}`,
       },
       body: JSON.stringify({
-        supplierId: 's1111111-1111-1111-1111-111111111111',
+        supplierId: 'b1111111-1111-4111-a111-111111111111',
         courierName: 'Trax Logistics',
         trackingNumber: 'TRX998877PK',
         courierChargePkr: 250,

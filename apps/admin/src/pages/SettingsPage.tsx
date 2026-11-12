@@ -4,17 +4,41 @@ import { fetchSettings, updateSettings } from '../services/api';
 import { Settings, Save, Check } from 'lucide-react';
 
 export const SettingsPage: React.FC = () => {
-  const [settings, setSettings] = useState<StoreSettings | null>(null);
+  const fallbackSettings: StoreSettings = {
+    storeName: 'ApnaBuy',
+    tagline: 'Online Shopping in Pakistan - Cash on Delivery',
+    whatsappNumber: '03001277042',
+    supportEmail: 'support@apnabuy.pk',
+    supportPhone: '03001277042',
+    currency: 'PKR',
+    defaultDeliveryChargePkr: 200,
+    freeDeliveryThresholdPkr: 2999,
+    estimatedDeliveryDays: '2-4 working days',
+    codTerms: 'Cash on delivery available nationwide across Pakistan.',
+    returnPolicySummary: '7-day easy replacement policy for damaged or defective products.',
+    aboutText: 'ApnaBuy is a premier Pakistani online shopping storefront.',
+  };
+
+  const [settings, setSettings] = useState<StoreSettings>(fallbackSettings);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedAlert, setSavedAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
+  const loadSettings = () => {
+    setLoading(true);
     fetchSettings()
-      .then(setSettings)
-      .catch((err) => setErrorMessage(err.message || 'Failed to load settings'))
+      .then((data) => {
+        if (data) setSettings(data);
+      })
+      .catch((err) => {
+        setErrorMessage(err.message || 'Connecting to database settings...');
+      })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadSettings();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,10 +59,6 @@ export const SettingsPage: React.FC = () => {
       setSaving(false);
     }
   };
-
-  if (loading || !settings) {
-    return <div className="p-8 text-center text-xs text-gray-400">Loading settings...</div>;
-  }
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">

@@ -67,7 +67,7 @@ async function runVerification() {
       variants: [],
       supplierOffers: [
         {
-          supplierId: 's1111111-1111-1111-1111-111111111111',
+          supplierId: 'b1111111-1111-4111-a111-111111111111',
           supplierSku: 'SUP-M28',
           supplierCostPkr: 1300,
           isAvailable: true,
@@ -126,7 +126,7 @@ async function runVerification() {
       variants: [],
       supplierOffers: [
         {
-          supplierId: 's1111111-1111-1111-1111-111111111111',
+          supplierId: 'b1111111-1111-4111-a111-111111111111',
           supplierSku: 'SUP-JUICER',
           supplierCostPkr: 1100,
           isAvailable: true,
