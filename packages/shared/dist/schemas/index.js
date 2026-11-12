@@ -70,6 +70,7 @@ export const productCreateSchema = z.object({
     variants: z.array(productVariantSchema).default([]),
     supplierOffers: z.array(productSupplierOfferSchema).default([]),
 });
+export const productUpdateSchema = productCreateSchema.partial();
 export const categoryCreateSchema = z.object({
     name: z.string().trim().min(2).max(100),
     slug: z.string().trim().min(2).max(100).regex(/^[a-z0-9-]+$/, 'Slug must be alphanumeric and hyphens only'),

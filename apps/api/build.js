@@ -24,17 +24,22 @@ async function build() {
     path.join(distDir, 'app.js'),
     path.join(distDir, 'index.js'),
     path.join(__dirname, 'index.js'),
+    path.join(__dirname, '..', 'storefront', 'api', 'index.js'),
+    path.join(__dirname, '..', '..', 'api', 'index.js'),
   ];
 
   for (const outfile of targets) {
+    const outDir = path.dirname(outfile);
+    if (!fs.existsSync(outDir)) {
+      fs.mkdirSync(outDir, { recursive: true });
+    }
     await esbuild.build({ ...commonConfig, outfile });
   }
 
-  console.log('[api-build] Successfully compiled and bundled API targets (CommonJS)');
+  console.log('[api-build] Successfully compiled and bundled API targets (CommonJS) across api, storefront/api, and root api');
 }
 
 build().catch((err) => {
   console.error('[api-build] Build failed:', err);
   process.exit(1);
 });
-

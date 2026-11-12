@@ -27,6 +27,7 @@ router.get('/dashboard/metrics', AdminController.getDashboard);
 
 // Products
 router.get('/products', AdminController.getProducts);
+router.get('/products/:id', AdminController.getProductById);
 router.post('/products', validateRequest(productCreateSchema), AdminController.createProduct);
 router.put('/products/:id', AdminController.updateProduct);
 router.delete('/products/:id', AdminController.deleteProduct);

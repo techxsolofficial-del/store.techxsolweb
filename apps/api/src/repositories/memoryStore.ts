@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import {
   Category,
   Product,
@@ -16,10 +17,25 @@ import {
 } from '@dropship/shared';
 import { IDataStore, ProductFilters, OrderFilters } from './types.js';
 
+function findRootStateFile(): string {
+  // Check standard locations relative to current working directory and module directory
+  const candidates = [
+    path.join(process.cwd(), 'dropship_store_state.json'),
+    path.join(process.cwd(), '..', 'dropship_store_state.json'),
+    path.join(process.cwd(), '..', '..', 'dropship_store_state.json'),
+  ];
+  for (const c of candidates) {
+    if (fs.existsSync(c)) {
+      return path.resolve(c);
+    }
+  }
+  return path.resolve(process.cwd(), 'dropship_store_state.json');
+}
+
 export class InMemoryStore implements IDataStore {
   private storageFilePath: string = process.env.VERCEL
     ? '/tmp/dropship_store_state.json'
-    : path.join(process.cwd(), 'dropship_store_state.json');
+    : findRootStateFile();
 
   private categories: Category[] = [
     {
@@ -284,7 +300,7 @@ export class InMemoryStore implements IDataStore {
     const category = this.categories.find((c) => c.id === data.categoryId);
     const product: Product = {
       ...data,
-      id: `prod-${Date.now()}`,
+      id: crypto.randomUUID(),
       categoryName: category?.name,
       categorySlug: category?.slug,
       createdAt: new Date().toISOString(),

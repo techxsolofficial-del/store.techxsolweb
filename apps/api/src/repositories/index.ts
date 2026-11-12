@@ -1,18 +1,26 @@
 import { IDataStore } from './types.js';
 import { InMemoryStore } from './memoryStore.js';
+import { PostgresStore } from './postgresStore.js';
+import { SupabaseStore } from './supabaseStore.js';
 import { config } from '../config/index.js';
 
 let storeInstance: IDataStore | null = null;
 
 export function getDataStore(): IDataStore {
   if (!storeInstance) {
-    if (config.databaseUrl || (config.supabase.url && config.supabase.serviceRoleKey)) {
-      console.log('Connecting to Supabase / PostgreSQL database...');
-      // In production with Supabase configured, this connects to Supabase/PostgreSQL.
-      // Currently using high-performance in-memory repository with seamless fallback.
-      storeInstance = new InMemoryStore();
+    if (config.databaseUrl) {
+      console.log('[DataStore] Connecting to PostgreSQL database (DATABASE_URL configured)...');
+      storeInstance = new PostgresStore(config.databaseUrl);
+    } else if (config.supabase.url && (config.supabase.serviceRoleKey || config.supabase.anonKey)) {
+      console.log('[DataStore] Connecting to Supabase database (SUPABASE_URL configured)...');
+      storeInstance = new SupabaseStore(
+        config.supabase.url,
+        config.supabase.serviceRoleKey || config.supabase.anonKey
+      );
     } else {
-      console.log('Using in-memory repository with pre-seeded Pakistan dropshipping catalog.');
+      console.warn(
+        '[DataStore] ⚠️ No DATABASE_URL or SUPABASE_URL configured! Falling back to local file storage. Note: In serverless environments like Vercel, set DATABASE_URL or SUPABASE_URL in your Vercel Project Settings for permanent persistence.'
+      );
       storeInstance = new InMemoryStore();
     }
   }
@@ -21,4 +29,5 @@ export function getDataStore(): IDataStore {
 
 export * from './types.js';
 export * from './memoryStore.js';
-
+export * from './postgresStore.js';
+export * from './supabaseStore.js';

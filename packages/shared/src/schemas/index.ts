@@ -94,6 +94,9 @@ export const productCreateSchema = z.object({
 
 export type ProductCreateInput = z.infer<typeof productCreateSchema>;
 
+export const productUpdateSchema = productCreateSchema.partial();
+export type ProductUpdateInput = z.infer<typeof productUpdateSchema>;
+
 export const categoryCreateSchema = z.object({
   name: z.string().trim().min(2).max(100),
   slug: z.string().trim().min(2).max(100).regex(/^[a-z0-9-]+$/, 'Slug must be alphanumeric and hyphens only'),

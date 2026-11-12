@@ -246,6 +246,7 @@ export class PublicController {
       const responsePayload = {
         success: true,
         data: {
+          id: createdOrder.id,
           orderReference: createdOrder.orderReference,
           trackingToken: createdOrder.trackingToken,
           totalPayablePkr: createdOrder.totalPayablePkr,

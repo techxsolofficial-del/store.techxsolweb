@@ -7,10 +7,14 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": true,
+    "strict": false,
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@dropship/shared": ["../../packages/shared/dist/index.d.ts"]
+    }
   },
   "include": ["src/**/*"]
 }

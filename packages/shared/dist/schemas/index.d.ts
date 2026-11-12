@@ -287,6 +287,150 @@ export declare const productCreateSchema: z.ZodObject<{
     }[] | undefined;
 }>;
 export type ProductCreateInput = z.infer<typeof productCreateSchema>;
+export declare const productUpdateSchema: z.ZodObject<{
+    categoryId: z.ZodOptional<z.ZodString>;
+    name: z.ZodOptional<z.ZodString>;
+    slug: z.ZodOptional<z.ZodString>;
+    shortDescription: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodString>;
+    basePricePkr: z.ZodOptional<z.ZodNumber>;
+    compareAtPricePkr: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodNumber>>>;
+    sku: z.ZodOptional<z.ZodString>;
+    isActive: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    isFeatured: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    images: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        url: z.ZodString;
+        altText: z.ZodOptional<z.ZodString>;
+        isPrimary: z.ZodDefault<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        url: string;
+        isPrimary: boolean;
+        altText?: string | undefined;
+    }, {
+        id: string;
+        url: string;
+        altText?: string | undefined;
+        isPrimary?: boolean | undefined;
+    }>, "many">>;
+    variants: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        sku: z.ZodOptional<z.ZodString>;
+        priceDeltaPkr: z.ZodDefault<z.ZodNumber>;
+        supplierCostDeltaPkr: z.ZodDefault<z.ZodNumber>;
+        isAvailable: z.ZodDefault<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        id: string;
+        priceDeltaPkr: number;
+        supplierCostDeltaPkr: number;
+        isAvailable: boolean;
+        sku?: string | undefined;
+    }, {
+        name: string;
+        id: string;
+        sku?: string | undefined;
+        priceDeltaPkr?: number | undefined;
+        supplierCostDeltaPkr?: number | undefined;
+        isAvailable?: boolean | undefined;
+    }>, "many">>>;
+    supplierOffers: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
+        id: z.ZodOptional<z.ZodString>;
+        supplierId: z.ZodString;
+        supplierSku: z.ZodString;
+        supplierCostPkr: z.ZodNumber;
+        isAvailable: z.ZodDefault<z.ZodBoolean>;
+        leadTimeDays: z.ZodDefault<z.ZodNumber>;
+        notes: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        isAvailable: boolean;
+        supplierId: string;
+        supplierSku: string;
+        supplierCostPkr: number;
+        leadTimeDays: number;
+        id?: string | undefined;
+        notes?: string | undefined;
+    }, {
+        supplierId: string;
+        supplierSku: string;
+        supplierCostPkr: number;
+        id?: string | undefined;
+        isAvailable?: boolean | undefined;
+        leadTimeDays?: number | undefined;
+        notes?: string | undefined;
+    }>, "many">>>;
+}, "strip", z.ZodTypeAny, {
+    name?: string | undefined;
+    sku?: string | undefined;
+    categoryId?: string | undefined;
+    slug?: string | undefined;
+    shortDescription?: string | undefined;
+    description?: string | undefined;
+    basePricePkr?: number | undefined;
+    compareAtPricePkr?: number | null | undefined;
+    isActive?: boolean | undefined;
+    isFeatured?: boolean | undefined;
+    images?: {
+        id: string;
+        url: string;
+        isPrimary: boolean;
+        altText?: string | undefined;
+    }[] | undefined;
+    variants?: {
+        name: string;
+        id: string;
+        priceDeltaPkr: number;
+        supplierCostDeltaPkr: number;
+        isAvailable: boolean;
+        sku?: string | undefined;
+    }[] | undefined;
+    supplierOffers?: {
+        isAvailable: boolean;
+        supplierId: string;
+        supplierSku: string;
+        supplierCostPkr: number;
+        leadTimeDays: number;
+        id?: string | undefined;
+        notes?: string | undefined;
+    }[] | undefined;
+}, {
+    name?: string | undefined;
+    sku?: string | undefined;
+    categoryId?: string | undefined;
+    slug?: string | undefined;
+    shortDescription?: string | undefined;
+    description?: string | undefined;
+    basePricePkr?: number | undefined;
+    compareAtPricePkr?: number | null | undefined;
+    isActive?: boolean | undefined;
+    isFeatured?: boolean | undefined;
+    images?: {
+        id: string;
+        url: string;
+        altText?: string | undefined;
+        isPrimary?: boolean | undefined;
+    }[] | undefined;
+    variants?: {
+        name: string;
+        id: string;
+        sku?: string | undefined;
+        priceDeltaPkr?: number | undefined;
+        supplierCostDeltaPkr?: number | undefined;
+        isAvailable?: boolean | undefined;
+    }[] | undefined;
+    supplierOffers?: {
+        supplierId: string;
+        supplierSku: string;
+        supplierCostPkr: number;
+        id?: string | undefined;
+        isAvailable?: boolean | undefined;
+        leadTimeDays?: number | undefined;
+        notes?: string | undefined;
+    }[] | undefined;
+}>;
+export type ProductUpdateInput = z.infer<typeof productUpdateSchema>;
 export declare const categoryCreateSchema: z.ZodObject<{
     name: z.ZodString;
     slug: z.ZodString;

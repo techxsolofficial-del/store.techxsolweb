@@ -99,6 +99,24 @@ export class AdminController {
     }
   }
 
+  static async getProductById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const store = getDataStore();
+      const id = String(req.params.id);
+      const product = await store.getProductById(id);
+      if (!product) {
+        res.status(404).json({
+          success: false,
+          error: { code: 'NOT_FOUND', message: 'Product not found' },
+        });
+        return;
+      }
+      res.json({ success: true, data: product });
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async createProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const store = getDataStore();
