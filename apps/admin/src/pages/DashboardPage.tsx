@@ -18,14 +18,32 @@ import {
 export const DashboardPage: React.FC = () => {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fallbackMetrics: DashboardMetrics = {
+    totalOrders: 0,
+    pendingConfirmation: 0,
+    confirmedOrders: 0,
+    dispatchedOrders: 0,
+    deliveredOrders: 0,
+    returnedOrders: 0,
+    totalRevenuePkr: 0,
+    totalEstimatedProfitPkr: 0,
+    totalActualProfitPkr: 0,
+    unsettledCodPkr: 0,
+    recentOrders: [],
+  };
 
   const loadData = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await fetchDashboardMetrics();
       setMetrics(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to load metrics', err);
+      setError(err?.message || 'Database connecting or offline. Using local view.');
+      setMetrics((prev) => prev || fallbackMetrics);
     } finally {
       setLoading(false);
     }
@@ -35,7 +53,7 @@ export const DashboardPage: React.FC = () => {
     loadData();
   }, []);
 
-  if (loading || !metrics) {
+  if (loading && !metrics) {
     return (
       <div className="p-8 space-y-6 animate-pulse">
         <div className="h-8 bg-gray-200 rounded w-1/4" />
@@ -47,6 +65,8 @@ export const DashboardPage: React.FC = () => {
       </div>
     );
   }
+
+  const activeMetrics = metrics || fallbackMetrics;
 
   return (
     <div className="space-y-8">
@@ -70,8 +90,15 @@ export const DashboardPage: React.FC = () => {
         </button>
       </div>
 
+      {error && (
+        <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-center justify-between gap-2">
+          <span>⚠️ {error}</span>
+          <button onClick={loadData} className="font-bold underline hover:text-amber-900">Retry</button>
+        </div>
+      )}
+
       {/* Critical Alert Bar: Pending Confirmation */}
-      {metrics.pendingConfirmation > 0 && (
+      {activeMetrics.pendingConfirmation > 0 && (
         <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-900">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-amber-200/80 text-amber-800 flex items-center justify-center shrink-0">
@@ -79,7 +106,7 @@ export const DashboardPage: React.FC = () => {
             </div>
             <div>
               <h3 className="font-bold text-xs">
-                {metrics.pendingConfirmation} New {metrics.pendingConfirmation === 1 ? 'Order' : 'Orders'} Awaiting Phone Confirmation!
+                {activeMetrics.pendingConfirmation} New {activeMetrics.pendingConfirmation === 1 ? 'Order' : 'Orders'} Awaiting Phone Confirmation!
               </h3>
               <p className="text-[11px] text-amber-800/80">
                 Contact customers to confirm delivery address before dispatching to dropship supplier.
@@ -104,7 +131,7 @@ export const DashboardPage: React.FC = () => {
               <ShoppingBag className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-black text-gray-900">{metrics.totalOrders}</div>
+          <div className="text-2xl font-black text-gray-900">{activeMetrics.totalOrders}</div>
           <div className="text-[11px] text-gray-400">Lifetime orders placed</div>
         </div>
 
@@ -115,7 +142,7 @@ export const DashboardPage: React.FC = () => {
               <CheckCircle className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-black text-gray-900">{metrics.confirmedOrders}</div>
+          <div className="text-2xl font-black text-gray-900">{activeMetrics.confirmedOrders}</div>
           <div className="text-[11px] text-purple-600 font-medium">Ready for packaging</div>
         </div>
 
@@ -126,7 +153,7 @@ export const DashboardPage: React.FC = () => {
               <Truck className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-black text-gray-900">{metrics.dispatchedOrders}</div>
+          <div className="text-2xl font-black text-gray-900">{activeMetrics.dispatchedOrders}</div>
           <div className="text-[11px] text-indigo-600 font-medium">With Trax / Leopards</div>
         </div>
 
@@ -137,7 +164,7 @@ export const DashboardPage: React.FC = () => {
               <CheckCircle className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-black text-emerald-700">{metrics.deliveredOrders}</div>
+          <div className="text-2xl font-black text-emerald-700">{activeMetrics.deliveredOrders}</div>
           <div className="text-[11px] text-emerald-600 font-medium">Successfully delivered</div>
         </div>
       </div>
@@ -152,7 +179,7 @@ export const DashboardPage: React.FC = () => {
             <TrendingUp className="w-5 h-5 text-emerald-400" />
           </div>
           <div className="text-3xl font-extrabold text-white">
-            {formatPkr(metrics.totalActualProfitPkr)}
+            {formatPkr(activeMetrics.totalActualProfitPkr)}
           </div>
           <p className="text-xs text-emerald-200/80">
             Reconciled cash received minus supplier wholesale cost and courier fees.
@@ -167,7 +194,7 @@ export const DashboardPage: React.FC = () => {
             <Banknote className="w-5 h-5 text-gray-400" />
           </div>
           <div className="text-3xl font-extrabold text-gray-900">
-            {formatPkr(metrics.totalEstimatedProfitPkr)}
+            {formatPkr(activeMetrics.totalEstimatedProfitPkr)}
           </div>
           <p className="text-xs text-gray-500">
             Expected gross profit from current active pipeline upon complete delivery.
@@ -182,7 +209,7 @@ export const DashboardPage: React.FC = () => {
             <Clock className="w-5 h-5 text-amber-500" />
           </div>
           <div className="text-3xl font-extrabold text-amber-800">
-            {formatPkr(metrics.unsettledCodPkr)}
+            {formatPkr(activeMetrics.unsettledCodPkr)}
           </div>
           <p className="text-xs text-gray-500">
             Cash collected by couriers or in transit awaiting bank remittance into store account.
@@ -219,14 +246,14 @@ export const DashboardPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 font-medium">
-              {metrics.recentOrders.length === 0 ? (
+              {activeMetrics.recentOrders.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-8 text-center text-gray-400 text-xs">
                     No orders placed yet. As customers order on the website or via WhatsApp, they will appear here in real time.
                   </td>
                 </tr>
               ) : (
-                metrics.recentOrders.map((order) => (
+                activeMetrics.recentOrders.map((order) => (
                   <tr key={order.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="py-3 px-4 font-mono font-bold text-emerald-950">
                       <Link to={`/orders/${order.id}`} className="hover:underline">

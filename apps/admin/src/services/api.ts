@@ -31,7 +31,9 @@ async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok || !data.success) {
     if (res.status === 401) {
       localStorage.removeItem('bazaarpk_admin_token');
-      window.location.href = '/login';
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/admin/login';
+      }
     }
     throw new Error(data.error?.message || 'API request failed');
   }

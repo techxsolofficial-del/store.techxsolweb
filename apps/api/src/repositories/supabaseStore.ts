@@ -19,15 +19,47 @@ import {
 } from '@dropship/shared';
 import { IDataStore, ProductFilters, OrderFilters } from './types.js';
 import { toValidUuid } from './postgresStore.js';
+import { InMemoryStore } from './memoryStore.js';
 
 export class SupabaseStore implements IDataStore {
   private client: SupabaseClient;
+  public fallbackStore: InMemoryStore = new InMemoryStore();
+  public isUsingFallback = false;
 
   constructor(supabaseUrl: string, supabaseKey: string) {
     this.client = createClient(supabaseUrl, supabaseKey, {
       auth: { persistSession: false },
     });
     console.log('[SupabaseStore] Initialized Supabase REST client.');
+
+    return new Proxy(this, {
+      get(target: any, prop: string | symbol) {
+        const orig = target[prop];
+        if (typeof orig === 'function' && !String(prop).startsWith('map')) {
+          return async function (...args: any[]) {
+            if (target.isUsingFallback) {
+              const fallbackFn = target.fallbackStore[prop];
+              if (typeof fallbackFn === 'function') {
+                return fallbackFn.apply(target.fallbackStore, args);
+              }
+            }
+            try {
+              return await orig.apply(target, args);
+            } catch (err: any) {
+              console.error(`[SupabaseStore] Method ${String(prop)} failed:`, err?.message || err);
+              console.warn(`[SupabaseStore] Switching to resilient in-memory fallback store for ${String(prop)}.`);
+              target.isUsingFallback = true;
+              const fallbackFn = target.fallbackStore[prop];
+              if (typeof fallbackFn === 'function') {
+                return fallbackFn.apply(target.fallbackStore, args);
+              }
+              throw err;
+            }
+          };
+        }
+        return orig;
+      },
+    });
   }
 
   // --- Mappers ---

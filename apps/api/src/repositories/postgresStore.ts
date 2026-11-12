@@ -18,6 +18,7 @@ import {
   DEFAULT_STORE_SETTINGS,
 } from '@dropship/shared';
 import { IDataStore, ProductFilters, OrderFilters } from './types.js';
+import { InMemoryStore } from './memoryStore.js';
 
 const { Pool } = pg;
 
@@ -33,6 +34,8 @@ export function toValidUuid(id?: string): string {
 export class PostgresStore implements IDataStore {
   private pool: pg.Pool;
   private initPromise: Promise<void> | null = null;
+  public fallbackStore: InMemoryStore = new InMemoryStore();
+  public isUsingFallback = false;
 
   constructor(connectionString: string) {
     const isLocal =
@@ -44,19 +47,54 @@ export class PostgresStore implements IDataStore {
       ssl: isLocal ? false : { rejectUnauthorized: false },
       max: 10,
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 10000,
+      connectionTimeoutMillis: 3500,
     });
 
     this.pool.on('error', (err) => {
-      console.error('[PostgresStore] Unexpected database pool error:', err);
+      console.error('[PostgresStore] Unexpected database pool error:', err?.message || err);
+      this.isUsingFallback = true;
+    });
+
+    return new Proxy(this, {
+      get(target: any, prop: string | symbol) {
+        const orig = target[prop];
+        if (typeof orig === 'function' && prop !== 'ensureInitialized') {
+          return async function (...args: any[]) {
+            if (target.isUsingFallback) {
+              const fallbackFn = target.fallbackStore[prop];
+              if (typeof fallbackFn === 'function') {
+                return fallbackFn.apply(target.fallbackStore, args);
+              }
+            }
+            try {
+              return await orig.apply(target, args);
+            } catch (err: any) {
+              console.error(`[PostgresStore] Method ${String(prop)} failed:`, err?.message || err);
+              console.warn(`[PostgresStore] Switching to resilient in-memory fallback store for ${String(prop)}.`);
+              target.isUsingFallback = true;
+              const fallbackFn = target.fallbackStore[prop];
+              if (typeof fallbackFn === 'function') {
+                return fallbackFn.apply(target.fallbackStore, args);
+              }
+              throw err;
+            }
+          };
+        }
+        return orig;
+      },
     });
   }
 
   private async ensureInitialized(): Promise<void> {
+    if (this.isUsingFallback) return;
     if (!this.initPromise) {
-      this.initPromise = this.initSchemaAndSeed();
+      this.initPromise = this.initSchemaAndSeed().catch((err) => {
+        console.error('[PostgresStore] ⚠️ Failed to connect to PostgreSQL database:', err?.message || err);
+        console.warn('[PostgresStore] Activating resilient fallback store to keep Admin Panel and Storefront fast and responsive.');
+        this.isUsingFallback = true;
+      });
     }
-    return this.initPromise;
+    await this.initPromise;
   }
 
   private async initSchemaAndSeed(): Promise<void> {
