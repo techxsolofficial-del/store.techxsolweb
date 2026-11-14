@@ -39,7 +39,7 @@ export const config = {
     process.env.SUPABASE_DB_URL ||
     '',
   adminDefault: {
-    email: process.env.ADMIN_EMAIL || 'adminname',
+    email: process.env.ADMIN_EMAIL || 'useradmin',
     password: process.env.ADMIN_PASSWORD || 'user@123$123',
     displayName: process.env.ADMIN_NAME || 'Admin',
   },

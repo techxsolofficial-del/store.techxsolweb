@@ -21,6 +21,7 @@ export class AdminController {
       const inputPassword = (req.body.password || '').toString().trim();
 
       const validIdentities = new Set([
+        'useradmin',
         'adminname',
         (config.adminDefault.email || '').toLowerCase(),
         (process.env.ADMIN_EMAIL || '').toLowerCase(),

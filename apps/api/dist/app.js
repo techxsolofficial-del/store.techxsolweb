@@ -63133,7 +63133,7 @@ var config = {
   },
   databaseUrl: process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL || process.env.SUPABASE_DATABASE_URL || process.env.SUPABASE_DB_URL || "",
   adminDefault: {
-    email: process.env.ADMIN_EMAIL || "adminname",
+    email: process.env.ADMIN_EMAIL || "useradmin",
     password: process.env.ADMIN_PASSWORD || "user@123$123",
     displayName: process.env.ADMIN_NAME || "Admin"
   }
@@ -64369,6 +64369,7 @@ var AdminController = class {
       const rawIdentity = (req.body.email || req.body.username || "").toString().trim().toLowerCase();
       const inputPassword = (req.body.password || "").toString().trim();
       const validIdentities = new Set([
+        "useradmin",
         "adminname",
         (config.adminDefault.email || "").toLowerCase(),
         (process.env.ADMIN_EMAIL || "").toLowerCase(),
