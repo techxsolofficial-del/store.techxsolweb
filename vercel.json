@@ -12,22 +12,17 @@
   },
   "rewrites": [
     {
-      "source": "/api/:match*",
+      "source": "/api/(.*)",
       "destination": {
         "service": "api"
       }
     },
     {
-      "source": "/admin/:match*",
-      "destination": {
-        "service": "web"
-      }
-    },
-    {
-      "source": "/:match*",
+      "source": "/(.*)",
       "destination": {
         "service": "web"
       }
     }
   ]
 }
+
