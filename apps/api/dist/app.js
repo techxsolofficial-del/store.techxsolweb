@@ -63133,9 +63133,9 @@ var config = {
   },
   databaseUrl: process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL || process.env.SUPABASE_DATABASE_URL || process.env.SUPABASE_DB_URL || "",
   adminDefault: {
-    email: process.env.ADMIN_EMAIL || "admin@bazaarpk.com",
-    password: process.env.ADMIN_PASSWORD || "AdminBazaar2026!",
-    displayName: process.env.ADMIN_NAME || "Store Owner"
+    email: process.env.ADMIN_EMAIL || "adminname",
+    password: process.env.ADMIN_PASSWORD || "user@123$123",
+    displayName: process.env.ADMIN_NAME || "Admin"
   }
 };
 
@@ -64369,22 +64369,20 @@ var AdminController = class {
       const rawIdentity = (req.body.email || req.body.username || "").toString().trim().toLowerCase();
       const inputPassword = (req.body.password || "").toString().trim();
       const validIdentities = new Set([
+        "adminname",
         (config.adminDefault.email || "").toLowerCase(),
         (process.env.ADMIN_EMAIL || "").toLowerCase(),
         (process.env.ADMIN_USERNAME || "").toLowerCase(),
         "admin",
-        "admin@bazaarpk.com",
         "admin@apnabuy.com",
         "admin@techxsol.com",
         "m35975673@gmail.com"
       ].filter(Boolean));
       const validPasswords = new Set([
+        "user@123$123",
         config.adminDefault.password,
         process.env.ADMIN_PASSWORD,
-        "AdminBazaar2026!",
-        "Admin@ApnaBuy2025",
-        "admin123",
-        "admin"
+        "AdminBazaar2026!"
       ].filter(Boolean));
       const isValidUser = validIdentities.has(rawIdentity);
       const isValidPass = validPasswords.has(inputPassword);
@@ -64413,7 +64411,7 @@ var AdminController = class {
         success: false,
         error: {
           code: "INVALID_CREDENTIALS",
-          message: "Invalid email or password. Use your configured admin credentials or default admin@bazaarpk.com / AdminBazaar2026!"
+          message: "Invalid username/email or password."
         }
       });
     } catch (err) {

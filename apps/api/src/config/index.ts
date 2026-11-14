@@ -39,8 +39,8 @@ export const config = {
     process.env.SUPABASE_DB_URL ||
     '',
   adminDefault: {
-    email: process.env.ADMIN_EMAIL || 'admin@bazaarpk.com',
-    password: process.env.ADMIN_PASSWORD || 'AdminBazaar2026!',
-    displayName: process.env.ADMIN_NAME || 'Store Owner',
+    email: process.env.ADMIN_EMAIL || 'adminname',
+    password: process.env.ADMIN_PASSWORD || 'user@123$123',
+    displayName: process.env.ADMIN_NAME || 'Admin',
   },
 };

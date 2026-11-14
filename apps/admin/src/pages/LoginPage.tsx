@@ -62,7 +62,7 @@ export const LoginPage: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="admin or admin@bazaarpk.com"
+                placeholder="Enter username or email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-emerald-500 placeholder-gray-500"
@@ -84,10 +84,6 @@ export const LoginPage: React.FC = () => {
               />
               <Lock className="w-4 h-4 text-gray-400 absolute left-3 pointer-events-none" />
             </div>
-          </div>
-
-          <div className="p-2.5 rounded-lg bg-gray-800/60 border border-gray-700/50 text-[11px] text-gray-400">
-            Default credentials: <strong className="text-emerald-400">admin</strong> / <strong className="text-emerald-400">AdminBazaar2026!</strong>
           </div>
 
           <button

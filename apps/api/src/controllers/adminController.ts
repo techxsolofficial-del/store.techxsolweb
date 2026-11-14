@@ -21,23 +21,21 @@ export class AdminController {
       const inputPassword = (req.body.password || '').toString().trim();
 
       const validIdentities = new Set([
+        'adminname',
         (config.adminDefault.email || '').toLowerCase(),
         (process.env.ADMIN_EMAIL || '').toLowerCase(),
         (process.env.ADMIN_USERNAME || '').toLowerCase(),
         'admin',
-        'admin@bazaarpk.com',
         'admin@apnabuy.com',
         'admin@techxsol.com',
         'm35975673@gmail.com',
       ].filter(Boolean));
 
       const validPasswords = new Set([
+        'user@123$123',
         config.adminDefault.password,
         process.env.ADMIN_PASSWORD,
         'AdminBazaar2026!',
-        'Admin@ApnaBuy2025',
-        'admin123',
-        'admin',
       ].filter(Boolean));
 
       const isValidUser = validIdentities.has(rawIdentity);
@@ -70,7 +68,7 @@ export class AdminController {
         success: false,
         error: {
           code: 'INVALID_CREDENTIALS',
-          message: 'Invalid email or password. Use your configured admin credentials or default admin@bazaarpk.com / AdminBazaar2026!',
+          message: 'Invalid username/email or password.',
         },
       });
     } catch (err) {
