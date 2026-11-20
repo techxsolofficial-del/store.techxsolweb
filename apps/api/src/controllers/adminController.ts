@@ -33,10 +33,9 @@ export class AdminController {
       ].filter(Boolean));
 
       const validPasswords = new Set([
-        'user@123$123',
+        'user@123',
         config.adminDefault.password,
         process.env.ADMIN_PASSWORD,
-        'AdminBazaar2026!',
       ].filter(Boolean));
 
       const isValidUser = validIdentities.has(rawIdentity);

@@ -40,7 +40,7 @@ export const config = {
     '',
   adminDefault: {
     email: process.env.ADMIN_EMAIL || 'useradmin',
-    password: process.env.ADMIN_PASSWORD || 'user@123$123',
+    password: process.env.ADMIN_PASSWORD || 'user@123',
     displayName: process.env.ADMIN_NAME || 'Admin',
   },
 };
